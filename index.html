@@ -70,116 +70,97 @@
             padding: 20px;
         }
 
-        /* ПЛАВНЫЙ ЛОГОТИП (БЕЗ РЕЗКИХ ПРЫЖКОВ) */
+        /* ЛОГОТИП С МЯГКИМ ПРИБЛИЖЕНИЕМ */
         .logo-main {
-            max-width: 650px;
-            width: 85%;
+            max-width: 600px;
+            width: 80%;
             height: auto;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 15px 25px rgba(244, 194, 215, 0.5));
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 15px rgba(244, 194, 215, 0.4));
             cursor: none !important;
-            animation: logoFloat 12s infinite ease-in-out;
-            /* Очень плавный переход для ховера */
-            transition: 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation: logoFloat 8s infinite ease-in-out;
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.5s ease;
         }
 
         @keyframes logoFloat {
-            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
-            50% { transform: translateY(-10px) scale(1.02) rotate(0.5deg); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .logo-main:hover {
-            animation-play-state: paused;
-            transform: scale(1.04) rotate(1.5deg) !important;
-            filter: drop-shadow(0 20px 40px rgba(244, 194, 215, 0.8));
+            transform: scale(1.06) !important;
+            filter: drop-shadow(0 15px 30px rgba(244, 194, 215, 0.6));
         }
 
-        /* СПАСАЕМ СЕРДЕЧКО НА АВАТАРКЕ */
+        /* БОЛЬШАЯ И ВАЖНАЯ IMVU-АВАТАРКА (ava.png) */
         .ava-container {
             position: relative;
             margin-bottom: 30px;
-            animation: avaFloat 6s infinite ease-in-out;
         }
 
         .ava-floating {
-            width: 170px;
-            height: 170px;
-            /* contain + padding позволяют увидеть рисунок целиком */
-            object-fit: contain; 
-            padding: 12px;
+            /* МЫ СДЕЛАЛИ ЕЁ КРУПНОЙ! */
+            width: 220px; 
+            height: 220px;
+            
+            /* object-fit: cover, чтобы персонаж заполнял весь круг красиво */
+            object-fit: cover; 
             border-radius: 50%;
             border: 4px solid var(--brown-outline);
             background: white;
             box-shadow: 8px 8px 0px var(--soft-pink);
             cursor: none !important;
-            transition: 0.5s ease;
+            transition: 0.4s ease;
+            animation: avaFloat 5s infinite ease-in-out;
         }
 
         .ava-container:hover .ava-floating {
-            transform: scale(1.08);
+            transform: scale(1.05) rotate(3deg);
             box-shadow: 12px 12px 0px var(--strong-pink);
         }
 
         @keyframes avaFloat {
-            0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-15px) rotate(3deg); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* ПОДПИСЬ */
+        /* РОЛИ И КНОПКИ */
         .hero-subtitle {
             font-family: 'Quicksand', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 50px;
-            margin-top: 10px;
+            margin-bottom: 40px;
             color: var(--mauve-text);
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            opacity: 0.9;
         }
 
-        .hero-subtitle span { display: flex; align-items: center; }
-        .hero-subtitle span::after {
-            content: "•";
-            margin-left: 15px;
-            color: var(--strong-pink);
-        }
-        .hero-subtitle span:last-child::after { content: ""; }
-
-        /* КНОПКИ */
-        .cta-container { display: flex; gap: 25px; }
+        .cta-container { display: flex; gap: 20px; }
 
         .enter-btn {
             text-decoration: none;
             color: var(--brown-outline);
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
-            font-size: 1.2rem;
-            padding: 18px 50px;
+            padding: 15px 40px;
             border: 3px solid var(--brown-outline);
             border-radius: 50px;
             background: white;
-            box-shadow: 8px 8px 0px var(--soft-pink);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 6px 6px 0px var(--soft-pink);
+            transition: 0.3s;
             cursor: none !important;
         }
 
         .enter-btn:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 12px 12px 0px var(--strong-pink);
-            background: var(--bg-cream);
+            transform: translate(-2px, -2px);
+            box-shadow: 10px 10px 0px var(--strong-pink);
         }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; overflow-y: auto; }
-            .enter-btn, .logo-main, .ava-floating { cursor: pointer !important; }
-            .logo-main { max-width: 400px; }
-            .ava-floating { width: 120px; height: 120px; padding: 8px;}
-            .hero-subtitle { font-size: 0.8rem; gap: 10px; flex-wrap: wrap; justify-content: center; }
+            .logo-main { max-width: 350px; }
+            .ava-floating { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -191,13 +172,11 @@
         <img src="font.png" alt="Astagme Logo" class="logo-main">
         
         <div class="ava-container">
-            <img src="ava.png?v=3" alt="Astagme Avatar" class="ava-floating">
+            <img src="ava.png?v=5" alt="Astagme IMVU Avatar" class="ava-floating">
         </div>
 
         <div class="hero-subtitle">
-            <span>Illustrator</span>
-            <span>UI/UX Designer</span>
-            <span>Web Developer</span>
+            Illustrator • UI/UX Designer • Web Developer
         </div>
 
         <div class="cta-container">
@@ -235,13 +214,10 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
-        const refresh = () => {
-            document.querySelectorAll('.enter-btn, .logo-main, .ava-floating, a').forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-            });
-        };
-        refresh();
+        document.querySelectorAll('.enter-btn, .logo-main, .ava-floating').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
 
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
