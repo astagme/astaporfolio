@@ -14,7 +14,7 @@
             --brown-outline: #63414C;
         }
 
-        /* --- ПЛАВНОСТЬ ЗАГРУЗКИ --- */
+        /* --- ПЛАВНОСТЬ И БАЗА --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
@@ -26,12 +26,12 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* На главной уберем скролл для чистоты */
+            overflow: hidden;
         }
 
         body.fade-in { opacity: 1; }
 
-        /* --- ЕДИНЫЙ КУРСОР --- */
+        /* --- ЕДИНЫЙ КУРСОР И ИСКРЫ (тот же код) --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -44,7 +44,7 @@
             z-index: 1000000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             display: none;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s, width 0.2s, height 0.2s;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
         }
 
         .cursor-active {
@@ -52,7 +52,6 @@
             background: var(--soft-pink) !important;
         }
 
-        /* --- ИСКОРКИ --- */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
@@ -71,36 +70,55 @@
             align-items: center;
             text-align: center;
             padding: 20px;
+            position: relative;
         }
 
+        /* КРУПНЫЙ ЛОГОТИП ASTAGME */
         .logo-main {
-            max-width: 350px;
+            max-width: 600px; /* Сделали реально большим! */
+            width: 80%; /* И адаптивным */
             height: auto;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 10px 15px rgba(244, 194, 215, 0.4));
-            transition: 0.5s ease;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 15px 25px rgba(244, 194, 215, 0.5));
+            transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: none !important;
         }
 
         .logo-main:hover {
             transform: scale(1.05) rotate(2deg);
-            filter: drop-shadow(0 15px 25px rgba(244, 194, 215, 0.8));
+            filter: drop-shadow(0 20px 40px rgba(244, 194, 215, 0.9));
+        }
+
+        /* ПАРЯЩАЯ АВАТАРКА (ava.png) */
+        .ava-floating {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--brown-outline);
+            box-shadow: 5px 5px 0px var(--soft-pink);
+            margin-bottom: 20px;
+            animation: avaFloat 6s infinite ease-in-out;
+            cursor: none !important;
+        }
+
+        @keyframes avaFloat {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
         h1 {
             font-family: 'Quicksand', sans-serif;
-            font-size: 1.5rem;
-            letter-spacing: 5px;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 40px;
-            opacity: 0.7;
+            margin-bottom: 50px;
+            margin-top: 0;
+            opacity: 0.8;
         }
 
-        /* --- КНОПКИ ВХОДА --- */
-        .cta-container {
-            display: flex;
-            gap: 20px;
-        }
+        /* --- КНОПКИ --- */
+        .cta-container { display: flex; gap: 25px; }
 
         .enter-btn {
             text-decoration: none;
@@ -108,7 +126,7 @@
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
             font-size: 1.2rem;
-            padding: 15px 40px;
+            padding: 18px 50px;
             border: 3px solid var(--brown-outline);
             border-radius: 50px;
             background: white;
@@ -123,39 +141,25 @@
             background: var(--bg-cream);
         }
 
-        /* --- АНИМИРОВАННЫЙ ДЕКОР --- */
-        .floating-shape {
-            position: absolute;
-            background: var(--soft-pink);
-            opacity: 0.3;
-            border-radius: 50%;
-            filter: blur(40px);
-            z-index: -1;
-            animation: float 10s infinite alternate ease-in-out;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; overflow-y: auto; }
-            .enter-btn, .logo-main { cursor: pointer !important; }
+            .enter-btn, .logo-main, .ava-floating { cursor: pointer !important; }
+            .logo-main { max-width: 350px; }
+            .ava-floating { width: 60px; height: 60px; }
+            h1 { font-size: 1rem; letter-spacing: 2px; }
         }
     </style>
 </head>
 <body>
-
-    <div class="floating-shape" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
-    <div class="floating-shape" style="width: 250px; height: 250px; bottom: -50px; right: -50px; background: #F4C2D7;"></div>
 
     <div id="custom-cursor"></div>
 
     <main class="hero">
         <img src="font.png" alt="Astagme Logo" class="logo-main">
         
+        <img src="ava.png" alt="Astagme Avatar" class="ava-floating">
+
         <h1>Digital Artist & Designer</h1>
 
         <div class="cta-container">
@@ -165,10 +169,8 @@
     </main>
 
     <script>
-        // Плавное появление
         window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
 
-        // Курсор и искры
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -195,16 +197,14 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
-        // Реакция на кнопки и лого
         const refresh = () => {
-            document.querySelectorAll('.enter-btn, .logo-main, a').forEach(el => {
+            document.querySelectorAll('.enter-btn, .logo-main, .ava-floating, a').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
             });
         };
         refresh();
 
-        // Переход между страницами
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && this.href.includes('.html')) {
