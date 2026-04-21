@@ -223,5 +223,65 @@
             });
         });
     </script>
+    <script>
+    // 1. Анимация появления при загрузке
+    window.addEventListener('load', () => { 
+        document.body.classList.add('fade-in'); 
+    });
+
+    // 2. ИСПРАВЛЕНИЕ ДЛЯ КНОПКИ "НАЗАД"
+    // Это событие срабатывает, когда страница достается из кэша (back/forward cache)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            document.body.style.opacity = '1';
+            document.body.classList.add('fade-in');
+        }
+    });
+
+    // 3. ЛОГИКА КУРСОРA И ПЫЛИ (оставляем как была)
+    const cursor = document.getElementById('custom-cursor');
+    window.addEventListener('mousemove', (e) => {
+        cursor.style.display = 'block';
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        createSparkle(e.clientX, e.clientY);
+    });
+
+    function createSparkle(x, y) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        document.body.appendChild(sparkle);
+        const size = Math.random() * 8 + 2;
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+        sparkle.style.left = `${x}px`;
+        sparkle.style.top = `${y}px`;
+        const destX = x + (Math.random() - 0.5) * 80;
+        const destY = y + (Math.random() - 0.5) * 80;
+        sparkle.animate([
+            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+            { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+        ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
+        setTimeout(() => sparkle.remove(), 1000);
+    }
+
+    document.querySelectorAll('.nav-btn, .category-card, a').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+    });
+
+    // 4. ПЛАВНЫЙ УХОД СО СТРАНИЦЫ
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Проверяем, что ссылка ведет на внутреннюю страницу .html
+            if (this.hostname === window.location.hostname && this.getAttribute('href').includes('.html')) {
+                e.preventDefault();
+                const target = this.href;
+                document.body.style.opacity = '0';
+                setTimeout(() => { window.location.href = target; }, 500);
+            }
+        });
+    });
+</script>
 </body>
 </html>
