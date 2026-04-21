@@ -1,42 +1,252 @@
-<style>
-    /* Обновленные стили для карточки */
-    .about-card {
-        background: #FFF5F8; /* НОВОЕ: Нежно-розовый вместо желтоватого */
-        border-radius: 40px;
-        padding: 40px;
-        display: flex;
-        gap: 40px;
-        max-width: 1000px;
-        width: 100%;
-        box-shadow: 0 20px 50px var(--glow); 
-        border: 2px solid white; /* Добавили белый кант для чистоты */
-        align-items: center;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAGME | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #A67081;
+            --bg-cream: #FDFBF7;
+            --star-yellow: #FFD700;
+            --brown-outline: #63414C; /* Тот самый коричневый контур */
+            --glow: rgba(255, 219, 234, 0.8);
+        }
 
-    /* Дополнительный стиль для новых тегов */
-    .tag {
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid var(--soft-pink);
-        color: var(--mauve-text);
-        font-weight: 500;
-    }
-</style>
+        /* 1. ПОДКЛЮЧАЕМ ТВОЙ ШРИФТ */
+        @font-face {
+            font-family: 'Porkys';
+            src: url('PORKYS_.TTF');
+        }
 
-<section class="about-section">
-    <div class="about-card">
-        <img src="photo.jpg" alt="Asta" class="about-img"> 
-        <div class="about-content">
-            <h2>Behind the Work ✨</h2>
-            <p>
-                Hello, I'm Asta! I'm a graphic designer and **Web Developer** who genuinely loves bringing ideas to life. 
-                I don't just create beautiful visuals — I build functional, high-quality websites using clean code to make your brand stand out in the digital world.
-            </p>
-            
-            <div class="tags-container">
-                <div class="tag">🎨 Figma, Illustrator & Photoshop</div>
-                <div class="tag">💻 Web Development (HTML/CSS/JS)</div> <div class="tag">💡 i love creative ideas and try something new</div>
-                <div class="tag">🗓️ 3-week turnaround</div>
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Comfortaa', cursive;
+            margin: 0;
+            cursor: none; 
+            min-height: 200vh;
+            overflow-x: hidden;
+            color: var(--mauve-text);
+        }
+
+        /* --- ОБНОВЛЕННЫЙ КУРСОР --- */
+        #custom-cursor {
+            position: fixed;
+            width: 28px;
+            height: 28px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%;
+            transform: rotate(-45deg) translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s linear, width 0.2s;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+        }
+
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
+            width: 8px; height: 8px;
+            background: var(--soft-pink);
+            border-radius: 50%;
+            top: 6px; left: 6px;
+        }
+
+        #custom-cursor.active {
+            transform: rotate(-45deg) scale(1.4);
+            background: var(--soft-pink);
+        }
+
+        /* --- ФОН СО ЗВЕЗДАМИ --- */
+        .star-field {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background: var(--star-yellow);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0.4;
+        }
+        @keyframes twinkle {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+        }
+
+        /* --- ВЕРХНЯЯ ЧАСТЬ (HEADER) --- */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .pfp-png { width: 320px; filter: drop-shadow(0 15px 30px var(--glow)); }
+        .logo-text { width: 70%; max-width: 800px; filter: drop-shadow(0 20px 40px var(--glow)); }
+
+        nav { margin-top: 40px; display: flex; gap: 20px; }
+        .nav-btn {
+            text-decoration: none;
+            color: var(--mauve-text);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid var(--strong-pink);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
+        .nav-btn:hover { background: var(--soft-pink); color: white; transform: translateY(-3px); }
+
+        /* --- РОЗОВОЕ ОКОШКО С ТВОИМ ШРИФТОМ --- */
+        .about-section {
+            display: flex;
+            justify-content: center;
+            padding: 80px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .about-card {
+            background: #FFF5F8; /* Нежно-розовый внутри */
+            border-radius: 40px;
+            padding: 45px;
+            display: flex;
+            gap: 45px;
+            max-width: 1050px;
+            width: 100%;
+            box-shadow: 0 20px 60px var(--glow);
+            border: 3px solid white; /* Белый контур для свежести */
+            align-items: center;
+        }
+
+        .about-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 35px;
+            object-fit: cover;
+            filter: drop-shadow(0 10px 25px var(--glow));
+        }
+
+        .about-content { flex: 1; }
+
+        .about-content h2 {
+            font-family: 'Porkys', sans-serif; /* ПРИМЕНИЛИ ШРИФТ */
+            font-size: 2.8rem;
+            margin: 0 0 15px 0;
+            color: #5D3D48;
+            letter-spacing: 1px;
+        }
+
+        .about-content p {
+            font-family: 'Porkys', sans-serif; /* ПРИМЕНИЛИ ШРИФТ */
+            line-height: 1.4;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: #7A5361;
+        }
+
+        .tags-container { display: flex; flex-wrap: wrap; gap: 12px; }
+
+        .tag {
+            font-family: 'Porkys', sans-serif; /* ПРИМЕНИЛИ ШРИФТ */
+            background: white;
+            padding: 8px 18px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            color: var(--mauve-text);
+            border: 1px solid var(--soft-pink);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: 0.3s;
+        }
+
+        @media (max-width: 850px) {
+            .about-card { flex-direction: column; text-align: center; padding: 30px; }
+            .about-img { width: 220px; height: 220px; }
+            #custom-cursor { display: none; }
+            body { cursor: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div class="star-field"></div>
+
+    <header>
+        <div class="brand-container">
+            <img src="ava.png" alt="Asta" class="pfp-png">
+            <img src="font.png" alt="astagme" class="logo-text">
+        </div>
+        <nav>
+            <a href="index.html" class="nav-btn">home</a>
+            <a href="branding.html" class="nav-btn">branding</a>
+            <a href="art.html" class="nav-btn">art</a>
+            <a href="info.html" class="nav-btn">info</a>
+        </nav>
+    </header>
+
+    <section class="about-section">
+        <div class="about-card">
+            <img src="photo.jpg" alt="Asta" class="about-img"> 
+            <div class="about-content">
+                <h2>Behind the Work ✨</h2>
+                <p>
+                    Hello, I'm Asta! I'm a graphic designer and Web Developer who genuinely loves bringing ideas to life. 
+                    I don't just create beautiful visuals — I build functional, high-quality websites using clean code to make your brand stand out.
+                </p>
+                
+                <div class="tags-container">
+                    <div class="tag">🎨 Figma & Illustrator</div>
+                    <div class="tag">💻 Web Dev (HTML/CSS/JS)</div>
+                    <div class="tag">💡 creative ideas & new things</div>
+                    <div class="tag">🗓️ 3-week turnaround</div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <script>
+        // Движение курсора
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Эффект наведения
+        document.querySelectorAll('.nav-btn, .tag, .about-img').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        });
+
+        // Генерация звезд
+        const field = document.querySelector('.star-field');
+        for (let i = 0; i < 18; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 20 + 10 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            field.appendChild(star);
+        }
+    </script>
+</body>
+</html>
