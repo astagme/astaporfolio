@@ -11,7 +11,6 @@
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --glow: rgba(255, 219, 234, 0.8);
-            --card-white: #ffffff;
         }
 
         body {
@@ -25,45 +24,44 @@
             background: linear-gradient(135deg, #fdfbf7 0%, #fff5f8 100%);
         }
 
-        /* --- HEADER & NAV --- */
+        /* --- HEADER --- */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-15px); }
         }
 
         header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 80px 20px 40px;
-            animation: float 5s ease-in-out infinite;
-        }
-
-        .brand-signature {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .pfp-circle {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            z-index: 2;
-            border: 4px solid white;
-            box-shadow: 0 10px 25px var(--glow);
-            object-fit: cover;
+            justify-content: center;
+            min-height: 90vh; /* Занимает почти весь экран при загрузке */
+            padding: 40px 20px;
+            text-align: center;
         }
 
         .logo-text {
-            height: 80px; 
-            margin-left: -35px; /* Overlap */
-            z-index: 1;
-            filter: drop-shadow(0 8px 15px var(--glow));
+            width: 80%; /* Логотип на весь экран */
+            max-width: 900px; 
+            height: auto;
+            filter: drop-shadow(0 10px 20px var(--glow));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pfp-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid white;
+            box-shadow: 0 10px 25px var(--glow);
+            object-fit: cover;
+            margin-top: -20px; /* Немного заходит под логотип для объема */
+            z-index: 2;
+            background-color: white;
         }
 
         nav {
-            margin-top: 30px;
+            margin-top: 40px;
             background: rgba(255, 255, 255, 0.5);
             padding: 12px 35px;
             border-radius: 50px;
@@ -81,67 +79,48 @@
 
         nav a:hover { color: #ff9ec7; text-shadow: 0 0 8px var(--soft-pink); }
 
-        .hero-section { text-align: center; margin-top: 30px; color: var(--mauve-text); }
+        .hero-section h1 {
+            color: var(--mauve-text);
+            font-weight: 300;
+            font-size: 1.8rem;
+            margin-top: 40px;
+        }
 
-        /* --- GALLERY SECTION --- */
+        /* --- GALLERY --- */
         .section-container {
             width: 100%;
             max-width: 1100px;
-            padding: 60px 20px;
+            padding: 100px 20px;
             text-align: center;
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            gap: 40px;
+            margin-top: 50px;
         }
 
         .work-card {
-            background: var(--card-white);
-            border-radius: 35px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(166, 112, 129, 0.08);
-            transition: 0.3s;
-        }
-
-        .work-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px var(--glow); }
-
-        .card-img { height: 250px; background-size: cover; background-position: center; background-color: #fff0f5; }
-
-        /* --- ABOUT / TOOLS SECTION --- */
-        .about-box {
             background: white;
             border-radius: 40px;
-            padding: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(166, 112, 129, 0.08);
+            transition: 0.4s;
         }
 
-        .tool-tag {
-            background: #fff5f8;
-            padding: 10px 20px;
-            border-radius: 20px;
-            color: var(--mauve-text);
-            font-size: 0.9rem;
-            border: 1px solid var(--soft-pink);
-        }
+        .work-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px var(--glow); }
+
+        .card-img { height: 300px; background-size: cover; background-position: center; background-color: #fff0f5; }
 
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand-signature">
-            <img src="ava.png" alt="Asta" class="pfp-circle">
-            <img src="font.png" alt="astagme" class="logo-text">
-        </div>
+        <img src="images/font.png" alt="astagme" class="logo-text">
+        
+        <img src="images/ava.png" alt="Asta" class="pfp-circle">
 
         <nav>
             <a href="#">home</a>
@@ -151,33 +130,20 @@
         </nav>
 
         <div class="hero-section">
-            <h1>i create brands people fall in love with ✨</h1>
+            <h1>i create brands people fall in love with</h1>
         </div>
     </header>
 
     <section class="section-container">
-        <h2 style="color: var(--mauve-text);">my work</h2>
+        <h2 style="color: var(--mauve-text); font-size: 2.5rem;">my work</h2>
         <div class="grid-container">
             <div class="work-card">
-                <div class="card-img" style="background-image: url('work1.png');"></div>
-                <div style="padding: 20px; color: var(--mauve-text);"><h3>Logos & Branding</h3></div>
+                <div class="card-img" style="background-image: url('images/work1.png');"></div>
+                <div style="padding: 30px; color: var(--mauve-text);"><h3>Logos & Branding</h3></div>
             </div>
             <div class="work-card">
-                <div class="card-img" style="background-image: url('work2.png');"></div>
-                <div style="padding: 20px; color: var(--mauve-text);"><h3>Cartoony Art</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-container">
-        <h2 style="color: var(--mauve-text);">behind the work</h2>
-        <div class="about-box">
-            <p style="color: var(--mauve-text); max-width: 500px; line-height: 1.8;">
-                i’m a designer obsessed with every pixel. i believe great design should build trust and make people feel something.
-            </p>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-                <span class="tool-tag">✨ Figma, Illustrator & PS</span>
-                <span class="tool-tag">🚀 2-week turnaround</span>
+                <div class="card-img" style="background-image: url('images/work2.png');"></div>
+                <div style="padding: 30px; color: var(--mauve-text);"><h3>Cartoony Art</h3></div>
             </div>
         </div>
     </section>
