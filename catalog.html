@@ -3,218 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalog | ASTAGME</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <title>ASTAGME | Projects Navigator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --soft-pink: #FFDBEA;
             --strong-pink: #F4C2D7; 
-            --mauve-text: #A67081;
+            --mauve-text: #63414C;
             --bg-cream: #FDFBF7;
-            --brown-outline: #63414C;
         }
 
-        /* --- ПЛАВНОСТЬ ЗАГРУЗКИ --- */
         body {
             background-color: var(--bg-cream);
-            font-family: 'Comfortaa', cursive;
             margin: 0;
-            opacity: 0; 
-            transition: opacity 0.6s ease-out;
             cursor: none !important;
             color: var(--mauve-text);
+            font-family: 'Quicksand', sans-serif;
             min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
         }
 
-        body.fade-in { opacity: 1; }
-
-        /* --- ЕДИНЫЙ КУРСОР --- */
-        #custom-cursor {
-            position: fixed;
-            width: 25px;
-            height: 25px;
-            background: white;
-            border: 2px solid var(--brown-outline);
-            border-radius: 2px 50% 50% 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            pointer-events: none;
-            z-index: 1000000;
-            box-shadow: 2px 2px 0px var(--soft-pink);
-            display: none;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s, width 0.2s, height 0.2s;
-        }
-
-        .cursor-active {
-            transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
-            background: var(--soft-pink) !important;
-        }
-
-        /* --- ИСКОРКИ (ЗВЕЗДНАЯ ПЫЛЬ) --- */
-        .sparkle {
-            position: fixed;
-            background: var(--strong-pink);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 999999;
-            box-shadow: 0 0 10px var(--soft-pink);
-        }
+        /* --- ФОН И КУРСОР (ТВОЯ БАЗА) --- */
+        .bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7); background-size: 500% 500%; animation: gradientMove 20s ease infinite; }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        #stars-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+        #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); }
+        .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 9999; }
 
         /* --- НАВИГАЦИЯ --- */
-        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
-        .nav-btn {
-            text-decoration: none;
-            color: var(--mauve-text);
-            padding: 12px 30px;
-            border-radius: 50px;
-            border: 2px solid var(--strong-pink);
-            background: white;
-            transition: 0.3s;
-            cursor: none !important;
+        .nav-header { width: 100%; padding: 25px; box-sizing: border-box; }
+        .back-btn { text-decoration: none; color: var(--mauve-text); font-weight: 700; padding: 10px 20px; border: 2px solid var(--mauve-text); border-radius: 50px; background: white; box-shadow: 4px 4px 0px var(--soft-pink); transition: 0.3s; display: inline-block; cursor: none !important; }
+
+        /* --- МЕНЮ ТАБОВ --- */
+        .tabs-container {
+            display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; max-width: 900px;
         }
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
-
-        /* --- КАТАЛОГ --- */
-        .catalog-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px 40px 80px;
-            text-align: center;
+        .tab-btn {
+            padding: 10px 20px; border: 2px solid var(--mauve-text); border-radius: 15px;
+            background: white; font-family: 'Quicksand'; font-weight: 700; color: var(--mauve-text);
+            box-shadow: 4px 4px 0px var(--soft-pink); transition: 0.3s; cursor: none !important;
         }
+        .tab-btn.active { background: var(--soft-pink); transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--mauve-text); }
+        .tab-btn:hover:not(.active) { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--strong-pink); }
 
-        .catalog-title {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 3.5rem;
-            margin-bottom: 50px;
-            color: #5D3D48;
+        /* --- ВИТРИНА ПРОЕКТА --- */
+        .showcase { position: relative; width: 800px; height: 550px; display: flex; flex-direction: column; align-items: center; }
+        
+        .browser-frame {
+            width: 100%; height: 480px; background: white; border: 3px solid var(--mauve-text);
+            border-radius: 20px; box-shadow: 15px 15px 0px var(--soft-pink);
+            overflow: hidden; position: relative; z-index: 2;
         }
+        .browser-top { height: 35px; background: var(--soft-pink); border-bottom: 3px solid var(--mauve-text); display: flex; align-items: center; padding: 0 15px; gap: 8px; }
+        .b-dot { width: 10px; height: 10px; border: 2px solid var(--mauve-text); border-radius: 50%; background: white; }
 
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
+        .browser-content { width: 100%; height: calc(100% - 35px); position: relative; overflow: hidden; }
+        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; background-size: cover; background-position: center; }
+        .slide.active { opacity: 1; }
+
+        /* Парящий телефон */
+        .phone-overlay {
+            position: absolute; right: -70px; bottom: 20px;
+            width: 180px; height: 360px; background: white;
+            border: 3px solid var(--mauve-text); border-radius: 30px;
+            box-shadow: 8px 8px 0px var(--strong-pink);
+            z-index: 5; overflow: hidden;
+            animation: floaty 5s infinite ease-in-out;
+            transition: 0.5s;
         }
+        @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .phone-overlay img { width: 100%; height: 100%; object-fit: cover; }
 
-        .category-card {
-            background: white;
-            border: 3px solid var(--brown-outline);
-            border-radius: 40px;
-            padding: 50px 30px;
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 10px 10px 0px var(--soft-pink);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: none !important;
-        }
+        /* Управление внутри слайдера */
+        .slider-controls { display: flex; gap: 15px; margin-top: 25px; }
+        .arrow { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--mauve-text); background: white; box-shadow: 3px 3px 0px var(--soft-pink); cursor: none !important; font-size: 18px; transition: 0.2s; }
+        .arrow:hover { background: var(--soft-pink); transform: scale(1.1); }
 
-        .category-card:hover {
-            transform: translate(-5px, -5px);
-            box-shadow: 15px 15px 0px var(--strong-pink);
-            background: #FFF9FB;
-        }
+        /* Описание */
+        .project-info { text-align: center; margin-top: 20px; max-width: 600px; }
+        .project-desc { font-size: 1rem; line-height: 1.5; color: var(--mauve-text); opacity: 0.8; }
 
-        .category-icon { font-size: 60px; margin-bottom: 20px; transition: 0.3s; }
-        .category-card:hover .category-icon { transform: scale(1.2) rotate(5deg); }
-
-        .category-card h3 { 
-            font-family: 'Quicksand', sans-serif; 
-            font-size: 1.8rem; 
-            margin: 10px 0; 
-            color: #5D3D48; 
-        }
-
-        .category-card p { margin: 0; color: var(--mauve-text); opacity: 0.8; }
-
-        @media (max-width: 850px) {
-            #custom-cursor { display: none !important; }
-            body { cursor: auto !important; }
-            .nav-btn, .category-card { cursor: pointer !important; }
+        @media (max-width: 1000px) {
+            .showcase { width: 90%; }
+            .phone-overlay { display: none; }
         }
     </style>
 </head>
 <body>
 
     <div id="custom-cursor"></div>
+    <div class="bg-gradient"></div>
+    <canvas id="stars-canvas"></canvas>
 
-    <nav>
-        <a href="index.html" class="nav-btn">Home</a>
-        <a href="about.html" class="nav-btn">About Me</a>
+    <nav class="nav-header">
+        <a href="index.html" class="back-btn">← Home</a>
     </nav>
 
-    <main class="catalog-container">
-        <h1 class="catalog-title">Portfolio</h1>
-        <div class="catalog-grid">
-            <a href="logos.html" class="category-card">
-                <div class="category-icon">🎨</div>
-                <h3>Logos</h3>
-                <p>Branding & visual identity</p>
-            </a>
-            <a href="art.html" class="category-card">
-                <div class="category-icon">✨</div>
-                <h3>Illustrations</h3>
-                <p>Digital art & character design</p>
-            </a>
-            <a href="websites.html" class="category-card">
-                <div class="category-icon">💻</div>
-                <h3>Websites</h3>
-                <p>UI/UX & creative coding</p>
-            </a>
+    <div class="tabs-container" id="tabsMenu">
+        </div>
+
+    <main class="showcase">
+        <div class="browser-frame">
+            <div class="browser-top">
+                <div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div>
+            </div>
+            <div class="browser-content" id="browserContent">
+                </div>
+        </div>
+
+        <div class="phone-overlay">
+            <img src="" id="phoneImg">
+        </div>
+
+        <div class="slider-controls">
+            <button class="arrow" onclick="changeSubSlide(-1)">❮</button>
+            <button class="arrow" onclick="changeSubSlide(1)">❯</button>
+        </div>
+
+        <div class="project-info">
+            <h2 id="projTitle" style="font-family: 'Comfortaa'; margin-bottom: 10px;">Project Name</h2>
+            <p class="project-desc" id="projDesc">Small description of the project goes here...</p>
         </div>
     </main>
 
     <script>
-        // 1. Плавная загрузка
-        window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
+        // ДАННЫЕ ТВОИХ ПРОЕКТОВ (Сюда просто добавляй новые!)
+        const projects = [
+            {
+                id: 1,
+                name: "Beauty Shop",
+                desc: "E-commerce platform for organic cosmetics with soft pastel design.",
+                folder: "project1",
+                desktop: ["desktop_1.png", "desktop_2.png", "desktop_3.png"],
+                mobile: "mobile_main.jpg"
+            },
+            {
+                id: 2,
+                name: "Coffee House",
+                desc: "Landing page for a local cafe with integrated menu and booking system.",
+                folder: "project2",
+                desktop: ["desktop_1.png", "desktop_2.png", "desktop_3.png"],
+                mobile: "mobile_main.jpg"
+            },
+            {
+                id: 3,
+                name: "Art Studio",
+                desc: "Minimalist portfolio gallery for a digital illustrator.",
+                folder: "project3",
+                desktop: ["desktop_1.png", "desktop_2.png", "desktop_3.png"],
+                mobile: "mobile_main.jpg"
+            }
+        ];
 
-        // 2. Логика курсора
-        const cursor = document.getElementById('custom-cursor');
-        
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.display = 'block';
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            createSparkle(e.clientX, e.clientY);
-        });
+        let currentProjIndex = 0;
+        let currentSubSlide = 0;
 
-        // 3. Звездная пыль
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            document.body.appendChild(sparkle);
-            const size = Math.random() * 8 + 2;
-            sparkle.style.width = `${size}px`;
-            sparkle.style.height = `${size}px`;
-            sparkle.style.left = `${x}px`;
-            sparkle.style.top = `${y}px`;
-            const destX = x + (Math.random() - 0.5) * 80;
-            const destY = y + (Math.random() - 0.5) * 80;
-            sparkle.animate([
-                { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
-            ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
-            setTimeout(() => sparkle.remove(), 1000);
+        function init() {
+            renderTabs();
+            loadProject(0);
         }
 
-        // 4. Реакция на интерактивные элементы
-        const refresh = () => {
-            document.querySelectorAll('.nav-btn, .category-card, a').forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-            });
-        };
-        refresh();
+        function renderTabs() {
+            const menu = document.getElementById('tabsMenu');
+            menu.innerHTML = projects.map((p, index) => `
+                <button class="tab-btn ${index === 0 ? 'active' : ''}" onclick="loadProject(${index})">
+                    ${p.name}
+                </button>
+            `).join('');
+        }
 
-        // 5. Плавный переход между страницами
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
-                    e.preventDefault();
-                    document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = this.href; }, 500);
-                }
+        function loadProject(index) {
+            currentProjIndex = index;
+            currentSubSlide = 0;
+            const p = projects[index];
+
+            // Обновляем табы
+            document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
             });
+
+            // Обновляем текст
+            document.getElementById('projTitle').innerText = p.name;
+            document.getElementById('projDesc').innerText = p.desc;
+
+            // Обновляем монитор
+            const content = document.getElementById('browserContent');
+            content.innerHTML = p.desktop.map((img, i) => `
+                <div class="slide ${i === 0 ? 'active' : ''}" 
+                     style="background-image: url('${p.folder}/${img}')">
+                </div>
+            `).join('');
+
+            // Обновляем телефон
+            document.getElementById('phoneImg').src = `${p.folder}/${p.mobile}`;
+        }
+
+        function changeSubSlide(dir) {
+            const slides = document.querySelectorAll('.slide');
+            slides[currentSubSlide].classList.remove('active');
+            currentSubSlide = (currentSubSlide + dir + slides.length) % slides.length;
+            slides[currentSubSlide].classList.add('active');
+        }
+
+        // --- КУРСОР И ЗВЕЗДЫ (ТВОЙ КОД) ---
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            if (Math.random() > 0.7) {
+                const s = document.createElement('div');
+                s.className = 'sparkle'; document.body.appendChild(s);
+                const size = Math.random()*8+2;
+                s.style.width = size+'px'; s.style.height = size+'px';
+                s.style.left = e.clientX+'px'; s.style.top = e.clientY+'px';
+                s.animate([{opacity:1}, {opacity:0, transform:`translate(${(Math.random()-0.5)*80}px, ${(Math.random()-0.5)*80}px) scale(0)`}], 1000);
+                setTimeout(() => s.remove(), 1000);
+            }
         });
+
+        const c = document.getElementById('stars-canvas');
+        const ctx = c.getContext('2d');
+        let pts = [];
+        function res() { c.width = window.innerWidth; c.height = window.innerHeight; }
+        window.addEventListener('resize', res); res();
+        for(let i=0; i<80; i++) pts.push({x:Math.random()*c.width, y:Math.random()*c.height, s:Math.random()*1.5, o:Math.random(), sp:0.005});
+        function draw() {
+            ctx.clearRect(0,0,c.width,c.height);
+            pts.forEach(p => { p.o+=p.sp; if(p.o>1||p.o<0) p.sp=-p.sp; ctx.globalAlpha=p.o; ctx.fillStyle="white"; ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2); ctx.fill(); });
+            requestAnimationFrame(draw);
+        }
+        draw();
+        init();
     </script>
 </body>
 </html>
