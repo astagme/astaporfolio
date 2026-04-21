@@ -8,6 +8,7 @@
     <style>
         :root {
             --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; /* Для контура кнопок */
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --glow: rgba(255, 219, 234, 0.8);
@@ -20,13 +21,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 150vh; /* Сделали сайт длиннее */
+            min-height: 180vh; /* Еще длиннее для скролла */
             overflow-x: hidden;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-30px); }
+            50% { transform: translateY(-20px); }
         }
 
         header {
@@ -34,33 +35,41 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Первый экран полностью под бренд */
+            height: 100vh;
             width: 100%;
             text-align: center;
+            padding-top: 50px;
+        }
+
+        /* Контейнер для аватарки и логотипа в одну линию */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px; /* Расстояние между авой и текстом */
+            width: 90%;
+            max-width: 1200px;
+            animation: float 6s ease-in-out infinite;
         }
 
         .logo-text {
-            width: 95%; 
-            max-width: 1300px;
+            width: 65%; /* Уменьшили надпись */
+            max-width: 700px;
             height: auto;
-            filter: drop-shadow(0 20px 40px var(--glow));
-            animation: float 6s ease-in-out infinite;
-            z-index: 2;
+            filter: drop-shadow(0 15px 30px var(--glow));
         }
 
         .pfp-png {
-            width: 400px; /* Сделали ЕЩЕ крупнее */
+            width: 250px; /* Крупная, но соразмерная тексту */
             height: auto;
-            margin-top: -140px; /* Прижимаем к логотипу */
-            filter: drop-shadow(0 15px 30px var(--glow));
-            z-index: 1;
+            filter: drop-shadow(0 10px 20px var(--glow));
         }
 
-        /* --- КНОПКИ МЕНЮ --- */
+        /* --- КНОПКИ С РОЗОВЫМ КОНТУРОМ --- */
         nav {
-            margin-top: 60px;
+            margin-top: 80px;
             display: flex;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -68,46 +77,45 @@
         .nav-btn {
             text-decoration: none;
             color: var(--mauve-text);
-            background: rgba(255, 255, 255, 0.6);
-            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 18px 45px;
             border-radius: 50px;
             backdrop-filter: blur(10px);
-            border: 1px solid white;
+            /* Розовый контур */
+            border: 2px solid var(--strong-pink); 
             font-weight: 500;
             font-size: 1.4rem;
-            transition: 0.4s all ease;
-            box-shadow: 0 10px 20px rgba(166, 112, 129, 0.05);
+            transition: 0.4s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 15px rgba(244, 194, 215, 0.2);
         }
 
         .nav-btn:hover {
             background: var(--soft-pink);
             color: white;
-            transform: translateY(-5px);
+            transform: scale(1.1);
             box-shadow: 0 15px 30px var(--glow);
+            border-color: transparent;
         }
 
         .tagline {
             color: var(--mauve-text);
             font-size: 2.2rem;
-            margin-top: 80px;
+            margin-top: 100px;
             font-weight: 300;
             letter-spacing: 2px;
-            max-width: 800px;
+            opacity: 0.8;
         }
 
-        /* --- СЕКЦИЯ КОНТЕНТА (чтобы сайт был длинным) --- */
-        .content-section {
-            padding: 100px 20px;
-            text-align: center;
-            width: 100%;
-            max-width: 1200px;
-        }
+        .spacer { height: 800px; } /* Место для будущего контента */
+
     </style>
 </head>
 <body>
     <header>
-        <img src="font.png" alt="astagme" class="logo-text">
-        <img src="ava.png" alt="Asta" class="pfp-png">
+        <div class="brand-container">
+            <img src="ava.png" alt="Asta" class="pfp-png">
+            <img src="font.png" alt="astagme" class="logo-text">
+        </div>
         
         <nav>
             <a href="index.html" class="nav-btn">home</a>
@@ -119,8 +127,6 @@
         <h1 class="tagline">i create brands people fall in love with</h1>
     </header>
 
-    <section class="content-section">
-        <div style="height: 500px;"></div> 
-    </section>
+    <div class="spacer"></div>
 </body>
 </html>
