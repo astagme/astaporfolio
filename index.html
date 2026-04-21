@@ -26,8 +26,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            overflow: hidden; /* На главной не нужен скролл */
+            justify-content: center; /* Центрируем всё вертикально */
+            overflow: hidden; 
             color: var(--mauve-text);
         }
 
@@ -70,42 +70,40 @@
         }
         @keyframes twinkle { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.6; } }
 
-        /* --- ГЛАВНЫЙ БЛОК (HEADER) --- */
+        /* --- ОБНОВЛЕННЫЙ ГЛАВНЫЙ БЛОК --- */
         .main-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-        }
-
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            animation: float 6s ease-in-out infinite;
+            gap: 10px; /* Уменьшили gap для более плотной компоновки */
+            animation: float 6s ease-in-out infinite; /* Анимация теперь на всём блоке */
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
 
+        /* ЛОГОТИП НАВЕРХУ - ДЕЛАЕМ КРУПНЫМ */
+        .logo-text { 
+            width: 650px; /* Был 450px, стал 650px - намного крупнее! */
+            max-width: 90vw; /* Адаптация под экраны */
+            filter: drop-shadow(0 20px 40px var(--glow)); 
+            margin-bottom: -15px; /* Немного "наплывает" на аватарку */
+        }
+
+        /* АВАТАРКА ПОД ЛОГО - ДЕЛАЕМ ЧУТЬ МЕНЬШЕ */
         .pfp-png { 
-            width: 300px; 
+            width: 180px; /* Была 300px, стала 180px - более аккуратная */
             filter: drop-shadow(0 15px 30px var(--glow)); 
         }
 
-        .logo-text { 
-            width: 450px; 
-            filter: drop-shadow(0 20px 40px var(--glow)); 
-        }
-
-        /* Текст-подпись под логотипом */
+        /* Текст-подпись */
         .subtitle {
             font-family: 'Quicksand', sans-serif;
             font-size: 1.1rem;
-            margin-top: -10px;
-            margin-bottom: 20px;
+            margin-top: 5px;
+            margin-bottom: 25px;
             opacity: 0.8;
             letter-spacing: 1px;
         }
@@ -139,9 +137,8 @@
 
         /* Адаптив для телефонов */
         @media (max-width: 850px) {
-            .brand-container { flex-direction: column; text-align: center; }
-            .logo-text { width: 80%; }
-            .pfp-png { width: 200px; }
+            .logo-text { width: 90%; }
+            .pfp-png { width: 140px; }
             nav { flex-direction: column; gap: 15px; }
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
@@ -155,10 +152,9 @@
     <div class="star-field"></div>
 
     <div class="main-content">
-        <div class="brand-container">
-            <img src="ava.png" alt="Asta" class="pfp-png">
-            <img src="font.png" alt="astagme" class="logo-text">
-        </div>
+        <img src="font.png" alt="astagme" class="logo-text">
+        
+        <img src="ava.png" alt="Asta" class="pfp-png">
         
         <p class="subtitle">Digital Artist & Web Developer</p>
 
@@ -171,22 +167,18 @@
 
     <script>
         const cursor = document.getElementById('custom-cursor');
-        
-        // Движение курсора
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Наведение на кнопки
         const buttons = document.querySelectorAll('.nav-btn');
         buttons.forEach(btn => {
             btn.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             btn.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // Генерация звезд
         const field = document.querySelector('.star-field');
         for (let i = 0; i < 18; i++) {
             const star = document.createElement('div');
