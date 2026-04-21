@@ -14,7 +14,7 @@
             --brown-outline: #63414C;
         }
 
-        /* --- ПЛАВНОСТЬ ЗАГРУЗКИ --- */
+        /* --- БАЗА И КУРСОР --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
@@ -28,7 +28,6 @@
 
         body.fade-in { opacity: 1; }
 
-        /* --- ЕДИНЫЙ КУРСОР --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -41,7 +40,7 @@
             z-index: 1000000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             display: none;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s, width 0.2s, height 0.2s;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
         }
 
         .cursor-active {
@@ -49,7 +48,6 @@
             background: var(--soft-pink) !important;
         }
 
-        /* --- ИСКОРКИ (ЗВЕЗДНАЯ ПЫЛЬ) --- */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
@@ -73,7 +71,7 @@
         }
         .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
 
-        /* --- ГАЛЕРЕЯ --- */
+        /* --- ГАЛЕРЕЯ АРТОВ (РОВНАЯ СЕТКА) --- */
         .art-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -83,46 +81,61 @@
 
         h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
 
+        /* ИСПОЛЬЗУЕМ CSS GRID ДЛЯ ИДЕАЛЬНОГО ВЫРАВНИВАНИЯ */
         .art-grid {
-            column-count: 3;
-            column-gap: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Ровно 3 колонки */
+            gap: 40px;
+            align-items: stretch; /* Все карточки одной высоты */
         }
 
-        @media (max-width: 1000px) { .art-grid { column-count: 2; } }
-        @media (max-width: 600px) { .art-grid { column-count: 1; } }
+        @media (max-width: 1000px) { .art-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) { .art-grid { grid-template-columns: 1fr; } }
 
         .art-item {
-            break-inside: avoid;
-            margin-bottom: 30px;
-            position: relative;
+            display: flex;
+            flex-direction: column;
             transition: 0.5s ease;
             cursor: none !important;
         }
 
+        /* Рамка теперь имеет фиксированную пропорцию */
         .art-wrapper {
             background: white;
             border: 3px solid var(--brown-outline); 
             border-radius: 30px;
-            padding: 12px;
-            overflow: hidden;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            display: inline-block;
+            box-shadow: 8px 8px 0px rgba(244, 194, 215, 0.3);
+            
+            /* Делаем рамки квадратными по умолчанию для ровности */
+            aspect-ratio: 1 / 1; 
+            overflow: hidden;
             width: 100%;
             box-sizing: border-box;
-            box-shadow: 8px 8px 0px rgba(244, 194, 215, 0.3); 
         }
 
         .art-item img {
-            width: 100%;
-            border-radius: 20px;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 18px;
+            object-fit: contain; /* Картинка масштабируется внутри рамки, не обрезаясь */
             display: block;
             transition: 0.5s ease;
         }
 
-        .art-item:hover { transform: translateY(-10px); }
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
+        .art-item:hover {
+            transform: translateY(-10px);
+        }
+
         .art-item:hover .art-wrapper {
-            box-shadow: 12px 12px 0px var(--soft-pink);
             border-color: var(--mauve-text);
+            box-shadow: 12px 12px 0px var(--soft-pink);
+            background: #FFF9FB;
         }
 
         .art-info {
@@ -132,6 +145,7 @@
             font-size: 1rem;
             color: #5D3D48;
             opacity: 0.8;
+            flex-grow: 1; /* Чтобы подписи не ломали сетку */
         }
 
         @media (max-width: 850px) {
@@ -156,28 +170,26 @@
         <div class="art-grid">
             <div class="art-item">
                 <div class="art-wrapper"><img src="illustrations/art1.jpg" alt="Art 1"></div>
-                <div class="art-info">Artwork 01</div>
+                <div class="art-info">Artwork Title 01</div>
             </div>
             <div class="art-item">
                 <div class="art-wrapper"><img src="illustrations/art2.jpg" alt="Art 2"></div>
-                <div class="art-info">Artwork 02</div>
+                <div class="art-info">Artwork Title 02</div>
             </div>
             <div class="art-item">
                 <div class="art-wrapper"><img src="illustrations/art3.jpg" alt="Art 3"></div>
-                <div class="art-info">Artwork 03</div>
+                <div class="art-info">Artwork Title 03</div>
             </div>
             <div class="art-item">
                 <div class="art-wrapper"><img src="illustrations/art4.jpg" alt="Art 4"></div>
-                <div class="art-info">Artwork 04</div>
+                <div class="art-info">Artwork Title 04</div>
             </div>
         </div>
     </main>
 
     <script>
-        // 1. Плавная загрузка
         window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
 
-        // 2. Логика курсора и искр
         const cursor = document.getElementById('custom-cursor');
         
         window.addEventListener('mousemove', (e) => {
@@ -187,7 +199,6 @@
             createSparkle(e.clientX, e.clientY);
         });
 
-        // 3. Звездная пыль
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -206,7 +217,6 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
-        // 4. Реакция на ссылки
         const refresh = () => {
             document.querySelectorAll('.nav-btn, .art-item, a').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
@@ -215,7 +225,6 @@
         };
         refresh();
 
-        // 5. Переход между страницами
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && this.href.includes('.html')) {
