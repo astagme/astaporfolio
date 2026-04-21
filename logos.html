@@ -12,24 +12,21 @@
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --brown-outline: #63414C;
-            --glow: rgba(255, 219, 234, 0.8);
         }
 
-        /* --- ПЛАВНОСТЬ --- */
+        /* --- ПЛАВНОСТЬ И БАЗА --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
             opacity: 0; 
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease-out;
             cursor: none !important;
             color: var(--mauve-text);
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        body.fade-in {
-            opacity: 1;
-        }
+        body.fade-in { opacity: 1; }
 
         /* --- КУРСОР --- */
         #custom-cursor {
@@ -44,30 +41,18 @@
             z-index: 10000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             display: none;
-        }
-
-        #custom-cursor::after {
-            content: '';
-            position: absolute;
-            width: 7px; height: 7px;
-            background: var(--soft-pink);
-            border-radius: 50%;
-            top: 5px; left: 5px;
+            transition: width 0.2s, height 0.2s, background 0.2s;
         }
 
         .cursor-active {
-            transform: rotate(-45deg) translate(-50%, -50%) scale(1.5) !important;
+            width: 40px !important;
+            height: 40px !important;
             background: var(--soft-pink) !important;
+            opacity: 0.7;
         }
 
         /* --- НАВИГАЦИЯ --- */
-        nav {
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
+        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
         .nav-btn {
             text-decoration: none;
             color: var(--mauve-text);
@@ -75,19 +60,12 @@
             border-radius: 50px;
             border: 2px solid var(--strong-pink);
             background: white;
-            font-weight: 500;
             transition: 0.3s;
             cursor: none !important;
         }
+        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
 
-        .nav-btn:hover {
-            background: var(--soft-pink);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px var(--glow);
-        }
-
-        /* --- ГАЛЕРЕЯ --- */
+        /* --- СЕТКА ГАЛЕРЕИ --- */
         .gallery-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -95,80 +73,67 @@
             text-align: center;
         }
 
-        h1 {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 3rem;
-            margin-bottom: 50px;
-            color: #5D3D48;
-        }
+        h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
 
         .logo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 80px; /* Большой отступ для "воздуха" */
+            align-items: center;
         }
 
         .logo-card {
-            background: white;
-            border-radius: 40px;
-            padding: 20px;
-            border: 2px solid var(--soft-pink);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: none !important;
-            text-align: left;
         }
 
-        .logo-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px var(--glow);
-            border-color: var(--strong-pink);
-        }
-
-        .card-image-wrapper {
-            background: #FFF9FB;
-            border-radius: 25px;
-            padding: 40px;
+        /* Обертка для самого PNG */
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 280px;
-            margin-bottom: 20px;
-            overflow: hidden;
+            transition: 0.5s ease;
         }
 
         .logo-card img {
-            max-width: 100%;
+            max-width: 85%;
             height: auto;
             object-fit: contain;
-            filter: drop-shadow(0 10px 15px rgba(244, 194, 215, 0.4));
-            transition: 0.4s;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.05)); /* Легкая базовая тень */
+            transition: 0.5s ease;
+        }
+
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
+        .logo-card:hover .img-wrapper {
+            transform: translateY(-20px); /* Взлет */
         }
 
         .logo-card:hover img {
-            transform: scale(1.08);
+            filter: drop-shadow(0 20px 30px rgba(244, 194, 215, 0.8)); /* Розовое свечение */
+            transform: scale(1.05);
         }
 
-        .logo-title {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-            font-size: 1.3rem;
-            color: #5D3D48;
-            margin-left: 10px;
+        .logo-info {
+            margin-top: 20px;
+            transition: 0.3s;
+            opacity: 0.8;
         }
 
-        .logo-category {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-left: 10px;
-            margin-top: 5px;
-            letter-spacing: 1px;
-        }
+        .logo-card:hover .logo-info { opacity: 1; transform: translateY(-5px); }
+
+        .logo-title { font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 1.4rem; color: #5D3D48; }
+        .logo-category { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; color: var(--strong-pink); }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
-            .nav-btn, .logo-card { cursor: pointer !important; }
-            h1 { font-size: 2.2rem; }
+            .logo-card, .nav-btn { cursor: pointer !important; }
         }
     </style>
 </head>
@@ -178,52 +143,49 @@
 
     <nav>
         <a href="index.html" class="nav-btn">Home</a>
-        <a href="catalog.html" class="nav-btn">← Back to Catalog</a>
+        <a href="catalog.html" class="nav-btn">← Catalog</a>
     </nav>
 
     <main class="gallery-container">
-        <h1>Logo Design ✨</h1>
+        <h1>Selected Logos ✨</h1>
         
         <div class="logo-grid">
             <div class="logo-card">
-                <div class="card-image-wrapper">
+                <div class="img-wrapper">
                     <img src="font.png" alt="Astagme Logo">
                 </div>
-                <div class="logo-title">Astagme Identity</div>
-                <div class="logo-category">Personal Branding</div>
+                <div class="logo-info">
+                    <div class="logo-title">Astagme Identity</div>
+                    <div class="logo-category">Bubblegum Style</div>
+                </div>
             </div>
 
             <div class="logo-card">
-                <div class="card-image-wrapper">
-                    <img src="https://via.placeholder.com/400x400/FFDBEA/A67081?text=Your+Work" alt="Project">
+                <div class="img-wrapper">
+                    <img src="metal-logo.png" alt="Metal Logo" onerror="this.src='https://via.placeholder.com/400x400/FDFBF7/F4C2D7?text=Metal+Logo+Coming+Soon'">
                 </div>
-                <div class="logo-title">Project Name</div>
-                <div class="logo-category">Logo Design</div>
+                <div class="logo-info">
+                    <div class="logo-title">Chrome Vision</div>
+                    <div class="logo-category">Heavy Metal Style</div>
+                </div>
             </div>
-        </div>
+            
+            </div>
     </main>
 
     <script>
-        // 1. ПЛАВНОСТЬ ПРИ ЗАГРУЗКЕ
-        window.addEventListener('load', () => {
-            document.body.classList.add('fade-in');
-        });
+        window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
 
-        // ПЛАВНЫЙ ПЕРЕХОД ПО ССЫЛКАМ
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && this.href.includes('.html')) {
                     e.preventDefault();
-                    const target = this.href;
                     document.body.style.opacity = '0';
-                    setTimeout(() => {
-                        window.location.href = target;
-                    }, 500);
+                    setTimeout(() => { window.location.href = this.href; }, 500);
                 }
             });
         });
 
-        // 2. КУРСОР
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -231,8 +193,7 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        const interactables = document.querySelectorAll('.nav-btn, .logo-card');
-        interactables.forEach(el => {
+        document.querySelectorAll('.nav-btn, .logo-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
