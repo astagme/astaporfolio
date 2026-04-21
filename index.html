@@ -8,7 +8,7 @@
     <style>
         :root {
             --soft-pink: #FFDBEA;
-            --strong-pink: #F4C2D7; /* Для контура кнопок */
+            --strong-pink: #F4C2D7; 
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --glow: rgba(255, 219, 234, 0.8);
@@ -21,7 +21,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 180vh; /* Еще длиннее для скролла */
+            min-height: 180vh;
             overflow-x: hidden;
         }
 
@@ -37,39 +37,40 @@
             justify-content: center;
             height: 100vh;
             width: 100%;
-            text-align: center;
-            padding-top: 50px;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        /* Контейнер для аватарки и логотипа в одну линию */
+        /* Контейнер для аватарки и логотипа */
         .brand-container {
             display: flex;
+            flex-direction: row; 
             align-items: center;
             justify-content: center;
-            gap: 30px; /* Расстояние между авой и текстом */
-            width: 90%;
-            max-width: 1200px;
+            gap: 15px; /* Уменьшили расстояние, чтобы они были ближе */
+            width: 100%;
+            max-width: 1100px;
             animation: float 6s ease-in-out infinite;
         }
 
-        .logo-text {
-            width: 65%; /* Уменьшили надпись */
-            max-width: 700px;
-            height: auto;
-            filter: drop-shadow(0 15px 30px var(--glow));
-        }
-
         .pfp-png {
-            width: 250px; /* Крупная, но соразмерная тексту */
+            width: 250px;
             height: auto;
             filter: drop-shadow(0 10px 20px var(--glow));
         }
 
-        /* --- КНОПКИ С РОЗОВЫМ КОНТУРОМ --- */
+        .logo-text {
+            width: 60%;
+            max-width: 600px;
+            height: auto;
+            filter: drop-shadow(0 15px 30px var(--glow));
+        }
+
+        /* Кнопки с розовым контуром */
         nav {
-            margin-top: 80px;
+            margin-top: 60px;
             display: flex;
-            gap: 25px;
+            gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -77,37 +78,31 @@
         .nav-btn {
             text-decoration: none;
             color: var(--mauve-text);
-            background: rgba(255, 255, 255, 0.5);
-            padding: 18px 45px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 15px 35px;
             border-radius: 50px;
-            backdrop-filter: blur(10px);
-            /* Розовый контур */
             border: 2px solid var(--strong-pink); 
             font-weight: 500;
-            font-size: 1.4rem;
-            transition: 0.4s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 15px rgba(244, 194, 215, 0.2);
+            font-size: 1.2rem;
+            transition: 0.3s all ease;
         }
 
         .nav-btn:hover {
             background: var(--soft-pink);
             color: white;
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px var(--glow);
-            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px var(--glow);
         }
 
-        .tagline {
-            color: var(--mauve-text);
-            font-size: 2.2rem;
-            margin-top: 100px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            opacity: 0.8;
+        /* Адаптация под мобильные */
+        @media (max-width: 768px) {
+            .brand-container { 
+                flex-direction: column; 
+                gap: 5px; 
+            }
+            .pfp-png { width: 180px; }
+            .logo-text { width: 90%; }
         }
-
-        .spacer { height: 800px; } /* Место для будущего контента */
-
     </style>
 </head>
 <body>
@@ -123,10 +118,7 @@
             <a href="art.html" class="nav-btn">art</a>
             <a href="info.html" class="nav-btn">info</a>
         </nav>
-
-        <h1 class="tagline">i create brands people fall in love with</h1>
     </header>
-
-    <div class="spacer"></div>
+    <div style="height: 1000px;"></div>
 </body>
 </html>
