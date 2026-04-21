@@ -26,7 +26,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Центрируем всё вертикально */
+            justify-content: center;
             overflow: hidden; 
             color: var(--mauve-text);
         }
@@ -70,13 +70,14 @@
         }
         @keyframes twinkle { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.6; } }
 
-        /* --- ОБНОВЛЕННЫЙ ГЛАВНЫЙ БЛОК --- */
+        /* --- ГЛАВНЫЙ БЛОК --- */
         .main-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px; /* Уменьшили gap для более плотной компоновки */
-            animation: float 6s ease-in-out infinite; /* Анимация теперь на всём блоке */
+            /* Увеличили gap для более свободной композиции */
+            gap: 20px; 
+            animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
@@ -84,17 +85,16 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* ЛОГОТИП НАВЕРХУ - ДЕЛАЕМ КРУПНЫМ */
         .logo-text { 
-            width: 650px; /* Был 450px, стал 650px - намного крупнее! */
-            max-width: 90vw; /* Адаптация под экраны */
+            width: 650px; 
+            max-width: 90vw;
             filter: drop-shadow(0 20px 40px var(--glow)); 
-            margin-bottom: -15px; /* Немного "наплывает" на аватарку */
+            margin-bottom: -10px; /* Немного сблизим с аватаркой */
         }
 
-        /* АВАТАРКА ПОД ЛОГО - ДЕЛАЕМ ЧУТЬ МЕНЬШЕ */
+        /* ИСПРАВЛЕНО: Аватарка стала больше */
         .pfp-png { 
-            width: 180px; /* Была 300px, стала 180px - более аккуратная */
+            width: 250px; /* Была 180px, стала 250px */
             filter: drop-shadow(0 15px 30px var(--glow)); 
         }
 
@@ -102,8 +102,8 @@
         .subtitle {
             font-family: 'Quicksand', sans-serif;
             font-size: 1.1rem;
-            margin-top: 5px;
-            margin-bottom: 25px;
+            margin-top: -5px; /* Уменьшили верхний отступ */
+            margin-bottom: 30px; /* Увеличили нижний отступ */
             opacity: 0.8;
             letter-spacing: 1px;
         }
@@ -138,7 +138,7 @@
         /* Адаптив для телефонов */
         @media (max-width: 850px) {
             .logo-text { width: 90%; }
-            .pfp-png { width: 140px; }
+            .pfp-png { width: 180px; } /* Чуть меньше на телефонах */
             nav { flex-direction: column; gap: 15px; }
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
@@ -153,7 +153,6 @@
 
     <div class="main-content">
         <img src="font.png" alt="astagme" class="logo-text">
-        
         <img src="ava.png" alt="Asta" class="pfp-png">
         
         <p class="subtitle">Digital Artist & Web Developer</p>
