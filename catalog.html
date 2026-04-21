@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAGME | Catalog</title>
+    <title>Catalog | ASTAGME</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --soft-pink: #FFDBEA;
             --strong-pink: #F4C2D7; 
-            --mauve-text: #63414C;
+            --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            --brown-outline: #63414C;
         }
 
         body {
@@ -23,67 +19,72 @@
             margin: 0;
             cursor: none !important;
             color: var(--mauve-text);
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Comfortaa', cursive;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
-            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0; 
+            transition: opacity 0.6s ease-out;
         }
 
-        #stars-canvas { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: -1; pointer-events: none; opacity: 0.5; 
+        body.fade-in { opacity: 1; }
+
+        /* --- КУРСОР ИЗ ABOUT.HTML --- */
+        #custom-cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            pointer-events: none;
+            z-index: 1000000;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            display: none;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
         }
+
+        .cursor-active {
+            transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
+            background: var(--soft-pink) !important;
+        }
+
+        /* --- ЗВЕЗДНАЯ ПЫЛЬ ИЗ ABOUT.HTML --- */
+        .sparkle {
+            position: fixed;
+            background: var(--strong-pink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            box-shadow: 0 0 10px var(--soft-pink);
+        }
+
+        /* --- НАВИГАЦИЯ --- */
+        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; width: 100%; box-sizing: border-box; }
         
-        /* КУРСОР ИЗ ABOUT.HTML */
-        #custom-cursor { 
-            position: fixed; width: 25px; height: 25px; background: white; 
-            border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; 
-            transform: translate(-50%, -50%) rotate(-45deg); 
-            pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); 
+        .nav-btn {
+            text-decoration: none;
+            color: var(--mauve-text);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid var(--strong-pink);
+            background: white;
+            transition: 0.3s;
+            cursor: none !important;
+            font-family: 'Comfortaa', cursive;
         }
-        
-        /* ЧАСТИЦЫ ПЫЛИ */
-        .sparkle { 
-            position: fixed; 
-            border-radius: 50%; 
-            pointer-events: none; 
-            z-index: 9999; 
-        }
+        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
 
-        /* --- ЦЕНТРАЛЬНАЯ НАВИГАЦИЯ --- */
-        .nav-header { 
-            width: 100%; 
-            padding: 30px; 
-            display: flex; 
-            justify-content: center; 
-            gap: 20px; 
-            z-index: 100;
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 3rem;
+            color: #5D3D48;
+            margin-bottom: 50px;
+            text-align: center;
         }
-        
-        .nav-btn { 
-            text-decoration: none; 
-            color: var(--mauve-text); 
-            font-weight: 700; 
-            font-size: 0.95rem;
-            padding: 12px 28px; 
-            border: 2px solid var(--mauve-text); 
-            border-radius: 50px; 
-            background: white; 
-            box-shadow: 4px 4px 0px var(--soft-pink); 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: none !important; 
-        }
-
-        .nav-btn:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 7px 7px 0px var(--strong-pink);
-            background-color: white;
-        }
-
-        h1 { font-family: 'Comfortaa'; font-size: 2.8rem; margin: 20px 0 60px; text-align: center; }
 
         /* --- СЕТКА КАТАЛОГА --- */
         .catalog-grid {
@@ -94,18 +95,18 @@
             max-width: 1100px;
             padding: 20px;
             box-sizing: border-box;
-            margin-bottom: 50px;
+            margin-bottom: 100px;
         }
 
         .category-card {
             text-decoration: none;
             color: var(--mauve-text);
             background: white;
-            border: 3px solid var(--mauve-text);
+            border: 3px solid var(--brown-outline);
             border-radius: 25px;
             padding: 50px 25px;
             text-align: center;
-            box-shadow: 12px 12px 0px var(--soft-pink);
+            box-shadow: 10px 10px 0px var(--soft-pink);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
             display: flex;
@@ -115,27 +116,28 @@
         }
 
         .category-card:hover {
-            transform: translate(6px, 6px);
-            box-shadow: 4px 4px 0px var(--mauve-text);
+            transform: translate(5px, 5px);
+            box-shadow: 3px 3px 0px var(--brown-outline);
             background-color: var(--soft-pink);
         }
 
-        .card-icon { font-size: 3.8rem; margin-bottom: 5px; }
-        .card-title { font-family: 'Comfortaa'; font-size: 1.7rem; font-weight: 700; }
-        .card-desc { font-size: 1rem; opacity: 0.8; line-height: 1.5; }
+        .card-icon { font-size: 3.8rem; }
+        .card-title { font-family: 'Comfortaa'; font-size: 1.7rem; font-weight: 700; color: #5D3D48; }
+        .card-desc { font-family: 'Quicksand'; font-size: 1rem; line-height: 1.5; }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .nav-btn { padding: 10px 20px; font-size: 0.85rem; }
+        @media (max-width: 850px) {
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .nav-btn, .category-card { cursor: pointer !important; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
     <div id="custom-cursor"></div>
-    <canvas id="stars-canvas"></canvas>
 
-    <nav class="nav-header">
+    <nav>
         <a href="index.html" class="nav-btn">Home</a>
         <a href="about.html" class="nav-btn">About me</a>
     </nav>
@@ -163,75 +165,58 @@
     </main>
 
     <script>
-        // --- ПОЛНАЯ КОПИЯ ЛОГИКИ КУРСОРA ИЗ ABOUT.HTML ---
+        // Анимация появления страницы
+        window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
+
         const cursor = document.getElementById('custom-cursor');
         
+        // Логика движения курсора и пыли
         window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            
-            // Создание пыли (sparkles)
-            if (Math.random() > 0.6) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                document.body.appendChild(sparkle);
-                
-                const size = Math.random() * 8 + 2;
-                sparkle.style.width = size + 'px';
-                sparkle.style.height = size + 'px';
-                
-                // Цвет частиц: белый или розовый (как в оригинале)
-                sparkle.style.background = Math.random() > 0.5 ? 'white' : 'var(--strong-pink)';
-                
-                sparkle.style.left = e.clientX + 'px';
-                sparkle.style.top = e.clientY + 'px';
-                
-                // Анимация разлета
-                const destinationX = (Math.random() - 0.5) * 100;
-                const destinationY = (Math.random() - 0.5) * 100;
-                
-                sparkle.animate([
-                    { opacity: 1, transform: 'translate(0, 0) scale(1)' },
-                    { opacity: 0, transform: `translate(${destinationX}px, ${destinationY}px) scale(0)` }
-                ], {
-                    duration: 1000,
-                    easing: 'cubic-bezier(0, .9, .57, 1)'
-                });
-                
-                setTimeout(() => sparkle.remove(), 1000);
-            }
+            createSparkle(e.clientX, e.clientY);
         });
 
-        // --- ЛОГИКА ЗВЕЗДНОГО ФОНА ---
-        const sCanvas = document.getElementById('stars-canvas');
-        const sCtx = sCanvas.getContext('2d');
-        let particles = [];
-        function resize() { sCanvas.width = window.innerWidth; sCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize);
-        resize();
-        for (let i = 0; i < 60; i++) {
-            particles.push({
-                x: Math.random() * sCanvas.width,
-                y: Math.random() * sCanvas.height,
-                size: Math.random() * 1.2,
-                opacity: Math.random(),
-                speed: 0.003 + Math.random() * 0.002
-            });
+        // Функция создания "той самой" пыли
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            document.body.appendChild(sparkle);
+            
+            const size = Math.random() * 8 + 2;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            
+            const destX = x + (Math.random() - 0.5) * 80;
+            const destY = y + (Math.random() - 0.5) * 80;
+            
+            sparkle.animate([
+                { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+            ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
+            
+            setTimeout(() => sparkle.remove(), 1000);
         }
-        function animate() {
-            sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
-            particles.forEach(p => {
-                p.opacity += p.speed;
-                if (p.opacity > 0.8 || p.opacity < 0) p.speed = -p.speed;
-                sCtx.globalAlpha = p.opacity;
-                sCtx.fillStyle = "white";
-                sCtx.beginPath();
-                sCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                sCtx.fill();
+
+        // Эффект увеличения на кнопках и карточках
+        document.querySelectorAll('.nav-btn, .category-card, a').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
+
+        // Плавный переход между страницами
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
+                    e.preventDefault();
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = this.href; }, 500);
+                }
             });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        });
     </script>
 </body>
 </html>
