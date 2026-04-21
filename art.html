@@ -5,161 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Illustrations | ASTAGME</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --soft-pink: #FFDBEA;
-            --strong-pink: #F4C2D7; 
-            --mauve-text: #A67081;
-            --bg-cream: #FDFBF7;
-            --brown-outline: #63414C;
-        }
+   <style>
+    :root {
+        --soft-pink: #FFDBEA;
+        --strong-pink: #F4C2D7; 
+        --mauve-text: #A67081;
+        --bg-cream: #FDFBF7;
+        --brown-outline: #63414C;
+        /* Тень для рамок */
+        --card-shadow: rgba(244, 194, 215, 0.4); 
+    }
 
-        /* --- ПЛАВНОСТЬ --- */
-        body {
-            background-color: var(--bg-cream);
-            font-family: 'Comfortaa', cursive;
-            margin: 0;
-            opacity: 0; 
-            transition: opacity 0.6s ease-out;
-            cursor: none !important;
-            color: var(--mauve-text);
-        }
+    /* --- БАЗА И ПЛАВНОСТЬ --- */
+    body {
+        background-color: var(--bg-cream);
+        font-family: 'Comfortaa', cursive;
+        margin: 0;
+        opacity: 0; 
+        transition: opacity 0.6s ease-out;
+        cursor: none !important;
+        color: var(--mauve-text);
+        min-height: 100vh;
+    }
 
-        body.fade-in { opacity: 1; }
+    body.fade-in { opacity: 1; }
 
-        /* --- КАСТОМНЫЙ КУРСОР --- */
-        #custom-cursor {
-            position: fixed;
-            width: 25px;
-            height: 25px;
-            background: white;
-            border: 2px solid var(--brown-outline);
-            border-radius: 2px 50% 50% 50%;
-            transform: rotate(-45deg) translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: 2px 2px 0px var(--soft-pink);
-            display: none;
-        }
+    /* --- ЕДИНЫЙ КУРСОР --- */
+    #custom-cursor {
+        position: fixed;
+        width: 25px;
+        height: 25px;
+        background: white;
+        border: 2px solid var(--brown-outline);
+        border-radius: 2px 50% 50% 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        pointer-events: none;
+        z-index: 1000000;
+        box-shadow: 2px 2px 0px var(--soft-pink);
+        display: none;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
+    }
 
-        .cursor-active {
-            transform: rotate(-45deg) translate(-50%, -50%) scale(1.6) !important;
-            background: var(--soft-pink) !important;
-            opacity: 0.8;
-        }
+    .cursor-active {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
+        background: var(--soft-pink) !important;
+    }
 
-        /* --- НАВИГАЦИЯ --- */
-        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
-        .nav-btn {
-            text-decoration: none;
-            color: var(--mauve-text);
-            padding: 12px 30px;
-            border-radius: 50px;
-            border: 2px solid var(--strong-pink);
-            background: white;
-            transition: 0.3s;
-            cursor: none !important;
-        }
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
+    /* --- НАВИГАЦИЯ --- */
+    nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
+    .nav-btn {
+        text-decoration: none;
+        color: var(--mauve-text);
+        padding: 12px 30px;
+        border-radius: 50px;
+        border: 2px solid var(--strong-pink);
+        background: white;
+        transition: 0.3s;
+        cursor: none !important;
+    }
+    .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
 
-        /* --- ГАЛЕРЕЯ АРТОВ --- */
-        .art-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 20px 100px;
-            text-align: center;
-        }
+    /* --- ГАЛЕРЕЯ АРТОВ --- */
+    .art-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px 100px;
+        text-align: center;
+    }
 
-        h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
+    h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
 
-        /* Сетка в стиле Pinterest */
-       /* Сетка: теперь 3 колонки для изящности */
-        .art-grid {
-            column-count: 3;
-            column-gap: 30px; /* Чуть меньше зазор между колонками */
-        }
+    /* Сетка в стиле Pinterest */
+    .art-grid {
+        column-count: 3; /* Сделали 3 колонки, как ты просила */
+        column-gap: 30px;
+    }
 
-        /* На планшетах оставляем 2 колонки */
-        @media (max-width: 1000px) { 
-            .art-grid { column-count: 2; } 
-        }
+    @media (max-width: 1000px) { .art-grid { column-count: 2; } }
+    @media (max-width: 600px) { .art-grid { column-count: 1; } }
 
-        /* На телефонах — 1 колонку */
-        @media (max-width: 600px) { 
-            .art-grid { column-count: 1; } 
-        }
+    .art-item {
+        break-inside: avoid;
+        margin-bottom: 30px;
+        position: relative;
+        transition: 0.5s ease;
+        cursor: none !important;
+    }
 
-        .art-wrapper {
-            border-radius: 25px; /* Чуть менее скругленные углы для компактности */
-            overflow: hidden;
-            background: white;
-            padding: 10px; /* Уменьшили рамку вокруг арта */
-            border: 2px solid transparent;
-            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    /* --- ОБНОВЛЕННАЯ СТИЛИЗОВАННАЯ РАМКА --- */
+    .art-wrapper {
+        background: white;
+        /* Четкий коричневый контур */
+        border: 3px solid var(--brown-outline); 
+        border-radius: 30px;
+        padding: 15px; /* Умеренный отступ, чтобы арт "дышал" */
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        /* Мягкая розовая тень */
+        box-shadow: 10px 10px 0px rgba(244, 194, 215, 0.3); 
+    }
 
-        .art-info {
-            margin-top: 10px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-            font-size: 1rem; /* Уменьшили размер шрифта подписи */
-            color: #5D3D48;
-            opacity: 0.7; /* Сделали подпись чуть деликатнее */
-        }
+    .art-item img {
+        width: 100%;
+        border-radius: 20px; /* Скруглили углы самой картинки внутри рамки */
+        display: block;
+        transition: 0.5s ease;
+    }
 
-        .art-item {
-            break-inside: avoid;
-            margin-bottom: 40px;
-            position: relative;
-            transition: 0.5s ease;
-        }
+    /* ЭФФЕКТ ПРИ НАВЕДЕНИИ (Левитация с акцентом) */
+    .art-item:hover {
+        transform: translateY(-10px);
+    }
 
-        .art-wrapper {
-            border-radius: 30px;
-            overflow: hidden;
-            background: white;
-            padding: 15px;
-            border: 2px solid transparent;
-            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    .art-item:hover .art-wrapper {
+        border-color: var(--mauve-text); /* Контур становится чуть темнее */
+        background: #FFF9FB; /* Фон рамки чуть розовеет */
+        box-shadow: 15px 15px 0px var(--soft-pink); /* Тень становится ярче */
+    }
 
-        .art-item img {
-            width: 100%;
-            border-radius: 20px;
-            display: block;
-            transition: 0.5s ease;
-        }
+    .art-info {
+        margin-top: 15px;
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #5D3D48;
+        opacity: 0.8;
+    }
 
-        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
-        .art-item:hover {
-            transform: translateY(-15px);
-        }
-
-        .art-item:hover .art-wrapper {
-            border-color: var(--soft-pink);
-            box-shadow: 0 30px 60px rgba(244, 194, 215, 0.4);
-        }
-
-        .art-info {
-            margin-top: 15px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #5D3D48;
-        }
-
-        @media (max-width: 850px) {
-            #custom-cursor { display: none !important; }
-            body { cursor: auto !important; }
-            .art-item, .nav-btn { cursor: pointer !important; }
-        }
-    </style>
+    /* Корректировка для сенсорных экранов */
+    @media (max-width: 850px) {
+        #custom-cursor { display: none !important; }
+        body { cursor: auto !important; }
+        .art-item, .nav-btn { cursor: pointer !important; }
+    }
+</style>
 </head>
 <body>
 
