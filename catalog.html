@@ -10,17 +10,16 @@
             --soft-pink: #FFDBEA;
             --strong-pink: #F4C2D7; 
             --mauve-text: #63414C;
-            --bg-cream: #FDFBF7; /* Тот самый кремовый из about.html */
+            --bg-cream: #FDFBF7;
         }
 
-        /* Плавное проявление контента без мерцания фона */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         body {
-            background-color: var(--bg-cream); /* Статичный фон */
+            background-color: var(--bg-cream);
             margin: 0;
             cursor: none !important;
             color: var(--mauve-text);
@@ -33,13 +32,11 @@
             animation: fadeIn 0.8s ease-out forwards;
         }
 
-        /* ЗВЕЗДЫ (оставляем едва заметными для атмосферы) */
         #stars-canvas { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: -1; pointer-events: none; opacity: 0.5; 
         }
         
-        /* КУРСОР ТРЕУГОЛЬНИК (из index.html) */
         #custom-cursor { 
             position: fixed; width: 25px; height: 25px; background: white; 
             border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; 
@@ -49,19 +46,38 @@
         
         .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 9999; }
 
-        /* --- НАВИГАЦИЯ --- */
-        .nav-header { width: 100%; padding: 30px; box-sizing: border-box; display: flex; justify-content: flex-start; }
-        
-        .back-btn { 
-            text-decoration: none; color: var(--mauve-text); font-weight: 700; 
-            padding: 10px 25px; border: 2px solid var(--mauve-text); border-radius: 50px; 
-            background: white; box-shadow: 4px 4px 0px var(--soft-pink); 
-            transition: 0.3s; cursor: none !important; 
+        /* --- ЦЕНТРАЛЬНАЯ НАВИГАЦИЯ --- */
+        .nav-header { 
+            width: 100%; 
+            padding: 30px; 
+            display: flex; 
+            justify-content: center; /* Кнопки в центре */
+            gap: 20px; 
+            z-index: 100;
         }
-        .back-btn:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--strong-pink); }
+        
+        .nav-btn { 
+            text-decoration: none; 
+            color: var(--mauve-text); 
+            font-weight: 700; 
+            font-size: 0.95rem;
+            padding: 12px 28px; 
+            border: 2px solid var(--mauve-text); 
+            border-radius: 50px; 
+            background: white; 
+            box-shadow: 4px 4px 0px var(--soft-pink); 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: none !important; 
+        }
+
+        .nav-btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 7px 7px 0px var(--strong-pink);
+            background-color: white;
+        }
 
         /* --- ЗАГОЛОВОК --- */
-        h1 { font-family: 'Comfortaa'; font-size: 2.5rem; margin: 20px 0 50px; text-align: center; }
+        h1 { font-family: 'Comfortaa'; font-size: 2.8rem; margin: 20px 0 60px; text-align: center; }
 
         /* --- СЕТКА КАТАЛОГА --- */
         .catalog-grid {
@@ -72,6 +88,7 @@
             max-width: 1100px;
             padding: 20px;
             box-sizing: border-box;
+            margin-bottom: 50px;
         }
 
         .category-card {
@@ -80,9 +97,9 @@
             background: white;
             border: 3px solid var(--mauve-text);
             border-radius: 25px;
-            padding: 45px 25px;
+            padding: 50px 25px;
             text-align: center;
-            box-shadow: 10px 10px 0px var(--soft-pink);
+            box-shadow: 12px 12px 0px var(--soft-pink);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
             display: flex;
@@ -92,18 +109,18 @@
         }
 
         .category-card:hover {
-            transform: translate(5px, 5px);
-            box-shadow: 3px 3px 0px var(--mauve-text);
+            transform: translate(6px, 6px);
+            box-shadow: 4px 4px 0px var(--mauve-text);
             background-color: var(--soft-pink);
         }
 
-        .card-icon { font-size: 3.5rem; }
-        .card-title { font-family: 'Comfortaa'; font-size: 1.6rem; font-weight: 700; }
-        .card-desc { font-size: 0.95rem; opacity: 0.8; line-height: 1.5; }
+        .card-icon { font-size: 3.8rem; margin-bottom: 5px; }
+        .card-title { font-family: 'Comfortaa'; font-size: 1.7rem; font-weight: 700; }
+        .card-desc { font-size: 1rem; opacity: 0.8; line-height: 1.5; }
 
         @media (max-width: 600px) {
-            .catalog-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
+            h1 { font-size: 2rem; }
+            .nav-btn { padding: 10px 20px; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -113,7 +130,8 @@
     <canvas id="stars-canvas"></canvas>
 
     <nav class="nav-header">
-        <a href="index.html" class="back-btn">← Home</a>
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="about.html" class="nav-btn">About me</a>
     </nav>
 
     <h1>Creative Portfolio</h1>
@@ -139,7 +157,6 @@
     </main>
 
     <script>
-        // КУРСОР И ПЫЛЬ (из index.html)
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -162,18 +179,12 @@
             }
         });
 
-        // ЗВЕЗДЫ (из index.html)
         const sCanvas = document.getElementById('stars-canvas');
         const sCtx = sCanvas.getContext('2d');
         let particles = [];
-
-        function resize() {
-            sCanvas.width = window.innerWidth;
-            sCanvas.height = window.innerHeight;
-        }
+        function resize() { sCanvas.width = window.innerWidth; sCanvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
-
         for (let i = 0; i < 60; i++) {
             particles.push({
                 x: Math.random() * sCanvas.width,
@@ -183,7 +194,6 @@
                 speed: 0.003 + Math.random() * 0.002
             });
         }
-
         function animate() {
             sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
             particles.forEach(p => {
