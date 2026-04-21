@@ -24,17 +24,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Начальная прозрачность */
+            /* Начальная прозрачность для анимации */
             opacity: 0; 
             transition: opacity 0.5s ease-in-out;
         }
 
-        /* Класс для плавного появления */
+        /* Класс для проявления */
         body.fade-in { 
             opacity: 1 !important; 
         }
 
-        /* --- КУРСОР И ПЫЛЬ --- */
+        /* --- МАГИЧЕСКИЙ КУРСОР --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -63,7 +63,7 @@
             z-index: 999999;
         }
 
-        /* --- НАВИГАЦИЯ --- */
+        /* --- НАВИГАЦИЯ (ПУХЛЫЕ КНОПКИ) --- */
         .nav-header { 
             width: 100%; 
             padding: 40px; 
@@ -90,7 +90,7 @@
             box-shadow: 7px 7px 0px var(--strong-pink);
         }
 
-        /* --- КОНТЕНТ --- */
+        /* --- ОСНОВНОЙ БЛОК --- */
         .about-container {
             max-width: 900px;
             padding: 40px 20px;
@@ -109,6 +109,7 @@
             box-shadow: 15px 15px 0px var(--soft-pink);
             margin-bottom: 40px;
             background: white;
+            transition: transform 0.3s ease;
         }
 
         .profile-pic-container img {
@@ -125,18 +126,18 @@
         }
 
         .description {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 1.8;
             max-width: 600px;
             margin-bottom: 40px;
         }
 
-        /* --- КНОПКИ СОЦСЕТЕЙ --- */
+        /* --- КНОПКИ СОЦСЕТЕЙ + ОТЗЫВЫ --- */
         .social-links {
             display: flex;
             gap: 20px;
-            flex-wrap: wrap;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .social-btn {
@@ -184,7 +185,7 @@
 
     <main class="about-container">
         <div class="profile-pic-container">
-            <img src="photo.jpg" alt="Astagme">
+            <img src="photo.jpg" alt="My photo">
         </div>
 
         <h1>Hi, I'm Astagme! ✨</h1>
@@ -199,23 +200,21 @@
             <a href="#" class="social-btn">📸</a>
             <a href="#" class="social-btn">✉️</a>
             
-            <a href="reviews.html" class="social-btn" title="My Reviews">
+            <a href="reviews.html" class="social-btn" title="Reviews">
                 <img src="icons/reviews.png" alt="Reviews">
             </a>
         </div>
     </main>
 
     <script>
-        // 1. ФУНКЦИЯ ПРОЯВЛЕНИЯ СТРАНИЦЫ
+        // 1. ПРОЯВЛЕНИЕ СТРАНИЦЫ (Защита от белого экрана)
         function showPage() {
             document.body.classList.add('fade-in');
         }
 
-        // Запуск при любых сценариях
         window.addEventListener('load', showPage);
         window.addEventListener('pageshow', showPage);
-        // Запасной вариант, если события выше не сработали
-        setTimeout(showPage, 50);
+        setTimeout(showPage, 100); // Принудительное включение через 0.1 сек
 
         // 2. КУРСОР И ПЫЛЬ
         const cursor = document.getElementById('custom-cursor');
@@ -224,34 +223,46 @@
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
             
+            // Создание пылинок
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
-            const size = Math.random() * 8 + 2;
+            const size = Math.random() * 6 + 2;
             sparkle.style.width = size + 'px';
             sparkle.style.height = size + 'px';
             sparkle.style.left = e.clientX + 'px';
             sparkle.style.top = e.clientY + 'px';
             
-            const destX = e.clientX + (Math.random() - 0.5) * 80;
-            const destY = e.clientY + (Math.random() - 0.5) * 80;
+            const destX = e.clientX + (Math.random() - 0.5) * 60;
+            const destY = e.clientY + (Math.random() - 0.5) * 60;
             
             sparkle.animate([
                 { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
                 { transform: `translate(${destX - e.clientX}px, ${destY - e.clientY}px) scale(0)`, opacity: 0 }
-            ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
-            setTimeout(() => sparkle.remove(), 1000);
+            ], { duration: 800, easing: 'ease-out' });
+            
+            setTimeout(() => sparkle.remove(), 800);
         });
 
-        // 3. ЭФФЕКТЫ ПРИ НАВЕДЕНИИ
-        document.querySelectorAll('a, .profile-pic-container, .social-btn').forEach(el => {
+        // 3. АКТИВАЦИЯ КУРСОРA НА ЭЛЕМЕНТАХ
+        document.querySelectorAll('a, .profile-pic-container').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // 4. ПЕРЕХОДЫ МЕЖДУ СТРАНИЦАМИ
+        // 4. ПЛАВНЫЙ УХОД ПРИ ПЕРЕХОДЕ
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                
-                // Переходим только если это реальная ссылка на .
+                if (href && href !== '#' && href.includes('.html')) {
+                    e.preventDefault();
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { 
+                        window.location.href = href; 
+                    }, 400);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
