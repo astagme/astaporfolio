@@ -219,5 +219,27 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
     </script>
+    const cursor = document.getElementById('custom-cursor');
+
+// Движение курсора
+window.addEventListener('mousemove', (e) => {
+    cursor.style.display = 'block';
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+});
+
+// Функция для добавления реакции на элементы
+// Она ищет кнопки, карточки логотипов, арты и вообще все ссылки <a>
+const refreshInteractables = () => {
+    const interactables = document.querySelectorAll('.nav-btn, .category-card, .logo-card, .art-item, a');
+    
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+    });
+};
+
+// Запускаем проверку элементов при загрузке
+refreshInteractables();
 </body>
 </html>
