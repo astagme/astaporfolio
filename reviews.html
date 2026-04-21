@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews | ASTAGME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #A67081;
+            --bg-cream: #FDFBF7;
+            --brown-outline: #63414C;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            margin: 0;
+            cursor: none !important;
+            color: var(--mauve-text);
+            font-family: 'Comfortaa', cursive;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            opacity: 0; 
+            transition: opacity 0.6s ease-out;
+        }
+
+        body.fade-in { opacity: 1 !important; }
+
+        /* --- КУРСОР И ПЫЛЬ --- */
+        #custom-cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            pointer-events: none;
+            z-index: 1000000;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            display: none;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
+        }
+
+        .cursor-active {
+            transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
+            background: var(--soft-pink) !important;
+        }
+
+        .sparkle {
+            position: fixed;
+            background: var(--strong-pink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            box-shadow: 0 0 10px var(--soft-pink);
+        }
+
+        /* --- НАВИГАЦИЯ --- */
+        .nav-header { 
+            width: 100%; 
+            padding: 40px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            z-index: 100;
+        }
+        
+        .nav-btn { 
+            text-decoration: none; 
+            color: var(--brown-outline); 
+            font-weight: 700; 
+            padding: 12px 28px; 
+            border: 2px solid var(--brown-outline); 
+            border-radius: 50px; 
+            background: white; 
+            box-shadow: 4px 4px 0px var(--soft-pink); 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: none !important; 
+        }
+
+        .nav-btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 7px 7px 0px var(--strong-pink);
+        }
+
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 3rem;
+            color: var(--brown-outline);
+            margin: 10px 0 10px;
+        }
+
+        .subtitle {
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* --- СЕТКА ОТЗЫВОВ --- */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1100px;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 100px;
+        }
+
+        .review-card {
+            background: white;
+            border: 3px solid var(--brown-outline);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 10px 10px 0px var(--soft-pink);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .review-card:hover {
+            transform: scale(1.02) rotate(1deg);
+            box-shadow: 15px 15px 0px var(--soft-pink);
+        }
+
+        .review-text {
+            font-family: 'Quicksand';
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--brown-outline);
+            background: var(--soft-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: var(--brown-outline);
+        }
+
+        .author-project {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .stars {
+            color: #FFB8D1;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 850px) {
