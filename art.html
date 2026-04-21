@@ -73,12 +73,42 @@
         h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
 
         /* Сетка в стиле Pinterest */
+       /* Сетка: теперь 3 колонки для изящности */
         .art-grid {
-            column-count: 2;
-            column-gap: 40px;
+            column-count: 3;
+            column-gap: 30px; /* Чуть меньше зазор между колонками */
         }
 
-        @media (max-width: 800px) { .art-grid { column-count: 1; } }
+        /* На планшетах оставляем 2 колонки */
+        @media (max-width: 1000px) { 
+            .art-grid { column-count: 2; } 
+        }
+
+        /* На телефонах — 1 колонку */
+        @media (max-width: 600px) { 
+            .art-grid { column-count: 1; } 
+        }
+
+        .art-wrapper {
+            border-radius: 25px; /* Чуть менее скругленные углы для компактности */
+            overflow: hidden;
+            background: white;
+            padding: 10px; /* Уменьшили рамку вокруг арта */
+            border: 2px solid transparent;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .art-info {
+            margin-top: 10px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1rem; /* Уменьшили размер шрифта подписи */
+            color: #5D3D48;
+            opacity: 0.7; /* Сделали подпись чуть деликатнее */
+        }
 
         .art-item {
             break-inside: avoid;
