@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAGME | Websites</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #63414C;
+            --bg-cream: #FDFBF7;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            margin: 0;
+            cursor: none !important;
+            color: var(--mauve-text);
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* --- ФОН И КУРСОР --- */
+        .bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7); background-size: 500% 500%; animation: gradientMove 20s ease infinite; }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        #stars-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
+        #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); }
+        .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 9999; box-shadow: 0 0 6px var(--soft-pink); }
+
+        /* --- КНОПКА НАЗАД --- */
+        .nav-header { width: 100%; padding: 30px; }
+        .back-link { text-decoration: none; color: var(--mauve-text); font-weight: 700; padding: 10px 20px; border: 2px solid var(--mauve-text); border-radius: 50px; background: white; box-shadow: 4px 4px 0px var(--soft-pink); transition: 0.3s; }
+        .back-link:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--strong-pink); }
+
+        /* --- ПРЕЗЕНТАЦИЯ САЙТА --- */
+        .project-section {
+            flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; max-width: 1200px; padding: 40px 20px;
+        }
+
+        .slider-wrapper {
+            display: flex; align-items: center; justify-content: center; gap: 30px; position: relative; width: 100%;
+        }
+
+        /* Браузерная рамка */
+        .browser-frame {
+            width: 800px; height: 480px; background: white; border: 3px solid var(--mauve-text);
+            border-radius: 20px; box-shadow: 15px 15px 0px var(--soft-pink);
+            overflow: hidden; position: relative; z-index: 2;
+        }
+
+        .browser-top {
+            height: 35px; background: var(--soft-pink); border-bottom: 3px solid var(--mauve-text);
+            display: flex; align-items: center; padding: 0 15px; gap: 8px;
+        }
+        .b-dot { width: 10px; height: 10px; border: 2px solid var(--mauve-text); border-radius: 50%; background: white; }
+
+        .browser-content { width: 100%; height: calc(100% - 35px); position: relative; overflow: hidden; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease; }
+        .slide.active { opacity: 1; }
+        .slide img { width: 100%; height: auto; position: absolute; top: 0; transition: transform 6s ease-in-out; }
+        .browser-frame:hover .slide.active img { transform: translateY(calc(-100% + 445px)); }
+
+        /* СТРЕЛКИ (КОРИЧНЕВЫЕ) */
+        .arrow {
+            background: white; border: 3px solid var(--mauve-text); color: var(--mauve-text);
+            width: 60px; height: 60px; border-radius: 50%; font-size: 26px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 5px 5px 0px var(--soft-pink); transition: 0.3s; z-index: 10;
+        }
+        .arrow:hover { transform: scale(1.1); background: var(--soft-pink); box-shadow: 7px 7px 0px var(--strong-pink); }
+
+        /* ТЕЛЕФОН */
+        .phone-overlay {
+            position: absolute; right: 2%; bottom: -30px;
+            width: 190px; height: 380px; background: white;
+            border: 3px solid var(--mauve-text); border-radius: 35px;
+            box-shadow: 10px 10px 0px var(--strong-pink);
+            z-index: 5; overflow: hidden;
+            animation: floaty 5s infinite ease-in-out;
+        }
+        @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .phone-overlay img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ИНФО */
+        .info-block { text-align: center; margin-top: 60px; }
+        .tags { display: flex; gap: 15px; margin-top: 15px; justify-content: center; }
+        .tag-item { padding: 6px 18px; border: 2px solid var(--mauve-text); border-radius: 50px; background: white; font-weight: 600; box-shadow: 3px 3px 0px var(--soft-pink); }
+
+        @media (max-width: 1000px) {
+            .browser-frame { width: 95%; height: 350px; }
+            .phone-overlay { display: none; }
+            .arrow { width: 45px; height: 45px; font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="custom-cursor"></div>
+    <div class="bg-gradient"></div>
+    <canvas id="stars-canvas"></canvas>
+
+    <nav class="nav-header">
+        <a href="index.html" class="back-link">← Home</a>
+    </nav>
+
+    <main class="project-section">
+        <div class="slider-wrapper">
+            <button class="arrow" onclick="move(-1)">❮</button>
+
+            <div class="browser-frame">
+                <div class="browser-top"><div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div></div>
+                <div class="browser-content">
+                    <div class="slide active"><img src="websites/project1/desktop_1.png"></div>
+                    <div class="slide"><img src="websites/project1/desktop_2.png"></div>
+                    <div class="slide"><img src="websites/project1/desktop_3.png"></div>
+                </div>
+            </div>
+
+            <div class="phone-overlay">
+                <img src="websites/project1/mobile_main.png">
+            </div>
+
+            <button class="arrow" onclick="move(1)">❯</button>
+        </div>
+
+        <div class="info-block">
+            <h1 style="font-family: 'Comfortaa';">Project Gallery</h1>
+            <div class="tags">
+                <span class="tag-item">Web Design</span>
+                <span class="tag-item">Adaptability</span>
+                <span class="tag-item">Creative UI</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        function move(dir) {
+            slides[current].classList.remove('active');
+            current = (current + dir + slides.length) % slides.length;
+            slides[current].classList.add('active');
+        }
+
+        // --- МАГИЯ КУРСОР И ПЫЛЬ ---
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            if (Math.random() > 0.6) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                document.body.appendChild(s);
+                const size = Math.random() * 8 + 2;
+                s.style.width = size + 'px'; s.style.height = size + 'px';
+                s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+                s.animate([{opacity:1}, {transform:`translate(${(Math.random()-0.5)*100}px, ${(Math.random()-0.5)*100}px) scale(0)`, opacity:0}], 1000);
+                setTimeout(() => s.remove(), 1000);
+            }
+        });
+
+        // --- МАГИЯ ЗВЕЗД ---
+        const c = document.getElementById('stars-canvas');
+        const ctx = c.getContext('2d');
+        let pts = [];
+        function res() { c.width = window.innerWidth; c.height = window.innerHeight; }
+        window.addEventListener('resize', res); res();
+        for(let i=0; i<100; i++) pts.push({x:Math.random()*c.width, y:Math.random()*c.height, s:Math.random()*1.5, o:Math.random(), sp:0.005});
+        function draw() {
+            ctx.clearRect(0,0,c.width,c.height);
+            pts.forEach(p => {
+                p.o += p.sp; if(p.o>1 || p.o<0) p.sp = -p.sp;
+                ctx.globalAlpha = p.o; ctx.fillStyle="white";
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
