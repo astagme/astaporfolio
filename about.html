@@ -6,6 +6,16 @@
     <title>About Me | ASTAGME</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Делаем страницу изначально прозрачной */
+body {
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Длительность затухания — 0.5 сек */
+}
+
+/* Класс, который сделает страницу видимой */
+body.fade-in {
+    opacity: 1;
+}
         :root {
             --soft-pink: #FFDBEA;
             --strong-pink: #F4C2D7; 
@@ -200,21 +210,39 @@
     </main>
 
     <script>
-        const cursor = document.getElementById('custom-cursor');
-        
-        // Показываем и двигаем курсор
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.display = 'block';
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+    // --- ПЛАВНЫЕ ПЕРЕХОДЫ ---
+    // 1. Проявляем страницу при загрузке
+    window.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('fade-in');
+    });
 
-        // Анимация при наведении
-        const interactables = document.querySelectorAll('.nav-btn, .tag, .about-img');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+    // 2. Гасим страницу при клике на ссылки
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (link.hostname === window.location.hostname && link.href.includes('.html')) {
+                e.preventDefault();
+                const targetUrl = link.href;
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 500);
+            }
         });
-    </script>
+    });
+
+    // --- ТВОЙ СТАРЫЙ КОД (КУРСОР) ---
+    const cursor = document.getElementById('custom-cursor');
+    window.addEventListener('mousemove', (e) => {
+        cursor.style.display = 'block';
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    const interactables = document.querySelectorAll('.nav-btn, .tag, .about-img');
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+    });
+</script>
 </body>
 </html>
