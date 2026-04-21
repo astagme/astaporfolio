@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me | ASTAGME</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --soft-pink: #FFDBEA;
@@ -16,19 +16,21 @@
 
         body {
             background-color: var(--bg-cream);
-            font-family: 'Comfortaa', cursive;
             margin: 0;
-            opacity: 0; 
-            transition: opacity 0.6s ease-out;
             cursor: none !important;
             color: var(--mauve-text);
+            font-family: 'Comfortaa', cursive;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            opacity: 0; 
+            transition: opacity 0.6s ease-out;
         }
 
-        body.fade-in { opacity: 1; }
+        body.fade-in { opacity: 1 !important; }
 
+        /* --- КУРСОР И ПЫЛЬ --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -41,7 +43,7 @@
             z-index: 1000000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             display: none;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .cursor-active {
@@ -55,115 +57,116 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 999999;
-            box-shadow: 0 0 10px var(--soft-pink);
         }
 
-        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
-        .nav-btn {
-            text-decoration: none;
-            color: var(--mauve-text);
-            padding: 12px 30px;
-            border-radius: 50px;
-            border: 2px solid var(--strong-pink);
-            background: white;
-            transition: 0.3s;
-            cursor: none !important;
+        /* --- НАВИГАЦИЯ (как на остальных страницах) --- */
+        .nav-header { 
+            width: 100%; 
+            padding: 40px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
         }
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
+        
+        .nav-btn { 
+            text-decoration: none; 
+            color: var(--brown-outline); 
+            font-weight: 700; 
+            padding: 12px 28px; 
+            border: 2px solid var(--brown-outline); 
+            border-radius: 50px; 
+            background: white; 
+            box-shadow: 4px 4px 0px var(--soft-pink); 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: none !important; 
+        }
 
+        .nav-btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 7px 7px 0px var(--strong-pink);
+        }
+
+        /* --- КОНТЕНТ --- */
         .about-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px 100px;
-            text-align: center;
-            flex-grow: 1;
-        }
-
-        /* ИСПРАВЛЕННЫЙ КОНТЕЙНЕР ДЛЯ СЕРДЕЧКА */
-        .profile-pic-container {
-            width: 280px; /* Сделали круг еще больше */
-            height: 280px;
-            margin: 0 auto 30px;
-            position: relative;
-            border-radius: 50%; 
-            border: 4px solid var(--brown-outline);
-            background: white;
-            box-shadow: 10px 10px 0px var(--soft-pink);
-            overflow: hidden;
+            max-width: 900px;
+            padding: 40px 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            /* Добавляем отступ внутри, чтобы края рисунка не касались рамки */
-            padding: 15px; 
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: none !important;
+            text-align: center;
         }
 
-        .profile-pic-container:hover {
-            transform: scale(1.05) rotate(5deg);
-            box-shadow: 15px 15px 0px var(--strong-pink);
+        .profile-pic-container {
+            width: 220px;
+            height: 220px;
+            border: 4px solid var(--brown-outline);
+            border-radius: 50% 20% 50% 20%;
+            overflow: hidden;
+            box-shadow: 15px 15px 0px var(--soft-pink);
+            margin-bottom: 40px;
+            background: white;
         }
 
-        .profile-pic {
+        .profile-pic-container img {
             width: 100%;
             height: 100%;
-            /* ВАЖНО: contain гарантирует, что всё фото влезет в круг */
-            object-fit: contain; 
-            display: block;
+            object-fit: cover;
         }
 
         h1 {
             font-family: 'Quicksand', sans-serif;
-            font-size: 3rem;
-            color: #5D3D48;
+            font-size: 2.8rem;
+            color: var(--brown-outline);
             margin-bottom: 20px;
         }
 
-        .bio-text {
-            font-size: 1.1rem;
+        .description {
+            font-size: 1.2rem;
             line-height: 1.8;
-            background: white;
-            padding: 40px;
-            border-radius: 40px;
-            border: 3px solid var(--brown-outline);
-            box-shadow: 10px 10px 0px var(--soft-pink);
+            max-width: 600px;
             margin-bottom: 40px;
-            text-align: left;
         }
 
+        /* --- КНОПКИ СОЦСЕТЕЙ + ОТЗЫВЫ --- */
         .social-links {
             display: flex;
-            justify-content: center;
             gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .social-btn {
-            text-decoration: none;
-            font-size: 1.5rem;
-            background: white;
-            border: 2px solid var(--brown-outline);
             width: 65px;
             height: 65px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 20px;
-            transition: 0.3s;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: 4px 4px 0px var(--soft-pink);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
+            overflow: hidden;
         }
 
         .social-btn:hover {
-            background: var(--soft-pink);
-            transform: translateY(-8px) rotate(-5deg);
-            box-shadow: 5px 5px 0px var(--strong-pink);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 6px 6px 0px var(--strong-pink);
         }
 
-        @media (max-width: 850px) {
+        .social-btn img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+
+        @media (max-width: 600px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
-            .nav-btn, .social-btn, .profile-pic-container { cursor: pointer !important; }
-            .profile-pic-container { width: 200px; height: 200px; padding: 10px; }
-            h1 { font-size: 2.2rem; }
+            .nav-btn, .social-btn { cursor: pointer !important; }
         }
     </style>
 </head>
@@ -171,34 +174,43 @@
 
     <div id="custom-cursor"></div>
 
-    <nav>
+    <nav class="nav-header">
         <a href="index.html" class="nav-btn">Home</a>
-        <a href="catalog.html" class="nav-btn">Portfolio</a>
+        <a href="catalog.html" class="nav-btn">Catalog</a>
     </nav>
 
     <main class="about-container">
         <div class="profile-pic-container">
-            <img src="photo.jpg?v=10" alt="Astagme photo" class="profile-pic">
-        </div>
-        
-        <h1>Hi, I'm Astagme! ✨</h1>
-        
-        <div class="bio-text">
-            <p>I am a creative <b>Illustrator</b>, <b>UI/UX Designer</b> and <b>Web Developer</b> with a passion for building unique digital experiences. My work bridges the gap between expressive art and functional design.</p>
-            <p>Whether it's a bubblegum-style branding or a complex website interface, I focus on making every project feel alive, magical, and a bit witty.</p>
-            <p>Welcome to my little corner of the web! Feel free to reach out for collaborations or just to say hi.</p>
+            <img src="photo.jpg" alt="Astagme">
         </div>
 
+        <h1>Hi, I'm Astagme! ✨</h1>
+        
+        <p class="description">
+            I am a beginner graphic designer passionate about soft aesthetics and meaningful visual stories. 
+            I love creating identities that feel like a warm hug.
+        </p>
+
         <div class="social-links">
-            <a href="#" class="social-btn">📱</a>
-            <a href="#" class="social-btn">📸</a>
-            <a href="#" class="social-btn">🎨</a>
-            <a href="#" class="social-btn">💻</a>
+            <a href="#" class="social-btn" title="Telegram">📱</a>
+            <a href="#" class="social-btn" title="Instagram">📸</a>
+            <a href="#" class="social-btn" title="Mail">✉️</a>
+            
+            <a href="reviews.html" class="social-btn" title="My Reviews">
+                <img src="icons/reviews.png" alt="Reviews">
+            </a>
         </div>
     </main>
 
     <script>
-        window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
+        function showPage() {
+            document.body.classList.add('fade-in');
+            document.body.style.opacity = '1';
+        }
+
+        window.addEventListener('load', showPage);
+        window.addEventListener('pageshow', (event) => { showPage(); });
+
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -212,10 +224,10 @@
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
             const size = Math.random() * 8 + 2;
-            sparkle.style.width = `${size}px`;
-            sparkle.style.height = `${size}px`;
-            sparkle.style.left = `${x}px`;
-            sparkle.style.top = `${y}px`;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
             const destX = x + (Math.random() - 0.5) * 80;
             const destY = y + (Math.random() - 0.5) * 80;
             sparkle.animate([
@@ -225,17 +237,18 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
-        document.querySelectorAll('.nav-btn, .social-btn, .profile-pic-container, a').forEach(el => {
+        document.querySelectorAll('a, .profile-pic-container').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
-                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
+                const href = this.getAttribute('href');
+                if (href && href.includes('.html') && !href.startsWith('http')) {
                     e.preventDefault();
                     document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = this.href; }, 500);
+                    setTimeout(() => { window.location.href = href; }, 500);
                 }
             });
         });
