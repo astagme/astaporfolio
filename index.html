@@ -12,68 +12,70 @@
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --star-yellow: #FFD700;
+            --brown-outline: #63414C; /* Коричневый контур для курсора */
             --glow: rgba(255, 219, 234, 0.8);
         }
 
-        /* --- КАСТОМНЫЙ КУРСОР "ЗВЁЗДОЧКА С КОНТУРОМ" --- */
+        /* --- КАСТОМНЫЙ КУРСОР (Бело-розовый с коричневым контуром) --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
-            cursor: none; /* Прячем стандартную стрелку */
-            min-height: 180vh;
+            cursor: none; 
+            min-height: 200vh;
             overflow-x: hidden;
-            position: relative;
+            color: var(--mauve-text);
         }
 
         #custom-cursor {
             position: fixed;
-            width: 35px;
-            height: 35px;
-            background: var(--star-yellow);
-            /* Форма звезды */
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            /* Розовый контур */
-            border: 3px solid var(--strong-pink); 
-            box-sizing: border-box;
-            pointer-events: none; /* Чтобы клики проходили сквозь неё */
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%; /* Форма капельки/стрелочки */
+            transform: rotate(-45deg) translate(-50%, -50%);
+            pointer-events: none;
             z-index: 10000;
-            opacity: 1;
-            transform: translate(-50%, -50%); /* Центрируем по кончику мышки */
-            transition: transform 0.05s linear, width 0.2s, height 0.2s, opacity 0.2s;
-            filter: drop-shadow(0 5px 10px rgba(244, 194, 215, 0.3));
+            transition: transform 0.1s linear, width 0.2s, background 0.2s;
+            box-shadow: 2px 2px 0px var(--soft-pink); /* Розовая тень/декор */
         }
 
-        /* Эффект при наведении на кнопки */
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--soft-pink);
+            border-radius: 50%;
+            top: 5px; left: 5px;
+        }
+
         #custom-cursor.active {
-            width: 45px;
-            height: 45px;
-            background: #FFE080; /* Чуть светлее жёлтый */
-            border-color: #FFB3D1; /* Чуть ярче розовый */
-            opacity: 0.9;
+            transform: rotate(-45deg) scale(1.5);
+            background: var(--soft-pink);
         }
 
-        /* --- ОСТАЛЬНЫЕ СТИЛИ --- */
+        /* --- ЗВЕЗДЫ --- */
         .star-field {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             pointer-events: none;
         }
-
         .star {
             position: absolute;
             background: var(--star-yellow);
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             animation: twinkle var(--duration) infinite ease-in-out;
-            opacity: 0.5;
+            opacity: 0.4;
         }
-
         @keyframes twinkle {
-            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
-            50% { transform: scale(1.2) rotate(10deg); opacity: 0.7; }
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
         }
 
+        /* --- ШАПКА --- */
         header {
             display: flex;
             flex-direction: column;
@@ -81,62 +83,119 @@
             justify-content: center;
             height: 100vh;
         }
-
         .brand-container {
             display: flex;
             align-items: center;
             gap: 10px;
             animation: float 6s ease-in-out infinite;
         }
-
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
         }
-
         .pfp-png { width: 320px; filter: drop-shadow(0 15px 30px var(--glow)); }
         .logo-text { width: 70%; max-width: 800px; filter: drop-shadow(0 20px 40px var(--glow)); }
 
-        nav { margin-top: 60px; display: flex; gap: 20px; }
-
+        nav { margin-top: 40px; display: flex; gap: 20px; }
         .nav-btn {
             text-decoration: none;
             color: var(--mauve-text);
-            padding: 15px 35px;
+            padding: 12px 30px;
             border-radius: 50px;
             border: 2px solid var(--strong-pink);
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(5px);
             transition: 0.3s;
-            cursor: none; /* Убираем курсор и на кнопках */
+            cursor: none;
+        }
+        .nav-btn:hover { background: var(--soft-pink); color: white; transform: translateY(-3px); }
+
+        /* --- НОВОЕ ОКОШКО "BEHIND THE WORK" --- */
+        .about-section {
+            display: flex;
+            justify-content: center;
+            padding: 100px 20px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .nav-btn:hover {
-            background: var(--soft-pink);
-            color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px var(--glow);
+        .about-card {
+            background: #FFFBF0; /* Теплый кремовый */
+            border-radius: 40px;
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 20px 50px var(--glow); /* Тот самый glow */
+            border: 1px solid rgba(244, 194, 215, 0.3);
+            align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .brand-container { flex-direction: column; }
-            body { cursor: auto; } /* На мобилках возвращаем обычный режим */
+        .about-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 30px;
+            object-fit: cover;
+            filter: drop-shadow(0 10px 20px var(--glow));
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            color: #4A323A;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-content p {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .tag {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border: 1px solid #F0F0F0;
+        }
+
+        @media (max-width: 850px) {
+            .about-card { flex-direction: column; text-align: center; }
+            .about-img { width: 100%; max-width: 250px; }
+            .tags-container { justify-content: center; }
             #custom-cursor { display: none; }
+            body { cursor: auto; }
         }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
 
-    <div class="star-field">
-        </div>
+    <div class="star-field"></div>
 
     <header>
         <div class="brand-container">
             <img src="ava.png" alt="Asta" class="pfp-png">
             <img src="font.png" alt="astagme" class="logo-text">
         </div>
-        
         <nav>
             <a href="index.html" class="nav-btn">home</a>
             <a href="branding.html" class="nav-btn">branding</a>
@@ -145,29 +204,39 @@
         </nav>
     </header>
 
+    <section class="about-section">
+        <div class="about-card">
+            <img src="photo.jpg" alt="Asta" class="about-img"> <div class="about-content">
+                <h2>Behind the Work ✨</h2>
+                <p>Hello, I'm Asta. I'm a graphic designer who genuinely loves what she does — which means I care deeply about every curve of a logo, every font pairing, and every pixel of a brand system I deliver.</p>
+                
+                <div class="tags-container">
+                    <div class="tag">🎨 Figma, Illustrator & Photoshop</div>
+                    <div class="tag">💡 i love creative ideas and try something new</div>
+                    <div class="tag">🗓️ 3-week turnaround</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script>
-        // Скрипт для движения курсора-звездочки за мышкой
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Добавляем класс при наведении на кнопки (чтобы звезда росла)
-        const btns = document.querySelectorAll('.nav-btn');
-        btns.forEach(btn => {
-            btn.addEventListener('mouseenter', () => cursor.classList.add('active'));
-            btn.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        document.querySelectorAll('.nav-btn, .tag').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
         });
 
-        // Скрипт для генерации множества звезд в случайных местах
         const field = document.querySelector('.star-field');
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 15; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             const size = Math.random() * 20 + 10 + 'px';
-            star.style.width = size;
-            star.style.height = size;
+            star.style.width = size; star.style.height = size;
             star.style.top = Math.random() * 100 + '%';
             star.style.left = Math.random() * 100 + '%';
             star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
