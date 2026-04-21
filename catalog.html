@@ -14,23 +14,21 @@
             --brown-outline: #63414C;
         }
 
-        /* ПЛАВНОСТЬ */
+        /* --- ПЛАВНОСТЬ ЗАГРУЗКИ --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
             opacity: 0; 
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease-out;
             cursor: none !important;
             color: var(--mauve-text);
             min-height: 100vh;
         }
 
-        body.fade-in {
-            opacity: 1;
-        }
+        body.fade-in { opacity: 1; }
 
-        /* КУРСОР */
+        /* --- ЕДИНЫЙ КУРСОР --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -38,25 +36,31 @@
             background: white;
             border: 2px solid var(--brown-outline);
             border-radius: 2px 50% 50% 50%;
-            transform: rotate(-45deg) translate(-50%, -50%);
+            transform: translate(-50%, -50%) rotate(-45deg);
             pointer-events: none;
             z-index: 1000000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             display: none;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s, width 0.2s, height 0.2s;
         }
 
         .cursor-active {
-            transform: rotate(-45deg) translate(-50%, -50%) scale(1.5) !important;
+            transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
             background: var(--soft-pink) !important;
         }
 
-        nav {
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        /* --- ИСКОРКИ (ЗВЕЗДНАЯ ПЫЛЬ) --- */
+        .sparkle {
+            position: fixed;
+            background: var(--strong-pink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            box-shadow: 0 0 10px var(--soft-pink);
         }
 
+        /* --- НАВИГАЦИЯ --- */
+        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
         .nav-btn {
             text-decoration: none;
             color: var(--mauve-text);
@@ -67,15 +71,11 @@
             transition: 0.3s;
             cursor: none !important;
         }
+        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
 
-        .nav-btn:hover {
-            background: var(--soft-pink);
-            color: white;
-            transform: translateY(-3px);
-        }
-
+        /* --- КАТАЛОГ --- */
         .catalog-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 20px 40px 80px;
             text-align: center;
@@ -83,14 +83,14 @@
 
         .catalog-title {
             font-family: 'Quicksand', sans-serif;
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 50px;
             color: #5D3D48;
         }
 
         .catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
         }
 
@@ -111,11 +111,20 @@
         .category-card:hover {
             transform: translate(-5px, -5px);
             box-shadow: 15px 15px 0px var(--strong-pink);
+            background: #FFF9FB;
         }
 
-        .category-icon { font-size: 60px; margin-bottom: 20px; }
-        .category-card h3 { font-family: 'Quicksand', sans-serif; font-size: 1.8rem; margin: 10px 0; color: #5D3D48; }
-        .category-card p { margin: 0; color: var(--mauve-text); }
+        .category-icon { font-size: 60px; margin-bottom: 20px; transition: 0.3s; }
+        .category-card:hover .category-icon { transform: scale(1.2) rotate(5deg); }
+
+        .category-card h3 { 
+            font-family: 'Quicksand', sans-serif; 
+            font-size: 1.8rem; 
+            margin: 10px 0; 
+            color: #5D3D48; 
+        }
+
+        .category-card p { margin: 0; color: var(--mauve-text); opacity: 0.8; }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
@@ -155,35 +164,56 @@
     </main>
 
     <script>
-        // Проявление при загрузке
-        window.addEventListener('load', () => {
-            document.body.classList.add('fade-in');
-        });
+        // 1. Плавная загрузка
+        window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
 
-        // Плавный уход при клике
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
-                    e.preventDefault();
-                    const target = this.href;
-                    document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = target; }, 500);
-                }
-            });
-        });
-
-        // Курсор
+        // 2. Логика курсора
         const cursor = document.getElementById('custom-cursor');
+        
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
+            createSparkle(e.clientX, e.clientY);
         });
 
-        const interactables = document.querySelectorAll('.nav-btn, .category-card');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        // 3. Звездная пыль
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            document.body.appendChild(sparkle);
+            const size = Math.random() * 8 + 2;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            const destX = x + (Math.random() - 0.5) * 80;
+            const destY = y + (Math.random() - 0.5) * 80;
+            sparkle.animate([
+                { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+            ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        // 4. Реакция на интерактивные элементы
+        const refresh = () => {
+            document.querySelectorAll('.nav-btn, .category-card, a').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+            });
+        };
+        refresh();
+
+        // 5. Плавный переход между страницами
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
+                    e.preventDefault();
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = this.href; }, 500);
+                }
+            });
         });
     </script>
 </body>
