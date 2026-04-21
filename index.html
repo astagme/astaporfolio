@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAGME | Magical Home</title>
+    <title>ASTAGME | Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -32,7 +32,7 @@
             to { opacity: 1; }
         }
 
-        /* --- ОБНОВЛЕННЫЙ ЖИВОЙ ФОН (КОСМОС И ИСКОРКИ) --- */
+        /* ФОН - КОСМИЧЕСКОЕ МЕРЦАНИЕ */
         .bg-gradient {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
@@ -47,14 +47,13 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Один холст для всего мерцания */
         #stars-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             pointer-events: none;
         }
 
-        /* КУРСОР */
+        /* КУРСОР - КОПИЯ ИЗ ABOUT.HTML */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -70,14 +69,14 @@
             will-change: transform;
         }
 
-        /* ПЫЛЬ КУРСОРА */
+        /* ПЫЛЬ - КОПИЯ ИЗ ABOUT.HTML */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 6px var(--soft-pink), 0 0 10px white;
+            box-shadow: 0 0 6px var(--soft-pink);
         }
 
         /* КОНТЕНТ */
@@ -95,11 +94,10 @@
             margin-bottom: 15px;
             filter: drop-shadow(0 15px 30px rgba(244, 194, 215, 0.4));
             animation: logoBreath 12s infinite ease-in-out;
-            will-change: transform;
         }
 
         @keyframes logoBreath {
-            0%, 100% { transform: scale(1) translateY(0); }
+            0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02) translateY(-5px); }
         }
 
@@ -128,16 +126,15 @@
 
         .skill-bow {
             height: 45px;
-            filter: drop-shadow(2px 2px 0px var(--soft-pink));
             animation: bowFloat 4s infinite ease-in-out;
         }
 
         @keyframes bowFloat {
-            0%, 100% { transform: scale(1) rotate(-5deg); }
-            50% { transform: scale(1.1) rotate(5deg); }
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg) scale(1.1); }
         }
 
-        /* АВАТАР */
+        /* АВАТАР С ВОЗДУШНОЙ АНИМАЦИЕЙ */
         .ava-box {
             width: 200px;
             height: 200px;
@@ -148,7 +145,6 @@
             overflow: hidden;
             margin-bottom: 45px;
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            will-change: transform;
         }
         .ava-box img { width: 100%; height: 100%; object-fit: cover; }
         .ava-box:hover {
@@ -179,8 +175,6 @@
         @media (max-width: 768px) {
             #custom-cursor { display: none; }
             body { cursor: auto !important; }
-            .logo-main { max-width: 400px; }
-            .ava-box { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -210,16 +204,11 @@
     </main>
 
     <script>
-        // --- ОБНОВЛЕННАЯ ЛОГИКА ФОНА (АВТОНОМНОЕ МЕРЦАНИЕ) ---
+        // ЛОГИКА ФОНОВЫХ ИСКОРОК
         const sCanvas = document.getElementById('stars-canvas');
         const sCtx = sCanvas.getContext('2d');
-        
         let particles = [];
-
-        function resize() {
-            sCanvas.width = window.innerWidth;
-            sCanvas.height = window.innerHeight;
-        }
+        function resize() { sCanvas.width = window.innerWidth; sCanvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
@@ -227,75 +216,40 @@
             constructor() {
                 this.x = Math.random() * sCanvas.width;
                 this.y = Math.random() * sCanvas.height;
-                
-                // Рандомно выбираем тип частицы
                 const type = Math.random();
-                if (type > 0.7) { // 30% — Яркие Искорки
-                    this.size = Math.random() * 2.5 + 1;
-                    this.color = '#FFFFFF';
-                    this.opacity = Math.random() * 0.5 + 0.5; // Ярче
-                    this.fadeSpeed = Math.random() * 0.02 + 0.01; // Быстро мерцают
-                    this.hasGlow = true;
-                } else if (type > 0.4) { // 30% — Розовая Пыль
-                    this.size = Math.random() * 2 + 0.5;
-                    this.color = '#FFDBEA';
-                    this.opacity = Math.random() * 0.4 + 0.2; // Мягче
-                    this.fadeSpeed = Math.random() * 0.01 + 0.005; // Медленно мерцают
-                    this.hasGlow = false;
-                } else { // 40% — Далекие Звезды
-                    this.size = Math.random() * 1 + 0.2;
-                    this.color = '#FFFFFF';
-                    this.opacity = Math.random() * 0.3 + 0.1; // Тускло
-                    this.fadeSpeed = Math.random() * 0.005 + 0.002; // Очень медленно
-                    this.hasGlow = false;
+                if (type > 0.7) { 
+                    this.size = Math.random() * 2 + 1; this.color = '#FFFFFF';
+                    this.opacity = Math.random() * 0.5; this.fadeSpeed = 0.01;
+                } else {
+                    this.size = Math.random() * 1.5; this.color = '#FFDBEA';
+                    this.opacity = Math.random() * 0.3; this.fadeSpeed = 0.005;
                 }
             }
             draw() {
                 sCtx.globalAlpha = this.opacity;
                 sCtx.fillStyle = this.color;
-                
-                if (this.hasGlow) { // Добавляем неоновое свечение ярким искоркам
-                    sCtx.shadowBlur = 10;
-                    sCtx.shadowColor = 'rgba(255, 219, 234, 0.8)';
-                } else {
-                    sCtx.shadowBlur = 0;
-                }
-                
-                sCtx.beginPath();
-                sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                sCtx.fill();
-                
-                sCtx.globalAlpha = 1; // Сброс
-                sCtx.shadowBlur = 0;   // Сброс
+                sCtx.beginPath(); sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); sCtx.fill();
             }
             update() {
-                // Плавное мерцание
                 this.opacity += this.fadeSpeed;
-                if (this.opacity > 1 || this.opacity < 0.1) this.fadeSpeed = -this.fadeSpeed;
+                if (this.opacity > 0.8 || this.opacity < 0.1) this.fadeSpeed = -this.fadeSpeed;
             }
         }
-
-        // Создаем 180 разнообразных частиц
-        for (let i = 0; i < 180; i++) particles.push(new Particle());
+        for (let i = 0; i < 150; i++) particles.push(new Particle());
 
         function animate() {
             sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
-
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
         animate();
 
-        // --- ЛОГИКА КУРСОР И ПЫЛИ (БЕЗ ИЗМЕНЕНИЙ) ---
+        // ЛОГИКА КУРСОР И ПЫЛИ (COPY FROM ABOUT.HTML)
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.7) {
+            if (Math.random() > 0.75) {
                 createSparkle(e.clientX, e.clientY);
             }
         });
@@ -312,12 +266,13 @@
             
             sparkle.animate([
                 { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${(Math.random()-0.5)*60}px, ${(Math.random()-0.5)*60}px) scale(0)`, opacity: 0 }
-            ], { duration: 800, easing: 'ease-out' });
+                { transform: `translate(${(Math.random()-0.5)*50}px, ${(Math.random()-0.5)*50}px) scale(0)`, opacity: 0 }
+            ], { duration: 700, easing: 'ease-out' });
             
-            setTimeout(() => sparkle.remove(), 800);
+            setTimeout(() => sparkle.remove(), 700);
         }
 
+        // Ховер-эффекты для курсора
         document.querySelectorAll('.enter-btn, .logo-main, .ava-box, .subtitle-wrapper').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.4)';
