@@ -24,14 +24,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-x: hidden;
+            /* Важно: если экран белый, убедись, что opacity меняется на 1 */
             opacity: 0; 
-            transition: opacity 0.6s ease-out;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        body.fade-in { opacity: 1 !important; }
+        body.fade-in { 
+            opacity: 1 !important; 
+        }
 
-        /* --- КУРСОР И ПЫЛЬ --- */
+        /* --- КУРСОР --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -44,7 +46,6 @@
             z-index: 1000000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             display: none;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
         }
 
         .cursor-active {
@@ -58,7 +59,6 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 999999;
-            box-shadow: 0 0 10px var(--soft-pink);
         }
 
         /* --- НАВИГАЦИЯ --- */
@@ -68,7 +68,6 @@
             display: flex; 
             justify-content: center; 
             gap: 20px; 
-            z-index: 100;
         }
         
         .nav-btn { 
@@ -93,89 +92,122 @@
             font-family: 'Quicksand', sans-serif;
             font-size: 3rem;
             color: var(--brown-outline);
-            margin: 10px 0 10px;
-        }
-
-        .subtitle {
-            margin-bottom: 50px;
-            font-size: 1.1rem;
-            opacity: 0.8;
+            margin: 10px 0;
+            text-align: center;
         }
 
         /* --- СЕТКА ОТЗЫВОВ --- */
         .reviews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             width: 100%;
             max-width: 1100px;
             padding: 20px;
             box-sizing: border-box;
-            margin-bottom: 100px;
+            margin-bottom: 50px;
         }
 
         .review-card {
             background: white;
             border: 3px solid var(--brown-outline);
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: 10px 10px 0px var(--soft-pink);
-            transition: all 0.3s ease;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 8px 8px 0px var(--soft-pink);
+            transition: 0.3s ease;
         }
 
         .review-card:hover {
-            transform: scale(1.02) rotate(1deg);
-            box-shadow: 15px 15px 0px var(--soft-pink);
+            transform: translateY(-5px);
+            box-shadow: 12px 12px 0px var(--soft-pink);
         }
 
-        .review-text {
-            font-family: 'Quicksand';
-            font-size: 1.1rem;
-            line-height: 1.6;
-            font-style: italic;
+        .review-text { font-size: 1rem; line-height: 1.6; font-style: italic; margin-bottom: 15px; }
+        .review-author { font-weight: 700; color: var(--brown-outline); display: block; }
+        .review-tag { font-size: 0.8rem; opacity: 0.7; }
+
+        @media (max-width: 600px) {
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .nav-btn { cursor: pointer !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="custom-cursor"></div>
+
+    <nav class="nav-header">
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="about.html" class="nav-btn">About me</a>
+        <a href="catalog.html" class="nav-btn">Catalog</a>
+    </nav>
+
+    <h1>Kind Words ✨</h1>
+
+    <main class="reviews-grid">
+        <div class="review-card">
+            <p class="review-text">"Amazing work! The soft aesthetic is exactly what I was looking for."</p>
+            <span class="review-author">Client Name</span>
+            <span class="review-tag">Logo Design</span>
+        </div>
+        <div class="review-card">
+            <p class="review-text">"Super easy to work with and very creative results."</p>
+            <span class="review-author">Another Client</span>
+            <span class="review-tag">Web Design</span>
+        </div>
+    </main>
+
+    <script>
+        // ГЛАВНОЕ: Проявление страницы
+        function reveal() {
+            document.body.classList.add('fade-in');
         }
 
-        .review-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 10px;
-        }
+        window.addEventListener('load', reveal);
+        window.addEventListener('pageshow', reveal);
+        setTimeout(reveal, 100); // Страховка от белого экрана
 
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 2px solid var(--brown-outline);
-            background: var(--soft-pink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
+        // КУРСОР
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            // Пыль
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            document.body.appendChild(sparkle);
+            sparkle.style.width = '6px';
+            sparkle.style.height = '6px';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            
+            sparkle.animate([
+                { transform: 'scale(1)', opacity: 1 },
+                { transform: 'scale(0) translate(20px, 20px)', opacity: 0 }
+            ], { duration: 800 });
+            setTimeout(() => sparkle.remove(), 800);
+        });
 
-        .author-info {
-            display: flex;
-            flex-direction: column;
-        }
+        // Плавный уход при клике
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const target = this.getAttribute('href');
+                if (target && target.includes('.html')) {
+                    e.preventDefault();
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = target; }, 400);
+                }
+            });
+        });
 
-        .author-name {
-            font-weight: 700;
-            color: var(--brown-outline);
-        }
-
-        .author-project {
-            font-size: 0.85rem;
-            opacity: 0.7;
-        }
-
-        .stars {
-            color: #FFB8D1;
-            font-size: 1.2rem;
-        }
-
-        @media (max-width: 850px) {
+        // Увеличение курсора
+        document.querySelectorAll('a, .review-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
+    </script>
+</body>
+</html>
