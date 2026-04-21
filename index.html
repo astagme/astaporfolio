@@ -41,29 +41,31 @@
             box-sizing: border-box;
         }
 
-        /* Контейнер для аватарки и логотипа */
+        /* Контейнер для аватарки и логотипа - УВЕЛИЧИЛИ РАЗМЕР */
         .brand-container {
             display: flex;
             flex-direction: row; 
             align-items: center;
             justify-content: center;
-            gap: 15px; /* Уменьшили расстояние, чтобы они были ближе */
+            gap: 10px; /* Сделали ЕЩЕ ближе */
             width: 100%;
-            max-width: 1100px;
+            max-width: 1300px; /* Увеличили максимальную ширину */
             animation: float 6s ease-in-out infinite;
         }
 
+        /* УВЕЛИЧИЛИ АВАТАРКУ */
         .pfp-png {
-            width: 250px;
-            height: auto;
-            filter: drop-shadow(0 10px 20px var(--glow));
-        }
-
-        .logo-text {
-            width: 60%;
-            max-width: 600px;
+            width: 320px; /* Было 250px */
             height: auto;
             filter: drop-shadow(0 15px 30px var(--glow));
+        }
+
+        /* УВЕЛИЧИЛИ ЛОГОТИП */
+        .logo-text {
+            width: 70%; /* Было 60% */
+            max-width: 800px; /* Было 600px */
+            height: auto;
+            filter: drop-shadow(0 20px 40px var(--glow));
         }
 
         /* Кнопки с розовым контуром */
@@ -100,8 +102,8 @@
                 flex-direction: column; 
                 gap: 5px; 
             }
-            .pfp-png { width: 180px; }
-            .logo-text { width: 90%; }
+            .pfp-png { width: 220px; }
+            .logo-text { width: 95%; }
         }
     </style>
 </head>
