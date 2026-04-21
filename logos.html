@@ -3,74 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logo Portfolio | ASTAGME</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <title>Logos | ASTAGME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Тут будут наши стандартные переменные и курсор (как в Catalog) */
-        :root { --soft-pink: #FFDBEA; --mauve-text: #A67081; --bg-cream: #FDFBF7; }
-        
-        body { background: var(--bg-cream); font-family: 'Quicksand', sans-serif; margin: 0; opacity: 0; transition: opacity 0.5s; cursor: none !important; }
+        :root {
+            --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #A67081;
+            --bg-cream: #FDFBF7;
+            --brown-outline: #63414C;
+        }
+
+        /* ПЛАВНОСТЬ */
+        body { opacity: 0; transition: opacity 0.5s ease; background-color: var(--bg-cream); font-family: 'Comfortaa', cursive; margin: 0; cursor: none !important; color: var(--mauve-text); }
         body.fade-in { opacity: 1; }
 
-        .gallery-container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; text-align: center; }
-        
-        /* Сетка для логотипов */
+        #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--brown-outline); border-radius: 2px 50% 50% 50%; transform: rotate(-45deg) translate(-50%, -50%); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); display: none; }
+        .cursor-active { transform: rotate(-45deg) translate(-50%, -50%) scale(1.5) !important; background: var(--soft-pink) !important; }
+
+        nav { padding: 30px; display: flex; justify-content: center; gap: 20px; }
+        .nav-btn { text-decoration: none; color: var(--mauve-text); padding: 10px 25px; border-radius: 50px; border: 2px solid var(--strong-pink); background: white; transition: 0.3s; cursor: none !important; }
+        .nav-btn:hover { background: var(--soft-pink); color: white; transform: translateY(-3px); }
+
+        /* СЕТКА ГАЛЕРЕИ */
+        .gallery-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; text-align: center; }
+        h1 { font-family: 'Quicksand', sans-serif; font-size: 2.5rem; margin-bottom: 40px; }
+
         .logo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
         }
 
-        .logo-item {
+        .logo-card {
             background: white;
-            border-radius: 25px;
-            padding: 20px;
+            border-radius: 30px;
+            padding: 15px;
             border: 2px solid var(--soft-pink);
-            transition: 0.3s;
+            transition: 0.4s;
             cursor: none !important;
+            position: relative;
+            overflow: hidden;
         }
 
-        .logo-item:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 25px rgba(244, 194, 215, 0.4);
-        }
+        .logo-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px var(--soft-pink); }
 
-        .logo-item img {
+        .logo-card img {
             width: 100%;
-            border-radius: 15px;
+            border-radius: 20px;
             display: block;
+            transition: 0.4s;
         }
 
-        .logo-info { margin-top: 15px; color: var(--mauve-text); }
+        .logo-card:hover img { transform: scale(1.05); }
+
+        .logo-title { font-family: 'Quicksand', sans-serif; margin-top: 15px; font-weight: 600; font-size: 1.1rem; }
     </style>
 </head>
 <body>
+
     <div id="custom-cursor"></div>
 
-    <nav style="text-align: center; padding: 30px;">
-        <a href="catalog.html" style="text-decoration: none; color: #A67081;">← Back to Catalog</a>
+    <nav>
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="catalog.html" class="nav-btn">← Back to Catalog</a>
     </nav>
 
     <div class="gallery-container">
-        <h1>Logo Design Gallery</h1>
-        <p>A collection of visual identities created with love.</p>
-
+        <h1>Logo Design ✨</h1>
+        
         <div class="logo-grid">
-            <div class="logo-item">
-                <img src="work1.jpg" alt="Logo Name">
-                <div class="logo-info">
-                    <strong>Project Name</strong>
-                    <p>Branding, 2024</p>
-                </div>
+            <div class="logo-card">
+                <img src="logo1.jpg" alt="Project 1">
+                <div class="logo-title">Project Name 1</div>
             </div>
+
+            <div class="logo-card">
+                <img src="logo2.jpg" alt="Project 2">
+                <div class="logo-title">Project Name 2</div>
             </div>
+
+            <div class="logo-card">
+                <img src="logo3.jpg" alt="Project 3">
+                <div class="logo-title">Project Name 3</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Добавь сюда тот же скрипт для плавного появления и курсора
-        document.body.classList.add('fade-in');
-        // ... код для курсора
+        // ПЛАВНОСТЬ
+        window.addEventListener('DOMContentLoaded', () => { document.body.classList.add('fade-in'); });
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.hostname === window.location.hostname && link.href.includes('.html')) {
+                    e.preventDefault();
+                    const target = link.href;
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = target; }, 500);
+                }
+            });
+        });
+
+        // КУРСОР
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const items = document.querySelectorAll('.nav-btn, .logo-card');
+        items.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
     </script>
 </body>
 </html>
