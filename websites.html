@@ -48,7 +48,6 @@
             display: flex; align-items: center; justify-content: center; gap: 30px; position: relative; width: 100%;
         }
 
-        /* Окно браузера */
         .browser-frame {
             width: 800px; height: 480px; background: white; border: 3px solid var(--mauve-text);
             border-radius: 20px; box-shadow: 15px 15px 0px var(--soft-pink);
@@ -65,11 +64,9 @@
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out; }
         .slide.active { opacity: 1; }
         
-        /* Скролл десктопных PNG картинок */
         .slide img { width: 100%; height: auto; position: absolute; top: 0; transition: transform 6s ease-in-out; }
         .browser-frame:hover .slide.active img { transform: translateY(calc(-100% + 445px)); }
 
-        /* СТРЕЛКИ (КОРИЧНЕВЫЕ) */
         .arrow {
             background: white; border: 3px solid var(--mauve-text); color: var(--mauve-text);
             width: 60px; height: 60px; border-radius: 50%; font-size: 26px;
@@ -79,7 +76,6 @@
         }
         .arrow:hover { transform: scale(1.1); background: var(--soft-pink); box-shadow: 7px 7px 0px var(--strong-pink); }
 
-        /* ТЕЛЕФОН (JPG) */
         .phone-overlay {
             position: absolute; right: 2%; bottom: -30px;
             width: 190px; height: 380px; background: white;
@@ -91,13 +87,11 @@
         @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         .phone-overlay img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ИНФО */
         .info-block { text-align: center; margin-top: 60px; }
         .project-name { font-family: 'Comfortaa'; margin: 0; font-size: 2.2rem; }
         .tags { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
         .tag-item { padding: 6px 20px; border: 2px solid var(--mauve-text); border-radius: 50px; background: white; font-weight: 600; box-shadow: 3px 3px 0px var(--soft-pink); font-size: 0.9rem; }
 
-        /* Адаптивность */
         @media (max-width: 1000px) {
             .browser-frame { width: 90%; height: 350px; }
             .phone-overlay { display: none; }
@@ -124,14 +118,14 @@
                     <div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div>
                 </div>
                 <div class="browser-content">
-                    <div class="slide active"><img src="websites/project1/desktop_1.png"></div>
-                    <div class="slide"><img src="websites/project1/desktop_2.png"></div>
-                    <div class="slide"><img src="websites/project1/desktop_3.png"></div>
+                    <div class="slide active"><img src="project1/desktop_1.png"></div>
+                    <div class="slide"><img src="project1/desktop_2.png"></div>
+                    <div class="slide"><img src="project1/desktop_3.png"></div>
                 </div>
             </div>
 
             <div class="phone-overlay">
-                <img src="websites/project1/mobile_main.jpg" alt="Mobile Site View">
+                <img src="project1/mobile_main.jpg" alt="Mobile Site View">
             </div>
 
             <button class="arrow" onclick="move(1)">❯</button>
@@ -148,7 +142,6 @@
     </main>
 
     <script>
-        // Слайдер десктопных скринов
         let current = 0;
         const slides = document.querySelectorAll('.slide');
 
@@ -158,7 +151,6 @@
             slides[current].classList.add('active');
         }
 
-        // --- КУРСОР И ИСКРЫ ---
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -169,10 +161,8 @@
                 s.className = 'sparkle';
                 document.body.appendChild(s);
                 const size = Math.random() * 8 + 2;
-                s.style.width = size + 'px'; 
-                s.style.height = size + 'px';
-                s.style.left = e.clientX + 'px'; 
-                s.style.top = e.clientY + 'px';
+                s.style.width = size + 'px'; s.style.height = size + 'px';
+                s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
                 s.animate([
                     { opacity: 1, transform: 'scale(1)' },
                     { opacity: 0, transform: `translate(${(Math.random()-0.5)*100}px, ${(Math.random()-0.5)*100}px) scale(0)` }
@@ -181,7 +171,6 @@
             }
         });
 
-        // --- ЗВЕЗДНОЕ НЕБО ---
         const c = document.getElementById('stars-canvas');
         const ctx = c.getContext('2d');
         let pts = [];
