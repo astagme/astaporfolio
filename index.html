@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAGME | Home</title>
+    <title>ASTAGME | Magical Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,7 +16,7 @@
         body {
             background-color: var(--bg-cream);
             margin: 0;
-            cursor: none !important; /* Важно для кастомного курсора */
+            cursor: none !important;
             color: var(--mauve-text);
             height: 100vh;
             display: flex;
@@ -32,12 +32,14 @@
             to { opacity: 1; }
         }
 
+        /* --- ОБНОВЛЕННЫЙ ЖИВОЙ ФОН --- */
         .bg-gradient {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background: linear-gradient(45deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff);
-            background-size: 400% 400%;
-            animation: gradientMove 15s ease infinite;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            /* Более глубокий градиент */
+            background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7);
+            background-size: 500% 500%;
+            animation: gradientMove 20s ease infinite;
         }
 
         @keyframes gradientMove {
@@ -46,13 +48,16 @@
             100% { background-position: 0% 50%; }
         }
 
-        #stars-canvas {
+        /* Слои для мерцающих звезд */
+        #stars-canvas, #dust-canvas {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             pointer-events: none;
         }
 
-        /* КУРСОР КАК НА ДРУГИХ СТРАНИЦАХ */
+        #dust-canvas { z-index: -1; opacity: 0.5; } /* Розовая пыль чуть ближе */
+
+        /* КУРСОР */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -65,18 +70,20 @@
             z-index: 10000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             transition: transform 0.15s ease-out;
+            will-change: transform;
         }
 
-        /* ПЫЛЬ КАК НА ДРУГИХ СТРАНИЦАХ */
+        /* ПЫЛЬ КУРСОРА */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 6px var(--soft-pink);
+            box-shadow: 0 0 6px var(--soft-pink), 0 0 10px white;
         }
 
+        /* КОНТЕНТ */
         .hero-container {
             display: flex;
             flex-direction: column;
@@ -91,11 +98,12 @@
             margin-bottom: 15px;
             filter: drop-shadow(0 15px 30px rgba(244, 194, 215, 0.4));
             animation: logoBreath 12s infinite ease-in-out;
+            will-change: transform;
         }
 
         @keyframes logoBreath {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03) translateY(-5px); }
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.02) translateY(-5px); }
         }
 
         .subtitle-wrapper {
@@ -104,8 +112,8 @@
             gap: 25px;
             margin-bottom: 45px;
             padding: 12px 35px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
             border-radius: 50px;
             border: 2px solid var(--mauve-text);
             box-shadow: 6px 6px 0px var(--soft-pink);
@@ -123,15 +131,16 @@
 
         .skill-bow {
             height: 45px;
+            filter: drop-shadow(2px 2px 0px var(--soft-pink));
             animation: bowFloat 4s infinite ease-in-out;
         }
 
         @keyframes bowFloat {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg) scale(1.1); }
+            0%, 100% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
         }
 
-        /* ВОЗДУШНАЯ АНИМАЦИЯ АВАТАРА */
+        /* АВАТАР */
         .ava-box {
             width: 200px;
             height: 200px;
@@ -142,14 +151,15 @@
             overflow: hidden;
             margin-bottom: 45px;
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
         }
         .ava-box img { width: 100%; height: 100%; object-fit: cover; }
-
         .ava-box:hover {
             transform: translateY(-15px) scale(1.05) rotate(3deg);
             box-shadow: 0 0 0 8px white, 0 20px 40px rgba(166, 112, 129, 0.2);
         }
 
+        /* КНОПКИ */
         .cta-group { display: flex; gap: 25px; }
         .enter-btn {
             text-decoration: none;
@@ -164,16 +174,16 @@
             transition: 0.3s ease;
             cursor: none !important;
         }
-
         .enter-btn:hover {
             transform: translateY(-4px);
             box-shadow: 10px 10px 0px var(--strong-pink);
         }
 
-        /* Скрываем кастомный курсор на мобильных */
         @media (max-width: 768px) {
             #custom-cursor { display: none; }
             body { cursor: auto !important; }
+            .logo-main { max-width: 400px; }
+            .ava-box { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -182,6 +192,7 @@
     <div id="custom-cursor"></div>
     <div class="bg-gradient"></div>
     <canvas id="stars-canvas"></canvas>
+    <canvas id="dust-canvas"></canvas>
 
     <main class="hero-container">
         <img src="font.png" alt="Astagme" class="logo-main">
@@ -203,47 +214,103 @@
     </main>
 
     <script>
-        // Звезды на фоне
-        const canvas = document.getElementById('stars-canvas');
-        const ctx = canvas.getContext('2d');
+        // --- ОБНОВЛЕННАЯ ЛОГИКА ФОНА (МЕРЦАНИЕ И ГЛУБИНА) ---
+        const sCanvas = document.getElementById('stars-canvas');
+        const sCtx = sCanvas.getContext('2d');
+        const dCanvas = document.getElementById('dust-canvas');
+        const dCtx = dCanvas.getContext('2d');
+        
         let stars = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        let dust = [];
+        let mouseX = 0, mouseY = 0;
+
+        function resize() {
+            sCanvas.width = dCanvas.width = window.innerWidth;
+            sCanvas.height = dCanvas.height = window.innerHeight;
+        }
         window.addEventListener('resize', resize);
         resize();
 
-        class Star {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        class Particle {
+            constructor(color, isStar) {
+                this.x = Math.random() * sCanvas.width;
+                this.y = Math.random() * sCanvas.height;
+                this.size = Math.random() * (isStar ? 2.5 : 1.5) + 0.5;
+                this.color = color;
                 this.opacity = Math.random();
-                this.speed = Math.random() * 0.02;
+                this.fadeSpeed = Math.random() * 0.015 + 0.005;
+                this.isStar = isStar;
+                // Коэффициент параллакса (глубина)
+                this.depth = Math.random() * 0.05 + (isStar ? 0.02 : 0.01); 
             }
-            draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            draw(ctx) {
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1; // Сброс
             }
             update() {
-                this.opacity += this.speed;
-                if (this.opacity > 1 || this.opacity < 0) this.speed = -this.speed;
+                // Плавное мерцание
+                this.opacity += this.fadeSpeed;
+                if (this.opacity > 1 || this.opacity < 0.1) this.fadeSpeed = -this.fadeSpeed;
+
+                // Легкий параллакс от мыши
+                const moveX = (window.innerWidth / 2 - mouseX) * this.depth;
+                const moveY = (window.innerHeight / 2 - mouseY) * this.depth;
+                
+                // Рендерим с учетом смещения
+                this.renderX = this.x + moveX;
+                this.renderY = this.y + moveY;
             }
         }
-        for (let i = 0; i < 150; i++) stars.push(new Star());
+
+        // Создаем белые звезды
+        for (let i = 0; i < 120; i++) stars.push(new Particle('white', true));
+        // Создаем розовую пыль
+        for (let i = 0; i < 60; i++) dust.push(new Particle('#FFDBEA', false));
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(star => { star.update(); star.draw(); });
+            sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
+            dCtx.clearRect(0, 0, dCanvas.width, dCanvas.height);
+
+            // Отрисовка пыли (на нижнем холсте)
+            dust.forEach(p => {
+                p.update();
+                // Рисуем с учетом параллакса
+                dCtx.globalAlpha = p.opacity;
+                dCtx.fillStyle = p.color;
+                dCtx.beginPath();
+                dCtx.arc(p.renderX, p.renderY, p.size, 0, Math.PI * 2);
+                dCtx.fill();
+            });
+
+            // Отрисовка звезд (на верхнем холсте)
+            stars.forEach(p => {
+                p.update();
+                // Рисуем с учетом параллакса
+                sCtx.globalAlpha = p.opacity;
+                sCtx.fillStyle = p.color;
+                sCtx.beginPath();
+                sCtx.arc(p.renderX, p.renderY, p.size, 0, Math.PI * 2);
+                sCtx.fill();
+            });
+
             requestAnimationFrame(animate);
         }
         animate();
 
-        // ЛОГИКА КУРСОР И ПЫЛИ (КОПИЯ С ДРУГИХ СТРАНИЦ)
+        // --- ЛОГИКА КУРСОР И ПЫЛИ (БЕЗ ИЗМЕНЕНИЙ) ---
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            
-            // Частота появления пыли (0.7 — золотая середина)
             if (Math.random() > 0.7) {
                 createSparkle(e.clientX, e.clientY);
             }
@@ -253,8 +320,6 @@
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
-            
-            // Размер как в оригинальном коде
             const size = Math.random() * 5 + 2; 
             sparkle.style.width = size + 'px';
             sparkle.style.height = size + 'px';
@@ -269,7 +334,6 @@
             setTimeout(() => sparkle.remove(), 800);
         }
 
-        // Взаимодействие курсора
         document.querySelectorAll('.enter-btn, .logo-main, .ava-box, .subtitle-wrapper').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.4)';
