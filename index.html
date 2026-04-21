@@ -8,15 +8,15 @@
     <style>
         :root {
             --soft-pink: #FFDBEA;
-            --strong-pink: #FF85B3; /* Яркий неон */
-            --mauve-text: #63414C; /* Нейтральный контур */
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #63414C;
             --bg-cream: #FDFBF7;
         }
 
         body {
             background-color: var(--bg-cream);
             margin: 0;
-            cursor: none !important;
+            cursor: none !important; /* Важно для кастомного курсора */
             color: var(--mauve-text);
             height: 100vh;
             display: flex;
@@ -24,7 +24,7 @@
             justify-content: center;
             overflow: hidden;
             position: relative;
-            animation: fadeInPage 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInPage 0.8s ease-in-out;
         }
 
         @keyframes fadeInPage {
@@ -52,6 +52,7 @@
             pointer-events: none;
         }
 
+        /* КУРСОР КАК НА ДРУГИХ СТРАНИЦАХ */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -62,17 +63,18 @@
             transform: translate(-50%, -50%) rotate(-45deg);
             pointer-events: none;
             z-index: 10000;
-            box-shadow: 0 0 10px var(--strong-pink);
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            transition: transform 0.15s ease-out;
         }
 
+        /* ПЫЛЬ КАК НА ДРУГИХ СТРАНИЦАХ */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 12px var(--strong-pink), 0 0 20px white;
+            box-shadow: 0 0 6px var(--soft-pink);
         }
 
         .hero-container {
@@ -87,9 +89,8 @@
             max-width: 680px;
             width: 95%;
             margin-bottom: 15px;
-            filter: drop-shadow(0 15px 30px rgba(244, 194, 215, 0.6));
+            filter: drop-shadow(0 15px 30px rgba(244, 194, 215, 0.4));
             animation: logoBreath 12s infinite ease-in-out;
-            will-change: transform, filter;
         }
 
         @keyframes logoBreath {
@@ -103,73 +104,76 @@
             gap: 25px;
             margin-bottom: 45px;
             padding: 12px 35px;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
             border-radius: 50px;
-            border: 2px solid var(--soft-pink); 
-            box-shadow: 0 10px 25px rgba(255, 133, 179, 0.15);
+            border: 2px solid var(--mauve-text);
+            box-shadow: 6px 6px 0px var(--soft-pink);
         }
 
         .hero-subtitle {
             font-family: 'Quicksand', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             letter-spacing: 5px;
             text-transform: uppercase;
             font-weight: 700;
             color: var(--mauve-text);
             margin: 0;
-            text-shadow: 0 0 10px white, 0 0 15px var(--soft-pink), 0 0 5px var(--strong-pink);
         }
 
         .skill-bow {
             height: 45px;
-            filter: drop-shadow(0 0 10px var(--soft-pink));
             animation: bowFloat 4s infinite ease-in-out;
         }
 
         @keyframes bowFloat {
-            0%, 100% { transform: scale(1) rotate(-5deg); }
-            50% { transform: scale(1.15) rotate(5deg); }
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg) scale(1.1); }
         }
 
+        /* ВОЗДУШНАЯ АНИМАЦИЯ АВАТАРА */
         .ava-box {
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            border: 5px solid white;
-            box-shadow: 0 0 0 4px var(--mauve-text), 0 15px 35px rgba(255, 133, 179, 0.25);
+            border: 4px solid var(--mauve-text);
+            background: white;
+            box-shadow: 0 0 0 8px white, 0 0 0 12px var(--soft-pink);
             overflow: hidden;
             margin-bottom: 45px;
-            transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: white;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .ava-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* КНОПКИ - ИСПРАВЛЕННЫЙ НЕЙТРАЛЬНЫЙ ВИД */
-        .cta-group { display: flex; gap: 30px; }
+        .ava-box:hover {
+            transform: translateY(-15px) scale(1.05) rotate(3deg);
+            box-shadow: 0 0 0 8px white, 0 20px 40px rgba(166, 112, 129, 0.2);
+        }
+
+        .cta-group { display: flex; gap: 25px; }
         .enter-btn {
             text-decoration: none;
             color: var(--mauve-text);
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
-            padding: 18px 50px;
-            /* ИСПРАВЛЕНО: Нейтральный контур по умолчанию */
-            border: 3px solid var(--mauve-text); 
+            padding: 16px 45px;
+            border: 3px solid var(--mauve-text);
             border-radius: 50px;
             background: white;
-            /* ИСПРАВЛЕНО: Нейтральная тень */
-            box-shadow: 0 4px 15px rgba(100, 60, 70, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 6px 6px 0px var(--soft-pink);
+            transition: 0.3s ease;
             cursor: none !important;
         }
 
-        /* КНОПКИ ПРИ НАВЕДЕНИИ - МАГИЯ ОСТАЕТСЯ */
         .enter-btn:hover {
-            transform: translateY(-6px);
-            /* ИСПРАВЛЕНО: Яркий неон только при наведении */
-            border-color: var(--strong-pink); 
-            box-shadow: 0 0 25px var(--strong-pink), 0 0 10px white;
-            color: var(--mauve-text);
+            transform: translateY(-4px);
+            box-shadow: 10px 10px 0px var(--strong-pink);
+        }
+
+        /* Скрываем кастомный курсор на мобильных */
+        @media (max-width: 768px) {
+            #custom-cursor { display: none; }
+            body { cursor: auto !important; }
         }
     </style>
 </head>
@@ -199,6 +203,7 @@
     </main>
 
     <script>
+        // Звезды на фоне
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -232,11 +237,14 @@
         }
         animate();
 
+        // ЛОГИКА КУРСОР И ПЫЛИ (КОПИЯ С ДРУГИХ СТРАНИЦ)
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.6) {
+            
+            // Частота появления пыли (0.7 — золотая середина)
+            if (Math.random() > 0.7) {
                 createSparkle(e.clientX, e.clientY);
             }
         });
@@ -245,7 +253,9 @@
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
-            const size = Math.random() * 8 + 4; 
+            
+            // Размер как в оригинальном коде
+            const size = Math.random() * 5 + 2; 
             sparkle.style.width = size + 'px';
             sparkle.style.height = size + 'px';
             sparkle.style.left = x + 'px';
@@ -253,15 +263,16 @@
             
             sparkle.animate([
                 { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${(Math.random()-0.5)*100}px, ${(Math.random()-0.5)*100}px) scale(0)`, opacity: 0 }
-            ], { duration: 1200, easing: 'ease-out' });
+                { transform: `translate(${(Math.random()-0.5)*60}px, ${(Math.random()-0.5)*60}px) scale(0)`, opacity: 0 }
+            ], { duration: 800, easing: 'ease-out' });
             
-            setTimeout(() => sparkle.remove(), 1200);
+            setTimeout(() => sparkle.remove(), 800);
         }
 
+        // Взаимодействие курсора
         document.querySelectorAll('.enter-btn, .logo-main, .ava-box, .subtitle-wrapper').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.6)';
+                cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.4)';
                 cursor.style.background = 'var(--soft-pink)';
             });
             el.addEventListener('mouseleave', () => {
