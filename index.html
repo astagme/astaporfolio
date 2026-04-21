@@ -21,11 +21,12 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-25px); }
+            50% { transform: translateY(-30px); }
         }
 
         header {
@@ -40,48 +41,48 @@
 
         .logo-text {
             width: 95%; 
-            max-width: 1200px;
+            max-width: 1300px;
             height: auto;
-            filter: drop-shadow(0 15px 35px var(--glow));
+            filter: drop-shadow(0 20px 40px var(--glow));
             animation: float 6s ease-in-out infinite;
             z-index: 2;
         }
 
         .pfp-png {
-            width: 280px; /* Еще крупнее */
+            width: 320px; /* Очень крупная аватарка */
             height: auto;
-            margin-top: -100px; /* Сильнее прижимаем к надписи */
-            filter: drop-shadow(0 10px 20px var(--glow));
+            margin-top: -120px; /* Плотно к логотипу */
+            filter: drop-shadow(0 15px 25px var(--glow));
             z-index: 1;
-            /* Убрали кружок, фон и рамки */
+            /* Убрали круг, рамки и фон */
         }
 
         nav {
-            margin-top: 60px;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 20px 60px;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 25px 80px;
             border-radius: 100px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             border: 1px solid white;
         }
 
         nav a {
             text-decoration: none;
             color: var(--mauve-text);
-            margin: 0 30px;
+            margin: 0 35px;
             transition: 0.3s;
             font-weight: 500;
-            font-size: 1.5rem; /* Крупный шрифт меню */
+            font-size: 1.6rem;
         }
 
-        nav a:hover { color: #ff9ec7; text-shadow: 0 0 10px var(--soft-pink); }
+        nav a:hover { color: #ff9ec7; text-shadow: 0 0 15px var(--soft-pink); }
 
         .tagline {
             color: var(--mauve-text);
-            font-size: 2.2rem; /* Увеличили текст */
-            margin-top: 70px;
+            font-size: 2.5rem;
+            margin-top: 80px;
             font-weight: 300;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
     </style>
 </head>
