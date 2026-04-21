@@ -25,17 +25,15 @@
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
-            /* Начальное состояние для анимации появления */
             opacity: 0; 
             transition: opacity 0.6s ease-out;
         }
 
-        /* Класс, который делает страницу видимой */
         body.fade-in { 
             opacity: 1 !important; 
         }
 
-        /* --- КУРСОР ИЗ ABOUT.HTML --- */
+        /* --- КУРСОР И ПЫЛЬ --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -56,7 +54,6 @@
             background: var(--soft-pink) !important;
         }
 
-        /* --- ЗВЕЗДНАЯ ПЫЛЬ ИЗ ABOUT.HTML --- */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
@@ -66,7 +63,7 @@
             box-shadow: 0 0 10px var(--soft-pink);
         }
 
-        /* --- НАВИГАЦИЯ (ПУХЛЫЕ КНОПКИ) --- */
+        /* --- НАВИГАЦИЯ --- */
         .nav-header { 
             width: 100%; 
             padding: 40px; 
@@ -93,7 +90,6 @@
         .nav-btn:hover { 
             transform: translateY(-5px); 
             box-shadow: 7px 7px 0px var(--strong-pink);
-            background-color: white;
         }
 
         h1 {
@@ -104,7 +100,7 @@
             text-align: center;
         }
 
-        /* --- СЕТКА КАТАЛОГА --- */
+        /* --- КАРТОЧКИ --- */
         .catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -139,7 +135,18 @@
             background-color: var(--soft-pink);
         }
 
-        .card-icon { font-size: 3.8rem; }
+        .card-icon-img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .card-icon-img {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
         .card-title { font-family: 'Comfortaa'; font-size: 1.7rem; font-weight: 700; }
         .card-desc { font-family: 'Quicksand'; font-size: 1rem; line-height: 1.5; opacity: 0.9; }
 
@@ -147,7 +154,6 @@
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
             .nav-btn, .category-card { cursor: pointer !important; }
-            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -164,40 +170,33 @@
 
     <main class="catalog-grid">
         <a href="websites.html" class="category-card">
-            <div class="card-icon">🌐</div>
+            <img src="catalog/web.png" alt="Web Design" class="card-icon-img">
             <div class="card-title">Websites</div>
             <p class="card-desc">Custom landing pages & creative web designs</p>
         </a>
 
         <a href="logos.html" class="category-card">
-            <div class="card-icon">✨</div>
+            <img src="catalog/logos.png" alt="Logo Design" class="card-icon-img">
             <div class="card-title">Logos</div>
             <p class="card-desc">Unique symbols that tell your brand story</p>
         </a>
 
         <a href="art.html" class="category-card">
-            <div class="card-icon">🌸</div>
+            <img src="catalog/digital.png" alt="Digital Art" class="card-icon-img">
             <div class="card-title">Digital Art</div>
             <p class="card-desc">Hand-drawn illustrations and social media art</p>
         </a>
     </main>
 
     <script>
-        // Функция появления страницы
         function showPage() {
             document.body.classList.add('fade-in');
             document.body.style.opacity = '1';
         }
 
-        // Появление при обычной загрузке
         window.addEventListener('load', showPage);
+        window.addEventListener('pageshow', (event) => { showPage(); });
 
-        // Появление при возврате назад (исправление бага)
-        window.addEventListener('pageshow', (event) => {
-            showPage();
-        });
-
-        // КУРСОР И ПЫЛЬ
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -224,13 +223,11 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
-        // АКТИВАЦИЯ КУРСОРA НА ССЫЛКАХ
         document.querySelectorAll('a, .category-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // ПЛАВНЫЙ УХОД
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
