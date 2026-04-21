@@ -13,6 +13,12 @@
             --bg-cream: #FDFBF7;
         }
 
+        /* Плавное появление страницы как в index.html */
+        @keyframes fadeInPage {
+            from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
+        }
+
         body {
             background-color: var(--bg-cream);
             margin: 0;
@@ -24,9 +30,10 @@
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
+            animation: fadeInPage 1.2s ease-out forwards;
         }
 
-        /* --- ФОН И КУРСОР --- */
+        /* --- ФОН И ГРАДИЕНТ --- */
         .bg-gradient { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; 
             background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7); 
@@ -36,6 +43,7 @@
         
         #stars-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
         
+        /* КУРСОР ИЗ INDEX */
         #custom-cursor { 
             position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); 
             border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); 
@@ -58,7 +66,7 @@
         /* --- ЗАГОЛОВОК --- */
         h1 { font-family: 'Comfortaa'; font-size: 2.5rem; margin: 20px 0 50px; text-align: center; }
 
-        /* --- СЕТКА КАТАЛОГА --- */
+        /* --- СЕТКА КАРТОЧЕК --- */
         .catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -86,7 +94,6 @@
             gap: 15px;
         }
 
-        /* Эффект нажатия при наведении */
         .category-card:hover {
             transform: translate(6px, 6px);
             box-shadow: 4px 4px 0px var(--mauve-text);
@@ -128,7 +135,7 @@
             <p class="card-desc">Unique symbols that tell your brand story</p>
         </a>
 
-        <a href="illustrations.html" class="category-card">
+        <a href="art.html" class="category-card">
             <div class="card-icon">🌸</div>
             <div class="card-title">Digital Art</div>
             <p class="card-desc">Hand-drawn illustrations and social media art</p>
@@ -136,47 +143,62 @@
     </main>
 
     <script>
-        // КУРСОР
+        // ЛОГИКА КУРСОРA ИЗ INDEX
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
+            
+            // Звездная пыль
             if (Math.random() > 0.6) {
                 const s = document.createElement('div');
-                s.className = 'sparkle'; document.body.appendChild(s);
+                s.className = 'sparkle';
+                document.body.appendChild(s);
                 const size = Math.random() * 8 + 2;
-                s.style.width = size + 'px'; s.style.height = size + 'px';
-                s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+                s.style.width = size + 'px';
+                s.style.height = size + 'px';
+                s.style.left = e.clientX + 'px';
+                s.style.top = e.clientY + 'px';
                 s.animate([
                     { opacity: 1, transform: 'scale(1)' },
-                    { opacity: 0, transform: `translate(${(Math.random()-0.5)*100}px, ${(Math.random()-0.5)*100}px) scale(0)` }
-                ], 1000);
+                    { opacity: 0, transform: `translate(${(Math.random()-0.5)*120}px, ${(Math.random()-0.5)*120}px) scale(0)` }
+                ], { duration: 1000, easing: 'ease-out' });
                 setTimeout(() => s.remove(), 1000);
             }
         });
 
-        // ЗВЕЗДЫ
+        // ЛОГИКА ЗВЕЗД ИЗ INDEX
         const sCanvas = document.getElementById('stars-canvas');
         const sCtx = sCanvas.getContext('2d');
         let particles = [];
-        function resize() { sCanvas.width = window.innerWidth; sCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        
-        for(let i=0; i<80; i++) {
+
+        function resize() {
+            sCanvas.width = window.innerWidth;
+            sCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        for (let i = 0; i < 80; i++) {
             particles.push({
-                x: Math.random() * sCanvas.width, 
-                y: Math.random() * sCanvas.height, 
-                size: Math.random() * 1.5, 
-                opacity: Math.random(), 
-                speed: 0.005
+                x: Math.random() * sCanvas.width,
+                y: Math.random() * sCanvas.height,
+                size: Math.random() * 1.5,
+                opacity: Math.random(),
+                speed: 0.005 + Math.random() * 0.002
             });
         }
 
         function animate() {
-            sCtx.clearRect(0,0,sCanvas.width, sCanvas.height);
+            sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
             particles.forEach(p => {
-                p.opacity += p.speed; if (p.opacity > 1 || p.opacity < 0) p.speed = -p.speed;
-                sCtx.globalAlpha = p.opacity; sCtx.fillStyle = "white"; sCtx.beginPath(); sCtx.arc(p.x, p.y, p.size, 0, Math.PI*2); sCtx.fill();
+                p.opacity += p.speed;
+                if (p.opacity > 1 || p.opacity < 0) p.speed = -p.speed;
+                sCtx.globalAlpha = p.opacity;
+                sCtx.fillStyle = "white";
+                sCtx.beginPath();
+                sCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                sCtx.fill();
             });
             requestAnimationFrame(animate);
         }
