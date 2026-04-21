@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAGME | Projects Navigator</title>
+    <title>ASTAGME | Gallery</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,42 +13,44 @@
             --bg-cream: #FDFBF7;
         }
 
+        /* --- БАЗОВЫЕ СТИЛИ --- */
+        html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg-cream);
-            margin: 0;
-            cursor: none !important;
+            margin: 0; cursor: none !important;
             color: var(--mauve-text);
             font-family: 'Quicksand', sans-serif;
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-            overflow-x: hidden;
         }
 
-        /* --- ФОН И КУРСОР (ТВОЯ БАЗА) --- */
         .bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7); background-size: 500% 500%; animation: gradientMove 20s ease infinite; }
         @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         #stars-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
         #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); }
         .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 9999; }
 
-        /* --- НАВИГАЦИЯ --- */
-        .nav-header { width: 100%; padding: 25px; box-sizing: border-box; }
-        .back-btn { text-decoration: none; color: var(--mauve-text); font-weight: 700; padding: 10px 20px; border: 2px solid var(--mauve-text); border-radius: 50px; background: white; box-shadow: 4px 4px 0px var(--soft-pink); transition: 0.3s; display: inline-block; cursor: none !important; }
-
-        /* --- МЕНЮ ТАБОВ --- */
-        .tabs-container {
-            display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; max-width: 900px;
+        /* --- ФИКСИРОВАННОЕ МЕНЮ --- */
+        .sticky-nav {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 15px; padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            border: 2px solid var(--mauve-text); border-radius: 50px;
+            box-shadow: 6px 6px 0px var(--soft-pink); z-index: 1000;
         }
-        .tab-btn {
-            padding: 10px 20px; border: 2px solid var(--mauve-text); border-radius: 15px;
-            background: white; font-family: 'Quicksand'; font-weight: 700; color: var(--mauve-text);
-            box-shadow: 4px 4px 0px var(--soft-pink); transition: 0.3s; cursor: none !important;
+        .nav-item {
+            text-decoration: none; color: var(--mauve-text); font-weight: 700; font-size: 0.9rem;
+            padding: 5px 12px; transition: 0.3s; cursor: none !important;
         }
-        .tab-btn.active { background: var(--soft-pink); transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--mauve-text); }
-        .tab-btn:hover:not(.active) { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--strong-pink); }
+        .nav-item:hover { color: var(--strong-pink); }
 
-        /* --- ВИТРИНА ПРОЕКТА --- */
-        .showcase { position: relative; width: 800px; height: 550px; display: flex; flex-direction: column; align-items: center; }
+        /* --- СЕКЦИИ ПРОЕКТОВ --- */
+        .project-block {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 100px 20px; box-sizing: border-box;
+            border-bottom: 2px dashed var(--strong-pink);
+        }
+
+        .display-wrapper { position: relative; width: 800px; margin-bottom: 40px; }
         
         .browser-frame {
             width: 100%; height: 480px; background: white; border: 3px solid var(--mauve-text);
@@ -59,34 +61,42 @@
         .b-dot { width: 10px; height: 10px; border: 2px solid var(--mauve-text); border-radius: 50%; background: white; }
 
         .browser-content { width: 100%; height: calc(100% - 35px); position: relative; overflow: hidden; }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; background-size: cover; background-position: center; }
-        .slide.active { opacity: 1; }
+        .inner-slide {
+            width: 100%; height: 100%; background-size: cover; background-position: center;
+            display: none; /* Слайды внутри будем менять по кнопкам */
+        }
+        .inner-slide.active { display: block; }
 
-        /* Парящий телефон */
+        /* Телефон */
         .phone-overlay {
-            position: absolute; right: -70px; bottom: 20px;
-            width: 180px; height: 360px; background: white;
-            border: 3px solid var(--mauve-text); border-radius: 30px;
-            box-shadow: 8px 8px 0px var(--strong-pink);
+            position: absolute; right: -80px; bottom: -40px;
+            width: 190px; height: 380px; background: white;
+            border: 3px solid var(--mauve-text); border-radius: 35px;
+            box-shadow: 10px 10px 0px var(--strong-pink);
             z-index: 5; overflow: hidden;
             animation: floaty 5s infinite ease-in-out;
-            transition: 0.5s;
         }
         @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         .phone-overlay img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Управление внутри слайдера */
-        .slider-controls { display: flex; gap: 15px; margin-top: 25px; }
-        .arrow { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--mauve-text); background: white; box-shadow: 3px 3px 0px var(--soft-pink); cursor: none !important; font-size: 18px; transition: 0.2s; }
-        .arrow:hover { background: var(--soft-pink); transform: scale(1.1); }
+        /* Переключалки внутри монитора */
+        .mini-arrows { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-sm {
+            width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--mauve-text);
+            background: white; box-shadow: 3px 3px 0px var(--soft-pink);
+            cursor: none !important; display: flex; align-items: center; justify-content: center;
+        }
 
-        /* Описание */
-        .project-info { text-align: center; margin-top: 20px; max-width: 600px; }
-        .project-desc { font-size: 1rem; line-height: 1.5; color: var(--mauve-text); opacity: 0.8; }
+        .info-text { text-align: center; max-width: 600px; margin-top: 20px; }
+        .info-text h2 { font-family: 'Comfortaa'; font-size: 2rem; margin: 10px 0; }
+
+        /* Чередование сторон (телефон слева) */
+        .project-block.alt .phone-overlay { right: auto; left: -80px; box-shadow: -10px 10px 0px var(--strong-pink); }
 
         @media (max-width: 1000px) {
-            .showcase { width: 90%; }
+            .display-wrapper { width: 90%; }
             .phone-overlay { display: none; }
+            .sticky-nav { width: 95%; font-size: 0.7rem; gap: 5px; }
         }
     </style>
 </head>
@@ -96,128 +106,82 @@
     <div class="bg-gradient"></div>
     <canvas id="stars-canvas"></canvas>
 
-    <nav class="nav-header">
-        <a href="index.html" class="back-btn">← Home</a>
+    <nav class="sticky-nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="#proj1" class="nav-item">Beauty</a>
+        <a href="#proj2" class="nav-item">Coffee</a>
+        <a href="#proj3" class="nav-item">Art</a>
     </nav>
 
-    <div class="tabs-container" id="tabsMenu">
-        </div>
-
-    <main class="showcase">
-        <div class="browser-frame">
-            <div class="browser-top">
-                <div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div>
-            </div>
-            <div class="browser-content" id="browserContent">
+    <section class="project-block" id="proj1">
+        <div class="display-wrapper">
+            <div class="browser-frame">
+                <div class="browser-top"><div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div></div>
+                <div class="browser-content">
+                    <div class="inner-slide active" style="background-image: url('project1/desktop_1.png')"></div>
+                    <div class="inner-slide" style="background-image: url('project1/desktop_2.png')"></div>
                 </div>
+            </div>
+            <div class="phone-overlay">
+                <img src="project1/mobile_main.jpg">
+            </div>
         </div>
+        <div class="mini-arrows">
+            <button class="btn-sm" onclick="moveSub(this, -1)">❮</button>
+            <button class="btn-sm" onclick="moveSub(this, 1)">❯</button>
+        </div>
+        <div class="info-text">
+            <h2>Beauty Boutique</h2>
+            <p>A soft-toned landing page for a natural cosmetics brand.</p>
+        </div>
+    </section>
 
-        <div class="phone-overlay">
-            <img src="" id="phoneImg">
+    <section class="project-block alt" id="proj2">
+        <div class="display-wrapper">
+            <div class="browser-frame">
+                <div class="browser-top"><div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div></div>
+                <div class="browser-content">
+                    <div class="inner-slide active" style="background-image: url('project2/desktop_1.png')"></div>
+                    <div class="inner-slide" style="background-image: url('project2/desktop_2.png')"></div>
+                </div>
+            </div>
+            <div class="phone-overlay">
+                <img src="project2/mobile_main.jpg">
+            </div>
         </div>
-
-        <div class="slider-controls">
-            <button class="arrow" onclick="changeSubSlide(-1)">❮</button>
-            <button class="arrow" onclick="changeSubSlide(1)">❯</button>
+        <div class="mini-arrows">
+            <button class="btn-sm" onclick="moveSub(this, -1)">❮</button>
+            <button class="btn-sm" onclick="moveSub(this, 1)">❯</button>
         </div>
-
-        <div class="project-info">
-            <h2 id="projTitle" style="font-family: 'Comfortaa'; margin-bottom: 10px;">Project Name</h2>
-            <p class="project-desc" id="projDesc">Small description of the project goes here...</p>
+        <div class="info-text">
+            <h2>The Morning Coffee</h2>
+            <p>Minimalist coffee shop interface with booking system.</p>
         </div>
-    </main>
+    </section>
 
     <script>
-        // ДАННЫЕ ТВОИХ ПРОЕКТОВ (Сюда просто добавляй новые!)
-        const projects = [
-            {
-                id: 1,
-                name: "Beauty Shop",
-                desc: "E-commerce platform for organic cosmetics with soft pastel design.",
-                folder: "project1",
-                desktop: ["desktop_1.png", "desktop_2.png", "desktop_3.png"],
-                mobile: "mobile_main.jpg"
-            },
-            {
-                id: 2,
-                name: "Coffee House",
-                desc: "Landing page for a local cafe with integrated menu and booking system.",
-                folder: "project2",
-                desktop: ["desktop_1.png", "desktop_2.png", "desktop_3.png"],
-                mobile: "mobile_main.jpg"
-            },
-            {
-                id: 3,
-                name: "Art Studio",
-                desc: "Minimalist portfolio gallery for a digital illustrator.",
-                folder: "project3",
-                desktop: ["desktop_1.png", "desktop_2.png", "desktop_3.png"],
-                mobile: "mobile_main.jpg"
-            }
-        ];
-
-        let currentProjIndex = 0;
-        let currentSubSlide = 0;
-
-        function init() {
-            renderTabs();
-            loadProject(0);
+        // Функция для переключения слайдов ВНУТРИ каждого блока
+        function moveSub(btn, dir) {
+            const container = btn.closest('.project-block').querySelector('.browser-content');
+            const slides = container.querySelectorAll('.inner-slide');
+            let activeIdx = Array.from(slides).findIndex(s => s.classList.contains('active'));
+            
+            slides[activeIdx].classList.remove('active');
+            activeIdx = (activeIdx + dir + slides.length) % slides.length;
+            slides[activeIdx].classList.add('active');
         }
 
-        function renderTabs() {
-            const menu = document.getElementById('tabsMenu');
-            menu.innerHTML = projects.map((p, index) => `
-                <button class="tab-btn ${index === 0 ? 'active' : ''}" onclick="loadProject(${index})">
-                    ${p.name}
-                </button>
-            `).join('');
-        }
-
-        function loadProject(index) {
-            currentProjIndex = index;
-            currentSubSlide = 0;
-            const p = projects[index];
-
-            // Обновляем табы
-            document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-                btn.classList.toggle('active', i === index);
-            });
-
-            // Обновляем текст
-            document.getElementById('projTitle').innerText = p.name;
-            document.getElementById('projDesc').innerText = p.desc;
-
-            // Обновляем монитор
-            const content = document.getElementById('browserContent');
-            content.innerHTML = p.desktop.map((img, i) => `
-                <div class="slide ${i === 0 ? 'active' : ''}" 
-                     style="background-image: url('${p.folder}/${img}')">
-                </div>
-            `).join('');
-
-            // Обновляем телефон
-            document.getElementById('phoneImg').src = `${p.folder}/${p.mobile}`;
-        }
-
-        function changeSubSlide(dir) {
-            const slides = document.querySelectorAll('.slide');
-            slides[currentSubSlide].classList.remove('active');
-            currentSubSlide = (currentSubSlide + dir + slides.length) % slides.length;
-            slides[currentSubSlide].classList.add('active');
-        }
-
-        // --- КУРСОР И ЗВЕЗДЫ (ТВОЙ КОД) ---
+        // --- ТВОЙ КУРСОР И ЗВЕЗДЫ ---
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.7) {
+            if (Math.random() > 0.6) {
                 const s = document.createElement('div');
                 s.className = 'sparkle'; document.body.appendChild(s);
-                const size = Math.random()*8+2;
-                s.style.width = size+'px'; s.style.height = size+'px';
-                s.style.left = e.clientX+'px'; s.style.top = e.clientY+'px';
-                s.animate([{opacity:1}, {opacity:0, transform:`translate(${(Math.random()-0.5)*80}px, ${(Math.random()-0.5)*80}px) scale(0)`}], 1000);
+                s.style.width = '5px'; s.style.height = '5px';
+                s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+                s.animate([{opacity:1}, {opacity:0, transform: `translate(${(Math.random()-0.5)*50}px, ${(Math.random()-0.5)*50}px)`}], 1000);
                 setTimeout(() => s.remove(), 1000);
             }
         });
@@ -234,7 +198,6 @@
             requestAnimationFrame(draw);
         }
         draw();
-        init();
     </script>
 </body>
 </html>
