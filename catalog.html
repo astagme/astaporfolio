@@ -6,14 +6,6 @@
     <title>Catalog | ASTAGME</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-body.fade-in {
-    opacity: 1;
-}
         :root {
             --soft-pink: #FFDBEA;
             --strong-pink: #F4C2D7; 
@@ -23,16 +15,23 @@ body.fade-in {
             --glow: rgba(255, 219, 234, 0.8);
         }
 
+        /* ПЛАВНОСТЬ (Добавляем этот блок) */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
+            opacity: 0; /* Изначально скрыто */
+            transition: opacity 0.5s ease;
             cursor: none !important;
             color: var(--mauve-text);
             min-height: 100vh;
         }
 
-        /* --- КУРСОР --- */
+        body.fade-in {
+            opacity: 1; /* Всплывает при загрузке */
+        }
+
+        /* КУРСОР */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -52,7 +51,7 @@ body.fade-in {
             background: var(--soft-pink) !important;
         }
 
-        /* --- НАВИГАЦИЯ --- */
+        /* НАВИГАЦИЯ */
         nav {
             padding: 40px;
             display: flex;
@@ -77,7 +76,7 @@ body.fade-in {
             transform: translateY(-3px);
         }
 
-        /* --- СЕТКА КАТАЛОГА --- */
+        /* СЕТКА КАТАЛОГА */
         .catalog-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -98,7 +97,6 @@ body.fade-in {
             gap: 40px;
         }
 
-        /* КАРТОЧКА КАТЕГОРИИ */
         .category-card {
             background: white;
             border: 3px solid var(--brown-outline);
@@ -122,7 +120,6 @@ body.fade-in {
         .category-icon {
             font-size: 60px;
             margin-bottom: 20px;
-            filter: drop-shadow(0 5px 10px var(--glow));
         }
 
         .category-card h3 {
@@ -132,16 +129,7 @@ body.fade-in {
             color: #5D3D48;
         }
 
-        .category-card p {
-            font-size: 1rem;
-            color: var(--mauve-text);
-            opacity: 0.8;
-            line-height: 1.4;
-        }
-
-        /* АДАПТИВ */
         @media (max-width: 850px) {
-            .catalog-title { font-size: 2.2rem; }
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
             .nav-btn, .category-card { cursor: pointer !important; }
@@ -162,59 +150,30 @@ body.fade-in {
         <h1 class="catalog-title">Portfolio</h1>
         
         <div class="catalog-grid">
-            
             <a href="logos.html" class="category-card">
                 <div class="category-icon">🎨</div>
                 <h3>Logos</h3>
-                <p>Branding, visual identity and custom logo designs</p>
+                <p>Branding & visual identity</p>
             </a>
 
             <a href="art.html" class="category-card">
                 <div class="category-icon">✨</div>
                 <h3>Illustrations</h3>
-                <p>Digital art, character design and creative drawings</p>
+                <p>Digital art & character design</p>
             </a>
 
             <a href="branding.html" class="category-card">
                 <div class="category-icon">💻</div>
                 <h3>Websites</h3>
-                <p>Creative coding, UI/UX and web development</p>
+                <p>UI/UX & creative coding</p>
             </a>
-
         </div>
     </main>
 
     <script>
-        // Проявление при входе на страницу
-window.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('fade-in');
-});
-
-// Затухание при клике на кнопки (чтобы уйти плавно)
-document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        if (link.hostname === window.location.hostname && link.href.includes('.html')) {
-            e.preventDefault();
-            const targetUrl = link.href;
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 500);
-        }
-    });
-});
-        const cursor = document.getElementById('custom-cursor');
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.display = 'block';
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        // ЛОГИКА ПЛАВНОСТИ
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('fade-in');
         });
 
-        const interactables = document.querySelectorAll('.nav-btn, .category-card');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-        });
-    </script>
-</body>
-</html>
+        document.querySelectorAll('a').forEach(link => {
