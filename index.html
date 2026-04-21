@@ -12,16 +12,16 @@
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --star-yellow: #FFD700;
-            --brown-outline: #63414C; /* Коричневый контур для курсора */
+            --brown-outline: #63414C; /* Тот самый коричневый для контура */
             --glow: rgba(255, 219, 234, 0.8);
         }
 
-        /* --- КАСТОМНЫЙ КУРСОР --- */
+        /* --- КУРСОР (Бело-розовый с коричневым контуром) --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
-            cursor: none; /* Прячем стандартную стрелку */
+            cursor: none; 
             min-height: 180vh;
             overflow-x: hidden;
             color: var(--mauve-text);
@@ -33,11 +33,11 @@
             height: 28px;
             background: white;
             border: 2px solid var(--brown-outline);
-            border-radius: 2px 50% 50% 50%; /* Форма капельки */
+            border-radius: 2px 50% 50% 50%;
             transform: rotate(-45deg) translate(-50%, -50%);
             pointer-events: none;
             z-index: 10000;
-            transition: transform 0.1s linear, width 0.2s, background 0.2s;
+            transition: transform 0.1s linear, width 0.2s;
             box-shadow: 2px 2px 0px var(--soft-pink);
         }
 
@@ -55,7 +55,7 @@
             background: var(--soft-pink);
         }
 
-        /* --- ЗВЕЗДНОЕ НЕБО НА ФОНЕ --- */
+        /* --- ЗВЕЗДЫ НА ФОНЕ --- */
         .star-field {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -76,7 +76,7 @@
             50% { transform: scale(1.2); opacity: 0.6; }
         }
 
-        /* --- ШАПКА САЙТА --- */
+        /* --- ВЕРХНЯЯ ЧАСТЬ (HEADER) --- */
         header {
             display: flex;
             flex-direction: column;
@@ -111,7 +111,6 @@
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(5px);
             transition: 0.3s;
-            cursor: none;
         }
 
         .nav-btn:hover {
@@ -120,7 +119,7 @@
             transform: translateY(-3px);
         }
 
-        /* --- ОКОШКО "BEHIND THE WORK" --- */
+        /* --- ОКОШКО ABOUT --- */
         .about-section {
             display: flex;
             justify-content: center;
@@ -130,7 +129,7 @@
         }
 
         .about-card {
-            background: #FFF5F8; /* Нежно-розовый фон */
+            background: #FFF5F8; /* Нежно-розовый внутри */
             border-radius: 40px;
             padding: 40px;
             display: flex;
@@ -142,25 +141,17 @@
             align-items: center;
         }
 
-        /* Контейнер для фото, чтобы сердечко влезло целиком */
-        .about-img-container {
+        /* КВАДРАТИК ДЛЯ ФОТО */
+        .about-img {
             width: 300px;
             height: 300px;
             min-width: 300px;
-            background: white;
             border-radius: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            object-fit: contain; /* ЧТОБЫ СЕРДЕЧКО ВЛЕЗЛО ЦЕЛИКОМ */
+            padding: 15px; 
+            background: white; 
+            box-sizing: border-box;
             filter: drop-shadow(0 10px 25px var(--glow));
-        }
-
-        .about-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Сердечко теперь помещается полностью */
-            padding: 10px;
         }
 
         .about-content { flex: 1; }
@@ -192,15 +183,12 @@
             font-size: 0.95rem;
             color: var(--mauve-text);
             border: 1px solid var(--soft-pink);
-            display: flex;
-            align-items: center;
-            gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
 
         @media (max-width: 850px) {
             .about-card { flex-direction: column; text-align: center; }
-            .about-img-container { width: 250px; height: 250px; min-width: 250px; }
+            .about-img { width: 250px; height: 250px; min-width: 250px; }
             #custom-cursor { display: none; }
             body { cursor: auto; }
         }
@@ -208,7 +196,6 @@
 </head>
 <body>
     <div id="custom-cursor"></div>
-
     <div class="star-field"></div>
 
     <header>
@@ -216,7 +203,6 @@
             <img src="ava.png" alt="Asta" class="pfp-png">
             <img src="font.png" alt="astagme" class="logo-text">
         </div>
-        
         <nav>
             <a href="index.html" class="nav-btn">home</a>
             <a href="branding.html" class="nav-btn">branding</a>
@@ -227,18 +213,13 @@
 
     <section class="about-section">
         <div class="about-card">
-            <div class="about-img-container">
-                <img src="photo.png" alt="Asta Heart" class="about-img"> 
-            </div>
+            <img src="photo.png" alt="Asta" class="about-img"> 
             <div class="about-content">
                 <h2>Behind the Work ✨</h2>
-                <p>
-                    Hello, I'm Asta! I'm a graphic designer and **Web Developer** who genuinely loves bringing ideas to life. 
-                    I don't just create beautiful visuals — I build functional, high-quality websites using **HTML, CSS, and JavaScript** to make your brand stand out in the digital world.
-                </p>
+                <p>Hello, I'm Asta! I'm a graphic designer and Web Developer who genuinely loves bringing ideas to life. I don't just create beautiful visuals — I build functional, high-quality websites using clean code (HTML, CSS, JS) to make your brand stand out.</p>
                 
                 <div class="tags-container">
-                    <div class="tag">🎨 Figma, Photoshop & Illustrator</div>
+                    <div class="tag">🎨 Figma & Illustrator</div>
                     <div class="tag">💻 Web Dev (HTML / CSS / JS)</div>
                     <div class="tag">💡 creative ideas & new things</div>
                     <div class="tag">🗓️ 3-week turnaround</div>
@@ -248,31 +229,22 @@
     </section>
 
     <script>
-        // Скрипт для движения курсора
+        // Движение курсора
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Эффект увеличения курсора при наведении
-        document.querySelectorAll('.nav-btn, .tag, .about-img-container').forEach(el => {
+        // Эффект наведения
+        document.querySelectorAll('.nav-btn, .tag, .about-img').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
         });
 
-        // Генерация звезд в случайных местах
+        // Генерация звезд
         const field = document.querySelector('.star-field');
         for (let i = 0; i < 18; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             const size = Math.random() * 20 + 10 + 'px';
-            star.style.width = size; star.style.height = size;
-            star.style.top = Math.random() * 100 + '%';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
-            field.appendChild(star);
-        }
-    </script>
-</body>
-</html>
