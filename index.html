@@ -9,20 +9,13 @@
         :root {
             --soft-pink: #FFDBEA;
             --strong-pink: #F4C2D7; 
-            --mauve-text: #A67081;
+            --mauve-text: #63414C;
             --bg-cream: #FDFBF7;
-            --brown-outline: #63414C;
+            --angel-blue: #E3F2FD;
         }
 
         body {
             background-color: var(--bg-cream);
-            /* Нежный паттерн в горошек */
-            background-image: 
-                radial-gradient(var(--soft-pink) 1px, transparent 1px),
-                radial-gradient(var(--soft-pink) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            font-family: 'Comfortaa', cursive;
             margin: 0;
             cursor: none !important;
             color: var(--mauve-text);
@@ -31,21 +24,52 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
 
-        /* ТВОЙ ЛЮБИМЫЙ КУРСОР */
+        /* ЖИВОЙ ГРАДИЕНТНЫЙ ФОН */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(45deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ЗВЕЗДНОЕ НЕБО (Холст для JS) */
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* КУРСОР-РОМБИК */
         #custom-cursor {
             position: fixed;
             width: 25px;
             height: 25px;
             background: white;
-            border: 2px solid var(--brown-outline);
+            border: 2px solid var(--mauve-text);
             border-radius: 2px 50% 50% 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
             pointer-events: none;
             z-index: 10000;
             box-shadow: 2px 2px 0px var(--soft-pink);
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .cursor-active {
@@ -53,30 +77,7 @@
             background: var(--soft-pink) !important;
         }
 
-        .sparkle {
-            position: fixed;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 8px var(--strong-pink);
-        }
-
-        /* ДЕКОРАЦИИ (ЛОТОСЫ, БАНТИКИ, ЗВЕЗДЫ) */
-        .decor {
-            position: absolute;
-            pointer-events: none;
-            font-size: 2rem;
-            filter: drop-shadow(3px 3px 0px var(--soft-pink));
-            animation: float 6s infinite ease-in-out;
-            opacity: 0.7;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(8deg); }
-        }
-
+        /* КОНТЕНТ */
         .hero-container {
             display: flex;
             flex-direction: column;
@@ -85,43 +86,40 @@
             z-index: 10;
         }
 
-        /* ПЛАВНОЕ ЛОГО */
+        /* ЛОГОТИП С ФИКСОМ КАЧЕСТВА */
         .logo-main {
             max-width: 580px;
             width: 90%;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 10px 15px rgba(244, 194, 215, 0.4));
+            margin-bottom: 5px;
+            filter: drop-shadow(0 10px 20px rgba(244, 194, 215, 0.5));
             transition: all 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-            animation: logoBreath 8s infinite ease-in-out;
+            animation: logoBreath 10s infinite ease-in-out;
+            will-change: transform, filter;
+            image-rendering: -webkit-optimize-contrast;
         }
 
         @keyframes logoBreath {
-            0%, 100% { transform: scale(1); opacity: 0.95; }
+            0%, 100% { transform: scale(1); opacity: 0.9; }
             50% { transform: scale(1.02); opacity: 1; }
         }
 
         .logo-main:hover {
             transform: scale(1.05) !important;
-            filter: drop-shadow(0 0 30px var(--soft-pink));
+            filter: drop-shadow(0 0 35px var(--soft-pink));
         }
 
-        /* ВОЗВРАЩЕННАЯ НАДПИСЬ */
+        /* НАДПИСЬ */
         .hero-subtitle {
             font-family: 'Quicksand', sans-serif;
             font-size: 0.85rem;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             font-weight: 600;
             margin-bottom: 35px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             opacity: 0.8;
-        }
-
-        .hero-subtitle::before, .hero-subtitle::after {
-            content: '🌸';
-            font-size: 0.8rem;
         }
 
         /* АВАТАРКА */
@@ -129,7 +127,7 @@
             width: 190px;
             height: 190px;
             border-radius: 50%;
-            border: 4px solid var(--brown-outline);
+            border: 4px solid var(--mauve-text);
             background: white;
             box-shadow: 0 0 0 8px white, 0 0 0 12px var(--soft-pink);
             overflow: hidden;
@@ -138,22 +136,18 @@
         }
 
         .ava-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .ava-box:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 0 0 10px white, 0 0 40px var(--strong-pink);
-        }
+        .ava-box:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 0 10px white, 0 0 40px var(--strong-pink); }
 
         /* КНОПКИ */
         .cta-group { display: flex; gap: 25px; }
 
         .enter-btn {
             text-decoration: none;
-            color: var(--brown-outline);
+            color: var(--mauve-text);
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
-            padding: 15px 40px;
-            border: 3px solid var(--brown-outline);
+            padding: 16px 45px;
+            border: 3px solid var(--mauve-text);
             border-radius: 50px;
             background: white;
             box-shadow: 6px 6px 0px var(--soft-pink);
@@ -168,7 +162,7 @@
         }
 
         @media (max-width: 850px) {
-            #custom-cursor, .decor { display: none !important; }
+            #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
             .logo-main { max-width: 320px; }
             .ava-box { width: 140px; height: 140px; }
@@ -178,19 +172,14 @@
 <body>
 
     <div id="custom-cursor"></div>
-
-    <div class="decor" style="top: 10%; left: 10%; animation-delay: 0s;">🎀</div>
-    <div class="decor" style="top: 15%; right: 15%; animation-delay: 1s;">✨</div>
-    <div class="decor" style="bottom: 20%; left: 15%; animation-delay: 2s;">🌸</div>
-    <div class="decor" style="bottom: 10%; right: 10%; animation-delay: 1.5s;">👼</div>
-    <div class="decor" style="top: 45%; left: 5%; animation-delay: 3s; font-size: 1.5rem;">⭐</div>
-    <div class="decor" style="top: 50%; right: 5%; animation-delay: 2.5s; font-size: 1.5rem;">🪐</div>
+    <div class="bg-gradient"></div>
+    <canvas id="stars-canvas"></canvas>
 
     <main class="hero-container">
         <img src="font.png" alt="Astagme" class="logo-main">
 
         <div class="hero-subtitle">
-            Illustrator • UI/UX Designer • Web Developer
+            ✨ Illustrator • UI/UX Designer • Web Developer ✨
         </div>
 
         <div class="ava-box">
@@ -204,31 +193,57 @@
     </main>
 
     <script>
-        const cursor = document.getElementById('custom-cursor');
+        // Скрипт для мерцающих звезд
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
 
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.opacity = Math.random();
+                this.speed = Math.random() * 0.02;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            update() {
+                this.opacity += this.speed;
+                if (this.opacity > 1 || this.opacity < 0) this.speed = -this.speed;
+            }
+        }
+
+        for (let i = 0; i < 150; i++) stars.push(new Star());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Управление курсором
+        const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.85) createSparkle(e.clientX, e.clientY);
         });
-
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            document.body.appendChild(sparkle);
-            const size = Math.random() * 6 + 2;
-            sparkle.style.width = size + 'px';
-            sparkle.style.height = size + 'px';
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            
-            sparkle.animate([
-                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${(Math.random()-0.5)*60}px, 60px) scale(0)`, opacity: 0 }
-            ], { duration: 1000, easing: 'ease-out' });
-            
-            setTimeout(() => sparkle.remove(), 1000);
-        }
 
         document.querySelectorAll('.enter-btn, .logo-main, .ava-box').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
