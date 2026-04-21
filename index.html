@@ -14,7 +14,6 @@
             --brown-outline: #63414C;
         }
 
-        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
@@ -31,7 +30,7 @@
 
         body.fade-in { opacity: 1; }
 
-        /* --- МАГИЧЕСКИЙ КУРСОР --- */
+        /* МАГИЧЕСКИЙ КУРСОР */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -61,7 +60,6 @@
             box-shadow: 0 0 10px var(--soft-pink);
         }
 
-        /* --- КОНТЕНТ ГЛАВНОЙ --- */
         .hero {
             flex: 1;
             display: flex;
@@ -72,65 +70,62 @@
             padding: 20px;
         }
 
-        /* КРУПНЫЙ ЖИВОЙ ЛОГОТИП */
-       /* КРУПНЫЙ ЖИВОЙ ЛОГОТИП */
-.logo-main {
-    max-width: 650px;
-    width: 85%;
-    height: auto;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 15px 25px rgba(244, 194, 215, 0.5));
-    transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); /* Сделали переход плавнее */
-    cursor: none !important;
-    
-    /* Увеличили время с 6 до 10 секунд и смягчили движение */
-    animation: logoFloat 10s infinite ease-in-out;
-}
+        /* ПЛАВНЫЙ ЛОГОТИП (БЕЗ РЕЗКИХ ПРЫЖКОВ) */
+        .logo-main {
+            max-width: 650px;
+            width: 85%;
+            height: auto;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 15px 25px rgba(244, 194, 215, 0.5));
+            cursor: none !important;
+            animation: logoFloat 12s infinite ease-in-out;
+            /* Очень плавный переход для ховера */
+            transition: 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
 
-@keyframes logoFloat {
-    0%, 100% { 
-        transform: translateY(0) rotate(0deg); 
-    }
-    50% { 
-        transform: translateY(-8px) rotate(0.5deg); /* Уменьшили подъем с 15px до 8px */
-    }
-}
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-10px) scale(1.02) rotate(0.5deg); }
+        }
 
-.logo-main:hover {
-    animation-play-state: paused;
-    transform: scale(1.03) rotate(1.5deg) !important; /* Уменьшили наклон при наведении */
-}
+        .logo-main:hover {
+            animation-play-state: paused;
+            transform: scale(1.04) rotate(1.5deg) !important;
+            filter: drop-shadow(0 20px 40px rgba(244, 194, 215, 0.8));
+        }
 
-        /* ПАРЯЩАЯ АВАТАРКА */
+        /* СПАСАЕМ СЕРДЕЧКО НА АВАТАРКЕ */
         .ava-container {
             position: relative;
             margin-bottom: 30px;
-            animation: avaFloat 5s infinite ease-in-out;
+            animation: avaFloat 6s infinite ease-in-out;
         }
 
         .ava-floating {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
+            width: 170px;
+            height: 170px;
+            /* contain + padding позволяют увидеть рисунок целиком */
+            object-fit: contain; 
+            padding: 12px;
             border-radius: 50%;
             border: 4px solid var(--brown-outline);
             background: white;
             box-shadow: 8px 8px 0px var(--soft-pink);
             cursor: none !important;
-            transition: 0.4s ease;
+            transition: 0.5s ease;
         }
 
         .ava-container:hover .ava-floating {
-            transform: scale(1.1);
+            transform: scale(1.08);
             box-shadow: 12px 12px 0px var(--strong-pink);
         }
 
         @keyframes avaFloat {
             0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-20px) rotate(3deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
         }
 
-        /* НОВАЯ ПОДПИСЬ */
+        /* ПОДПИСЬ */
         .hero-subtitle {
             font-family: 'Quicksand', sans-serif;
             font-size: 1.1rem;
@@ -147,13 +142,11 @@
         }
 
         .hero-subtitle span { display: flex; align-items: center; }
-
         .hero-subtitle span::after {
             content: "•";
             margin-left: 15px;
             color: var(--strong-pink);
         }
-        
         .hero-subtitle span:last-child::after { content: ""; }
 
         /* КНОПКИ */
@@ -185,7 +178,7 @@
             body { cursor: auto !important; overflow-y: auto; }
             .enter-btn, .logo-main, .ava-floating { cursor: pointer !important; }
             .logo-main { max-width: 400px; }
-            .ava-floating { width: 100px; height: 100px; }
+            .ava-floating { width: 120px; height: 120px; padding: 8px;}
             .hero-subtitle { font-size: 0.8rem; gap: 10px; flex-wrap: wrap; justify-content: center; }
         }
     </style>
@@ -198,7 +191,7 @@
         <img src="font.png" alt="Astagme Logo" class="logo-main">
         
         <div class="ava-container">
-            <img src="ava.png" alt="Astagme Avatar" class="ava-floating">
+            <img src="ava.png?v=3" alt="Astagme Avatar" class="ava-floating">
         </div>
 
         <div class="hero-subtitle">
@@ -214,10 +207,8 @@
     </main>
 
     <script>
-        // Плавное появление страницы
         window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
 
-        // Логика курсора
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -226,7 +217,6 @@
             createSparkle(e.clientX, e.clientY);
         });
 
-        // Эффект искр
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -245,7 +235,6 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
-        // Интерактивность элементов
         const refresh = () => {
             document.querySelectorAll('.enter-btn, .logo-main, .ava-floating, a').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
@@ -254,7 +243,6 @@
         };
         refresh();
 
-        // Плавный уход со страницы
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && this.href.includes('.html')) {
