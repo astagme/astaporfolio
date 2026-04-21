@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illustrations | ASTAGME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #A67081;
+            --bg-cream: #FDFBF7;
+            --brown-outline: #63414C;
+        }
+
+        /* --- ПЛАВНОСТЬ --- */
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Comfortaa', cursive;
+            margin: 0;
+            opacity: 0; 
+            transition: opacity 0.6s ease-out;
+            cursor: none !important;
+            color: var(--mauve-text);
+        }
+
+        body.fade-in { opacity: 1; }
+
+        /* --- КАСТОМНЫЙ КУРСОР --- */
+        #custom-cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%;
+            transform: rotate(-45deg) translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            display: none;
+        }
+
+        .cursor-active {
+            transform: rotate(-45deg) translate(-50%, -50%) scale(1.6) !important;
+            background: var(--soft-pink) !important;
+            opacity: 0.8;
+        }
+
+        /* --- НАВИГАЦИЯ --- */
+        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
+        .nav-btn {
+            text-decoration: none;
+            color: var(--mauve-text);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid var(--strong-pink);
+            background: white;
+            transition: 0.3s;
+            cursor: none !important;
+        }
+        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
+
+        /* --- ГАЛЕРЕЯ АРТОВ --- */
+        .art-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            text-align: center;
+        }
+
+        h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
+
+        /* Сетка в стиле Pinterest */
+        .art-grid {
+            column-count: 2;
+            column-gap: 40px;
+        }
+
+        @media (max-width: 800px) { .art-grid { column-count: 1; } }
+
+        .art-item {
+            break-inside: avoid;
+            margin-bottom: 40px;
+            position: relative;
+            transition: 0.5s ease;
+        }
+
+        .art-wrapper {
+            border-radius: 30px;
+            overflow: hidden;
+            background: white;
+            padding: 15px;
+            border: 2px solid transparent;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .art-item img {
+            width: 100%;
+            border-radius: 20px;
+            display: block;
+            transition: 0.5s ease;
+        }
+
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
+        .art-item:hover {
+            transform: translateY(-15px);
+        }
+
+        .art-item:hover .art-wrapper {
+            border-color: var(--soft-pink);
+            box-shadow: 0 30px 60px rgba(244, 194, 215, 0.4);
+        }
+
+        .art-info {
+            margin-top: 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #5D3D48;
+        }
+
+        @media (max-width: 850px) {
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .art-item, .nav-btn { cursor: pointer !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="custom-cursor"></div>
+
+    <nav>
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="catalog.html" class="nav-btn">← Catalog</a>
+    </nav>
+
+    <main class="art-container">
+        <h1>My Illustrations ✨</h1>
+        
+        <div class="art-grid">
+            <div class="art-item">
+                <div class="art-wrapper">
+                    <img src="illustrations/art1.jpg" alt="Illustration 1" onerror="this.src='https://via.placeholder.com/600x800?text=Art+1+Not+Found'">
+                </div>
+                <div class="art-info">Artwork Title 01</div>
+            </div>
+
+            <div class="art-item">
+                <div class="art-wrapper">
+                    <img src="illustrations/art2.jpg" alt="Illustration 2" onerror="this.src='https://via.placeholder.com/600x600?text=Art+2+Not+Found'">
+                </div>
+                <div class="art-info">Artwork Title 02</div>
+            </div>
+
+            <div class="art-item">
+                <div class="art-wrapper">
+                    <img src="illustrations/art3.jpg" alt="Illustration 3" onerror="this.src='https://via.placeholder.com/600x900?text=Art+3+Not+Found'">
+                </div>
+                <div class="art-info">Artwork Title 03</div>
+            </div>
+
+            <div class="art-item">
+                <div class="art-wrapper">
+                    <img src="illustrations/art4.jpg" alt="Illustration 4" onerror="this.src='https://via.placeholder.com/600x700?text=Art+4+Not+Found'">
+                </div>
+                <div class="art-info">Artwork Title 04</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Проявление страницы
+        window.addEventListener('load', () => { 
+            document.body.classList.add('fade-in'); 
+        });
+
+        // Плавный уход при клике на ссылки
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
+                    e.preventDefault();
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = this.href; }, 500);
+                }
+            });
+        });
+
+        // Работа курсора
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Реакция курсора на элементы
+        document.querySelectorAll('.nav-btn, .art-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
+    </script>
+</body>
+</html>
