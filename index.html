@@ -16,13 +16,18 @@
             --glow: rgba(255, 219, 234, 0.8);
         }
 
-        /* --- КУРСОР --- */
+        /* --- БАЗОВЫЕ СТИЛИ И КУРСОР --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
-            cursor: none !important; /* Скрываем везде */
-            min-height: 120vh;
+            cursor: none !important;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* На главной не нужен скролл */
             color: var(--mauve-text);
         }
 
@@ -37,7 +42,7 @@
             pointer-events: none;
             z-index: 1000000;
             box-shadow: 2px 2px 0px var(--soft-pink);
-            display: none; /* Появится при первом движении */
+            display: none;
         }
 
         #custom-cursor::after {
@@ -54,127 +59,145 @@
             background: var(--soft-pink) !important;
         }
 
-        /* --- ДИЗАЙН --- */
-        header { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .brand-container { display: flex; align-items: center; gap: 10px; animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-        .pfp-png { width: 320px; filter: drop-shadow(0 15px 30px var(--glow)); }
-        .logo-text { width: 70%; max-width: 800px; filter: drop-shadow(0 20px 40px var(--glow)); }
+        /* --- ЗВЕЗДЫ --- */
+        .star-field { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .star {
+            position: absolute;
+            background: var(--star-yellow);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0.4;
+        }
+        @keyframes twinkle { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.6; } }
 
-        nav { margin-top: 40px; display: flex; gap: 20px; }
-        
+        /* --- ГЛАВНЫЙ БЛОК (HEADER) --- */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pfp-png { 
+            width: 300px; 
+            filter: drop-shadow(0 15px 30px var(--glow)); 
+        }
+
+        .logo-text { 
+            width: 450px; 
+            filter: drop-shadow(0 20px 40px var(--glow)); 
+        }
+
+        /* Текст-подпись под логотипом */
+        .subtitle {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.1rem;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+
+        /* --- НАВИГАЦИЯ --- */
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
         .nav-btn {
             text-decoration: none;
             color: var(--mauve-text);
-            padding: 12px 30px;
+            padding: 15px 35px;
             border-radius: 50px;
             border: 2px solid var(--strong-pink);
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(5px);
-            transition: 0.3s;
-            cursor: none !important; /* УБИРАЕМ ПАЛЕЦ ТУТ */
-        }
-        .nav-btn:hover { background: var(--soft-pink); color: white; transform: translateY(-3px); }
-
-        /* --- КАРТОЧКА --- */
-        .about-section { display: flex; justify-content: center; padding: 100px 20px; }
-        .about-card {
-            background: #FFF5F8;
-            border-radius: 40px;
-            padding: 40px;
-            display: flex;
-            gap: 40px;
-            max-width: 1000px;
-            width: 100%;
-            box-shadow: 0 20px 60px var(--glow);
-            border: 3px solid white;
-            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(244, 194, 215, 0.3);
+            cursor: none !important;
         }
 
-        .about-img {
-            width: 300px;
-            height: 300px;
-            border-radius: 35px;
-            object-fit: contain;
-            background: white;
-            padding: 15px;
-            box-sizing: border-box;
-            filter: drop-shadow(0 10px 20px var(--glow));
-            cursor: none !important; /* И ТУТ ТОЖЕ УБИРАЕМ */
+        .nav-btn:hover {
+            background: var(--soft-pink);
+            color: white;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(244, 194, 215, 0.5);
         }
 
-        .about-content { flex: 1; }
-        .about-content h2 { font-family: 'Quicksand', sans-serif; font-size: 2.2rem; margin: 0 0 15px; color: #5D3D48; }
-        .about-content p { font-family: 'Quicksand', sans-serif; line-height: 1.6; font-size: 1.1rem; color: #7A5361; }
-        
-        .tags-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
-        .tag {
-            font-family: 'Quicksand', sans-serif;
-            background: white;
-            padding: 10px 18px;
-            border-radius: 18px;
-            font-size: 0.9rem;
-            border: 1px solid var(--soft-pink);
-            cursor: none !important; /* И ТУТ */
-        }
-
+        /* Адаптив для телефонов */
         @media (max-width: 850px) {
-            .about-card { flex-direction: column; text-align: center; }
+            .brand-container { flex-direction: column; text-align: center; }
+            .logo-text { width: 80%; }
+            .pfp-png { width: 200px; }
+            nav { flex-direction: column; gap: 15px; }
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
-            .nav-btn, .tag, .about-img { cursor: pointer !important; } /* Возвращаем палец на телефонах */
+            .nav-btn { cursor: pointer !important; }
         }
     </style>
 </head>
 <body>
 
     <div id="custom-cursor"></div>
+    <div class="star-field"></div>
 
-    <header>
+    <div class="main-content">
         <div class="brand-container">
             <img src="ava.png" alt="Asta" class="pfp-png">
             <img src="font.png" alt="astagme" class="logo-text">
         </div>
-        <nav>
-            <a href="index.html" class="nav-btn">home</a>
-            <a href="branding.html" class="nav-btn">branding</a>
-            <a href="art.html" class="nav-btn">art</a>
-            <a href="info.html" class="nav-btn">info</a>
-        </nav>
-    </header>
+        
+        <p class="subtitle">Digital Artist & Web Developer</p>
 
-    <section class="about-section">
-        <div class="about-card">
-            <img src="photo.jpg" alt="Asta" class="about-img">
-            <div class="about-content">
-                <h2>Behind the Work ✨</h2>
-                <p>Hello, I'm Asta! I'm a graphic designer and Web Developer who genuinely loves bringing ideas to life. I build functional, high-quality websites using clean code (HTML, CSS, JS) to make your brand stand out.</p>
-                <div class="tags-container">
-                    <div class="tag">🎨 Figma & Illustrator</div>
-                    <div class="tag">💻 Web Dev (HTML / CSS / JS)</div>
-                    <div class="tag">💡 creative ideas & new things</div>
-                    <div class="tag">🗓️ 3-week turnaround</div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <nav>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="about.html" class="nav-btn">About Me</a>
+            <a href="catalog.html" class="nav-btn">Catalog</a>
+        </nav>
+    </div>
 
     <script>
         const cursor = document.getElementById('custom-cursor');
         
-        // Показываем и двигаем курсор
+        // Движение курсора
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Наведение на кнопки и элементы
-        const interactables = document.querySelectorAll('.nav-btn, .tag, .about-img');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        // Наведение на кнопки
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            btn.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
+
+        // Генерация звезд
+        const field = document.querySelector('.star-field');
+        for (let i = 0; i < 18; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 20 + 10 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            field.appendChild(star);
+        }
     </script>
 </body>
 </html>
