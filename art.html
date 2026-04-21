@@ -5,145 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Illustrations | ASTAGME</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-   <style>
-    :root {
-        --soft-pink: #FFDBEA;
-        --strong-pink: #F4C2D7; 
-        --mauve-text: #A67081;
-        --bg-cream: #FDFBF7;
-        --brown-outline: #63414C;
-        /* Тень для рамок */
-        --card-shadow: rgba(244, 194, 215, 0.4); 
-    }
+    <style>
+        :root {
+            --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #A67081;
+            --bg-cream: #FDFBF7;
+            --brown-outline: #63414C;
+        }
 
-    /* --- БАЗА И ПЛАВНОСТЬ --- */
-    body {
-        background-color: var(--bg-cream);
-        font-family: 'Comfortaa', cursive;
-        margin: 0;
-        opacity: 0; 
-        transition: opacity 0.6s ease-out;
-        cursor: none !important;
-        color: var(--mauve-text);
-        min-height: 100vh;
-    }
+        /* --- ПЛАВНОСТЬ ЗАГРУЗКИ --- */
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Comfortaa', cursive;
+            margin: 0;
+            opacity: 0; 
+            transition: opacity 0.6s ease-out;
+            cursor: none !important;
+            color: var(--mauve-text);
+            min-height: 100vh;
+        }
 
-    body.fade-in { opacity: 1; }
+        body.fade-in { opacity: 1; }
 
-    /* --- ЕДИНЫЙ КУРСОР --- */
-    #custom-cursor {
-    position: fixed;
-    width: 25px;
-    height: 25px;
-    background: white;
-    border: 2px solid var(--brown-outline);
-    /* Форма капельки */
-    border-radius: 2px 50% 50% 50%;
-    /* Важно: сначала центрируем по точке, потом поворачиваем */
-    transform: translate(-50%, -50%) rotate(-45deg);
-    pointer-events: none;
-    z-index: 1000000;
-    box-shadow: 2px 2px 0px var(--soft-pink);
-    display: none;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s, width 0.2s, height 0.2s;
-}
+        /* --- ЕДИНЫЙ КУРСОР --- */
+        #custom-cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            pointer-events: none;
+            z-index: 1000000;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            display: none;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s, width 0.2s, height 0.2s;
+        }
 
-/* Эффект увеличения при наведении */
-.cursor-active {
-    transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
-    background: var(--soft-pink) !important;
-}
-    /* --- НАВИГАЦИЯ --- */
-    nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
-    .nav-btn {
-        text-decoration: none;
-        color: var(--mauve-text);
-        padding: 12px 30px;
-        border-radius: 50px;
-        border: 2px solid var(--strong-pink);
-        background: white;
-        transition: 0.3s;
-        cursor: none !important;
-    }
-    .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
+        .cursor-active {
+            transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
+            background: var(--soft-pink) !important;
+        }
 
-    /* --- ГАЛЕРЕЯ АРТОВ --- */
-    .art-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px 100px;
-        text-align: center;
-    }
+        /* --- ИСКОРКИ (ЗВЕЗДНАЯ ПЫЛЬ) --- */
+        .sparkle {
+            position: fixed;
+            background: var(--strong-pink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            box-shadow: 0 0 10px var(--soft-pink);
+        }
 
-    h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
+        /* --- НАВИГАЦИЯ --- */
+        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
+        .nav-btn {
+            text-decoration: none;
+            color: var(--mauve-text);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid var(--strong-pink);
+            background: white;
+            transition: 0.3s;
+            cursor: none !important;
+        }
+        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
 
-    /* Сетка в стиле Pinterest */
-    .art-grid {
-        column-count: 3; /* Сделали 3 колонки, как ты просила */
-        column-gap: 30px;
-    }
+        /* --- ГАЛЕРЕЯ --- */
+        .art-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            text-align: center;
+        }
 
-    @media (max-width: 1000px) { .art-grid { column-count: 2; } }
-    @media (max-width: 600px) { .art-grid { column-count: 1; } }
+        h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
 
-    .art-item {
-        break-inside: avoid;
-        margin-bottom: 30px;
-        position: relative;
-        transition: 0.5s ease;
-        cursor: none !important;
-    }
+        .art-grid {
+            column-count: 3;
+            column-gap: 30px;
+        }
 
-    /* --- ОБНОВЛЕННАЯ СТИЛИЗОВАННАЯ РАМКА --- */
-    .art-wrapper {
-        background: white;
-        /* Четкий коричневый контур */
-        border: 3px solid var(--brown-outline); 
-        border-radius: 30px;
-        padding: 15px; /* Умеренный отступ, чтобы арт "дышал" */
-        overflow: hidden;
-        transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        display: inline-block;
-        width: 100%;
-        box-sizing: border-box;
-        /* Мягкая розовая тень */
-        box-shadow: 10px 10px 0px rgba(244, 194, 215, 0.3); 
-    }
+        @media (max-width: 1000px) { .art-grid { column-count: 2; } }
+        @media (max-width: 600px) { .art-grid { column-count: 1; } }
 
-    .art-item img {
-        width: 100%;
-        border-radius: 20px; /* Скруглили углы самой картинки внутри рамки */
-        display: block;
-        transition: 0.5s ease;
-    }
+        .art-item {
+            break-inside: avoid;
+            margin-bottom: 30px;
+            position: relative;
+            transition: 0.5s ease;
+            cursor: none !important;
+        }
 
-    /* ЭФФЕКТ ПРИ НАВЕДЕНИИ (Левитация с акцентом) */
-    .art-item:hover {
-        transform: translateY(-10px);
-    }
+        .art-wrapper {
+            background: white;
+            border: 3px solid var(--brown-outline); 
+            border-radius: 30px;
+            padding: 12px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 8px 8px 0px rgba(244, 194, 215, 0.3); 
+        }
 
-    .art-item:hover .art-wrapper {
-        border-color: var(--mauve-text); /* Контур становится чуть темнее */
-        background: #FFF9FB; /* Фон рамки чуть розовеет */
-        box-shadow: 15px 15px 0px var(--soft-pink); /* Тень становится ярче */
-    }
+        .art-item img {
+            width: 100%;
+            border-radius: 20px;
+            display: block;
+            transition: 0.5s ease;
+        }
 
-    .art-info {
-        margin-top: 15px;
-        font-family: 'Quicksand', sans-serif;
-        font-weight: 600;
-        font-size: 1rem;
-        color: #5D3D48;
-        opacity: 0.8;
-    }
+        .art-item:hover { transform: translateY(-10px); }
+        .art-item:hover .art-wrapper {
+            box-shadow: 12px 12px 0px var(--soft-pink);
+            border-color: var(--mauve-text);
+        }
 
-    /* Корректировка для сенсорных экранов */
-    @media (max-width: 850px) {
-        #custom-cursor { display: none !important; }
-        body { cursor: auto !important; }
-        .art-item, .nav-btn { cursor: pointer !important; }
-    }
-</style>
+        .art-info {
+            margin-top: 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #5D3D48;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 850px) {
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .art-item, .nav-btn { cursor: pointer !important; }
+        }
+    </style>
 </head>
 <body>
 
@@ -159,42 +155,67 @@
         
         <div class="art-grid">
             <div class="art-item">
-                <div class="art-wrapper">
-                    <img src="illustrations/art1.jpg" alt="Illustration 1" onerror="this.src='https://via.placeholder.com/600x800?text=Art+1+Not+Found'">
-                </div>
-                <div class="art-info">Artwork Title 01</div>
+                <div class="art-wrapper"><img src="illustrations/art1.jpg" alt="Art 1"></div>
+                <div class="art-info">Artwork 01</div>
             </div>
-
             <div class="art-item">
-                <div class="art-wrapper">
-                    <img src="illustrations/art2.jpg" alt="Illustration 2" onerror="this.src='https://via.placeholder.com/600x600?text=Art+2+Not+Found'">
-                </div>
-                <div class="art-info">Artwork Title 02</div>
+                <div class="art-wrapper"><img src="illustrations/art2.jpg" alt="Art 2"></div>
+                <div class="art-info">Artwork 02</div>
             </div>
-
             <div class="art-item">
-                <div class="art-wrapper">
-                    <img src="illustrations/art3.jpg" alt="Illustration 3" onerror="this.src='https://via.placeholder.com/600x900?text=Art+3+Not+Found'">
-                </div>
-                <div class="art-info">Artwork Title 03</div>
+                <div class="art-wrapper"><img src="illustrations/art3.jpg" alt="Art 3"></div>
+                <div class="art-info">Artwork 03</div>
             </div>
-
             <div class="art-item">
-                <div class="art-wrapper">
-                    <img src="illustrations/art4.jpg" alt="Illustration 4" onerror="this.src='https://via.placeholder.com/600x700?text=Art+4+Not+Found'">
-                </div>
-                <div class="art-info">Artwork Title 04</div>
+                <div class="art-wrapper"><img src="illustrations/art4.jpg" alt="Art 4"></div>
+                <div class="art-info">Artwork 04</div>
             </div>
         </div>
     </main>
 
     <script>
-        // Проявление страницы
-        window.addEventListener('load', () => { 
-            document.body.classList.add('fade-in'); 
+        // 1. Плавная загрузка
+        window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
+
+        // 2. Логика курсора и искр
+        const cursor = document.getElementById('custom-cursor');
+        
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            createSparkle(e.clientX, e.clientY);
         });
 
-        // Плавный уход при клике на ссылки
+        // 3. Звездная пыль
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            document.body.appendChild(sparkle);
+            const size = Math.random() * 8 + 2;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            const destX = x + (Math.random() - 0.5) * 80;
+            const destY = y + (Math.random() - 0.5) * 80;
+            sparkle.animate([
+                { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+            ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        // 4. Реакция на ссылки
+        const refresh = () => {
+            document.querySelectorAll('.nav-btn, .art-item, a').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+            });
+        };
+        refresh();
+
+        // 5. Переход между страницами
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && this.href.includes('.html')) {
@@ -204,42 +225,6 @@
                 }
             });
         });
-
-        // Работа курсора
-        const cursor = document.getElementById('custom-cursor');
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.display = 'block';
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Реакция курсора на элементы
-        document.querySelectorAll('.nav-btn, .art-item').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-        });
     </script>
-    const cursor = document.getElementById('custom-cursor');
-
-// Движение курсора
-window.addEventListener('mousemove', (e) => {
-    cursor.style.display = 'block';
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
-
-// Функция для добавления реакции на элементы
-// Она ищет кнопки, карточки логотипов, арты и вообще все ссылки <a>
-const refreshInteractables = () => {
-    const interactables = document.querySelectorAll('.nav-btn, .category-card, .logo-card, .art-item, a');
-    
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-    });
-};
-
-// Запускаем проверку элементов при загрузке
-refreshInteractables();
 </body>
 </html>
