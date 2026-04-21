@@ -35,62 +35,67 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 90vh; /* Занимает почти весь экран при загрузке */
+            min-height: 95vh; /* Почти весь экран */
             padding: 40px 20px;
             text-align: center;
         }
 
         .logo-text {
-            width: 80%; /* Логотип на весь экран */
-            max-width: 900px; 
+            width: 85%; /* Логотип на весь экран */
+            max-width: 950px; 
             height: auto;
-            filter: drop-shadow(0 10px 20px var(--glow));
+            filter: drop-shadow(0 10px 25px var(--glow));
             animation: float 6s ease-in-out infinite;
         }
 
         .pfp-circle {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             border: 6px solid white;
-            box-shadow: 0 10px 25px var(--glow);
+            box-shadow: 0 10px 30px var(--glow);
             object-fit: cover;
-            margin-top: -20px; /* Немного заходит под логотип для объема */
+            margin-top: -30px; /* Эффект наслоения */
             z-index: 2;
             background-color: white;
         }
 
         nav {
-            margin-top: 40px;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 12px 35px;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 15px 40px;
             border-radius: 50px;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             border: 1px solid white;
         }
 
         nav a {
             text-decoration: none;
             color: var(--mauve-text);
-            margin: 0 15px;
+            margin: 0 20px;
             transition: 0.3s;
             font-weight: 500;
+            font-size: 1.1rem;
         }
 
-        nav a:hover { color: #ff9ec7; text-shadow: 0 0 8px var(--soft-pink); }
+        nav a:hover { 
+            color: #ff9ec7; 
+            text-shadow: 0 0 10px var(--soft-pink); 
+        }
 
         .hero-section h1 {
             color: var(--mauve-text);
             font-weight: 300;
-            font-size: 1.8rem;
-            margin-top: 40px;
+            font-size: 1.6rem;
+            margin-top: 50px;
+            letter-spacing: 1px;
         }
 
         /* --- GALLERY --- */
         .section-container {
             width: 100%;
             max-width: 1100px;
-            padding: 100px 20px;
+            padding: 80px 20px;
             text-align: center;
         }
 
@@ -106,12 +111,20 @@
             border-radius: 40px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(166, 112, 129, 0.08);
-            transition: 0.4s;
+            transition: 0.4s ease;
         }
 
-        .work-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px var(--glow); }
+        .work-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 40px var(--glow); 
+        }
 
-        .card-img { height: 300px; background-size: cover; background-position: center; background-color: #fff0f5; }
+        .card-img { 
+            height: 320px; 
+            background-size: cover; 
+            background-position: center; 
+            background-color: #fff5f8; 
+        }
 
     </style>
 </head>
@@ -135,7 +148,7 @@
     </header>
 
     <section class="section-container">
-        <h2 style="color: var(--mauve-text); font-size: 2.5rem;">my work</h2>
+        <h2 style="color: var(--mauve-text); font-size: 2.2rem;">my work</h2>
         <div class="grid-container">
             <div class="work-card">
                 <div class="card-img" style="background-image: url('images/work1.png');"></div>
