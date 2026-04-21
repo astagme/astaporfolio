@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAGME | Creative Portfolio</title>
+    <title>ASTAGME | Illustrator & Developer</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,6 +14,7 @@
             --brown-outline: #63414C;
         }
 
+        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
@@ -30,6 +31,7 @@
 
         body.fade-in { opacity: 1; }
 
+        /* --- МАГИЧЕСКИЙ КУРСОР --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -59,6 +61,7 @@
             box-shadow: 0 0 10px var(--soft-pink);
         }
 
+        /* --- КОНТЕНТ ГЛАВНОЙ --- */
         .hero {
             flex: 1;
             display: flex;
@@ -69,18 +72,29 @@
             padding: 20px;
         }
 
-        /* ГЛАВНЫЙ ЛОГОТИП */
+        /* КРУПНЫЙ ЖИВОЙ ЛОГОТИП */
         .logo-main {
             max-width: 650px;
             width: 85%;
             height: auto;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             filter: drop-shadow(0 15px 25px rgba(244, 194, 215, 0.5));
             transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: none !important;
+            animation: logoFloat 6s infinite ease-in-out;
         }
 
-        /* УВЕЛИЧЕННАЯ АВАТАРКА */
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        .logo-main:hover {
+            animation-play-state: paused;
+            transform: scale(1.05) rotate(3deg) !important;
+        }
+
+        /* ПАРЯЩАЯ АВАТАРКА */
         .ava-container {
             position: relative;
             margin-bottom: 30px;
@@ -88,7 +102,7 @@
         }
 
         .ava-floating {
-            width: 140px; /* Было 80, теперь 140! */
+            width: 140px;
             height: 140px;
             object-fit: cover;
             border-radius: 50%;
@@ -109,16 +123,33 @@
             50% { transform: translateY(-20px) rotate(3deg); }
         }
 
-        h1 {
+        /* НОВАЯ ПОДПИСЬ */
+        .hero-subtitle {
             font-family: 'Quicksand', sans-serif;
-            font-size: 1.3rem;
-            letter-spacing: 4px;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 50px;
-            margin-top: 0;
-            opacity: 0.8;
+            margin-top: 10px;
+            color: var(--mauve-text);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0.9;
         }
 
+        .hero-subtitle span { display: flex; align-items: center; }
+
+        .hero-subtitle span::after {
+            content: "•";
+            margin-left: 15px;
+            color: var(--strong-pink);
+        }
+        
+        .hero-subtitle span:last-child::after { content: ""; }
+
+        /* КНОПКИ */
         .cta-container { display: flex; gap: 25px; }
 
         .enter-btn {
@@ -148,6 +179,7 @@
             .enter-btn, .logo-main, .ava-floating { cursor: pointer !important; }
             .logo-main { max-width: 400px; }
             .ava-floating { width: 100px; height: 100px; }
+            .hero-subtitle { font-size: 0.8rem; gap: 10px; flex-wrap: wrap; justify-content: center; }
         }
     </style>
 </head>
@@ -162,7 +194,11 @@
             <img src="ava.png" alt="Astagme Avatar" class="ava-floating">
         </div>
 
-        <h1>Digital Artist & Designer</h1>
+        <div class="hero-subtitle">
+            <span>Illustrator</span>
+            <span>UI/UX Designer</span>
+            <span>Web Developer</span>
+        </div>
 
         <div class="cta-container">
             <a href="catalog.html" class="enter-btn">Portfolio</a>
@@ -171,8 +207,10 @@
     </main>
 
     <script>
+        // Плавное появление страницы
         window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
 
+        // Логика курсора
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -181,6 +219,7 @@
             createSparkle(e.clientX, e.clientY);
         });
 
+        // Эффект искр
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -199,6 +238,7 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
+        // Интерактивность элементов
         const refresh = () => {
             document.querySelectorAll('.enter-btn, .logo-main, .ava-floating, a').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
@@ -207,6 +247,7 @@
         };
         refresh();
 
+        // Плавный уход со страницы
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && this.href.includes('.html')) {
