@@ -32,7 +32,7 @@
             to { opacity: 1; }
         }
 
-        /* ФОН - КОСМИЧЕСКОЕ МЕРЦАНИЕ */
+        /* --- ЖИВОЙ ФОН (ИСКОРКИ) --- */
         .bg-gradient {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
@@ -53,7 +53,7 @@
             pointer-events: none;
         }
 
-        /* КУРСОР - КОПИЯ ИЗ ABOUT.HTML */
+        /* --- КУРСОР (КОПИЯ ИЗ ABOUT) --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -69,17 +69,17 @@
             will-change: transform;
         }
 
-        /* ПЫЛЬ - КОПИЯ ИЗ ABOUT.HTML */
+        /* --- ЗВЕЗДНАЯ ПЫЛЬ (КОПИЯ ИЗ ABOUT) --- */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 6px var(--soft-pink);
+            box-shadow: 0 0 8px var(--soft-pink), 0 0 12px white;
         }
 
-        /* КОНТЕНТ */
+        /* --- КОНТЕНТ --- */
         .hero-container {
             display: flex;
             flex-direction: column;
@@ -134,7 +134,7 @@
             50% { transform: rotate(5deg) scale(1.1); }
         }
 
-        /* АВАТАР С ВОЗДУШНОЙ АНИМАЦИЕЙ */
+        /* --- АВАТАР --- */
         .ava-box {
             width: 200px;
             height: 200px;
@@ -152,7 +152,7 @@
             box-shadow: 0 0 0 8px white, 0 20px 40px rgba(166, 112, 129, 0.2);
         }
 
-        /* КНОПКИ */
+        /* --- КНОПКИ --- */
         .cta-group { display: flex; gap: 25px; }
         .enter-btn {
             text-decoration: none;
@@ -204,7 +204,7 @@
     </main>
 
     <script>
-        // ЛОГИКА ФОНОВЫХ ИСКОРОК
+        // --- СКРИПТ ФОНОВЫХ ЗВЕЗД ---
         const sCanvas = document.getElementById('stars-canvas');
         const sCtx = sCanvas.getContext('2d');
         let particles = [];
@@ -219,10 +219,10 @@
                 const type = Math.random();
                 if (type > 0.7) { 
                     this.size = Math.random() * 2 + 1; this.color = '#FFFFFF';
-                    this.opacity = Math.random() * 0.5; this.fadeSpeed = 0.01;
+                    this.opacity = Math.random() * 0.5; this.fadeSpeed = 0.008;
                 } else {
-                    this.size = Math.random() * 1.5; this.color = '#FFDBEA';
-                    this.opacity = Math.random() * 0.3; this.fadeSpeed = 0.005;
+                    this.size = Math.random() * 1.2; this.color = '#FFDBEA';
+                    this.opacity = Math.random() * 0.3; this.fadeSpeed = 0.004;
                 }
             }
             draw() {
@@ -235,7 +235,7 @@
                 if (this.opacity > 0.8 || this.opacity < 0.1) this.fadeSpeed = -this.fadeSpeed;
             }
         }
-        for (let i = 0; i < 150; i++) particles.push(new Particle());
+        for (let i = 0; i < 160; i++) particles.push(new Particle());
 
         function animate() {
             sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
@@ -244,12 +244,15 @@
         }
         animate();
 
-        // ЛОГИКА КУРСОР И ПЫЛИ (COPY FROM ABOUT.HTML)
+        // --- СКРИПТ КУРСОР И ПЫЛИ (ТОЧНАЯ КОПИЯ ABOUT) ---
         const cursor = document.getElementById('custom-cursor');
+        
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.75) {
+            
+            // Пыль появляется часто и сочно
+            if (Math.random() > 0.6) {
                 createSparkle(e.clientX, e.clientY);
             }
         });
@@ -258,7 +261,8 @@
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
-            const size = Math.random() * 5 + 2; 
+            
+            const size = Math.random() * 8 + 3; 
             sparkle.style.width = size + 'px';
             sparkle.style.height = size + 'px';
             sparkle.style.left = x + 'px';
@@ -266,13 +270,19 @@
             
             sparkle.animate([
                 { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                { transform: `translate(${(Math.random()-0.5)*50}px, ${(Math.random()-0.5)*50}px) scale(0)`, opacity: 0 }
-            ], { duration: 700, easing: 'ease-out' });
+                { 
+                    transform: `translate(${(Math.random() - 0.5) * 110}px, ${(Math.random() - 0.5) * 110}px) scale(0)`, 
+                    opacity: 0 
+                }
+            ], { 
+                duration: 1100, 
+                easing: 'ease-out' 
+            });
             
-            setTimeout(() => sparkle.remove(), 700);
+            setTimeout(() => sparkle.remove(), 1100);
         }
 
-        // Ховер-эффекты для курсора
+        // Интерактив элементов
         document.querySelectorAll('.enter-btn, .logo-main, .ava-box, .subtitle-wrapper').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.4)';
