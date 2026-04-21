@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAGME | Dreamy Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #FFDBEA;
+            --mauve-text: #A67081;
+            --bg-cream: #FDFBF7;
+            --glow: rgba(255, 219, 234, 0.8);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Comfortaa', cursive;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            /* Simple animated background */
+            background: linear-gradient(135deg, #fdfbf7 0%, #fff5f8 100%);
+        }
+
+        /* Floating Cloud Decoration */
+        .cloud {
+            position: absolute;
+            background: white;
+            filter: blur(40px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.5;
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            from { transform: translateX(-10vw); }
+            to { transform: translateX(110vw); }
+        }
+
+        /* Floating Animation for Header */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px 40px 20px;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        /* The Signature: PFP + Logo */
+        .brand-signature {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .pfp-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            z-index: 2;
+            border: 5px solid white;
+            box-shadow: 0 10px 25px var(--glow);
+            object-fit: cover;
+        }
+
+        .logo-text {
+            height: 90px; 
+            margin-left: -35px; /* Overlap effect */
+            z-index: 1;
+            filter: drop-shadow(0 8px 15px var(--glow));
+            transition: transform 0.3s ease;
+        }
+
+        /* Navigation Menu */
+        nav {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--mauve-text);
+            font-size: 1.1rem;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #ff9ec7;
+            text-shadow: 0 0 8px var(--soft-pink);
+        }
+
+        nav span {
+            color: var(--soft-pink);
+            font-size: 1.2rem;
+        }
+
+        /* Hero Text */
+        .hero-section {
+            text-align: center;
+            margin-top: 40px;
+            max-width: 600px;
+        }
+
+        .hero-section h1 {
+            color: var(--mauve-text);
+            font-weight: 300;
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .sparkle {
+            color: #ffb7d5;
+            display: inline-block;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="cloud" style="width: 300px; height: 150px; top: 10%; left: -10%;"></div>
+    <div class="cloud" style="width: 400px; height: 200px; top: 50%; left: 80%; animation-duration: 35s;"></div>
+
+    <header>
+        <div class="brand-signature">
+            <img src="ava.jpg" alt="Asta Profile" class="pfp-circle">
+            <img src="font.jpg" alt="Astagme Logo" class="logo-text">
+        </div>
+
+        <nav>
+            <a href="#">home</a>
+            <span>•</span>
+            <a href="#">branding</a>
+            <span>•</span>
+            <a href="#">art</a>
+            <span>•</span>
+            <a href="#">info</a>
+        </nav>
+
+        <div class="hero-section">
+            <h1>i create brands people fall in love with <span class="sparkle">✨</span></h1>
+        </div>
+    </header>
+
+</body>
+</html>
