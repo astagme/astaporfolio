@@ -11,11 +11,12 @@
             --strong-pink: #F4C2D7; 
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
+            --star-yellow: #FFD700;
             --glow: rgba(255, 219, 234, 0.8);
         }
 
         body {
-            background: linear-gradient(135deg, #fdfbf7 0%, #fff5f8 100%);
+            background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
             display: flex;
@@ -23,13 +24,31 @@
             align-items: center;
             min-height: 180vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        /* --- АНИМАЦИЯ ЗВЕЗД --- */
+        .star {
+            position: absolute;
+            background: var(--star-yellow);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            z-index: -1;
+            opacity: 0.6;
         }
 
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1.2) rotate(15deg); }
+        }
+
+        /* Позиции для звезд (примеры) */
+        .star-1 { top: 10%; left: 5%; width: 30px; height: 30px; animation: twinkle 3s infinite; }
+        .star-2 { top: 20%; right: 10%; width: 20px; height: 20px; animation: twinkle 4s infinite 1s; }
+        .star-3 { top: 70%; left: 15%; width: 25px; height: 25px; animation: twinkle 5s infinite 0.5s; }
+        .star-4 { top: 40%; right: 5%; width: 35px; height: 35px; animation: twinkle 3.5s infinite 2s; }
+        .star-5 { top: 85%; right: 20%; width: 15px; height: 15px; animation: twinkle 6s infinite; }
+
+        /* --- ОСНОВНЫЕ СТИЛИ --- */
         header {
             display: flex;
             flex-direction: column;
@@ -37,38 +56,38 @@
             justify-content: center;
             height: 100vh;
             width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
+            z-index: 10;
         }
 
-        /* Контейнер для аватарки и логотипа - УВЕЛИЧИЛИ РАЗМЕР */
         .brand-container {
             display: flex;
             flex-direction: row; 
             align-items: center;
             justify-content: center;
-            gap: 10px; /* Сделали ЕЩЕ ближе */
+            gap: 10px; 
             width: 100%;
-            max-width: 1300px; /* Увеличили максимальную ширину */
+            max-width: 1300px;
             animation: float 6s ease-in-out infinite;
         }
 
-        /* УВЕЛИЧИЛИ АВАТАРКУ */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
         .pfp-png {
-            width: 320px; /* Было 250px */
+            width: 320px; 
             height: auto;
             filter: drop-shadow(0 15px 30px var(--glow));
         }
 
-        /* УВЕЛИЧИЛИ ЛОГОТИП */
         .logo-text {
-            width: 70%; /* Было 60% */
-            max-width: 800px; /* Было 600px */
+            width: 70%;
+            max-width: 800px;
             height: auto;
             filter: drop-shadow(0 20px 40px var(--glow));
         }
 
-        /* Кнопки с розовым контуром */
         nav {
             margin-top: 60px;
             display: flex;
@@ -80,34 +99,37 @@
         .nav-btn {
             text-decoration: none;
             color: var(--mauve-text);
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.7);
             padding: 15px 35px;
             border-radius: 50px;
             border: 2px solid var(--strong-pink); 
             font-weight: 500;
             font-size: 1.2rem;
             transition: 0.3s all ease;
+            backdrop-filter: blur(5px);
         }
 
         .nav-btn:hover {
             background: var(--soft-pink);
             color: white;
-            transform: translateY(-3px);
+            transform: scale(1.05);
             box-shadow: 0 10px 20px var(--glow);
         }
 
-        /* Адаптация под мобильные */
         @media (max-width: 768px) {
-            .brand-container { 
-                flex-direction: column; 
-                gap: 5px; 
-            }
+            .brand-container { flex-direction: column; gap: 5px; }
             .pfp-png { width: 220px; }
             .logo-text { width: 95%; }
         }
     </style>
 </head>
 <body>
+    <div class="star star-1"></div>
+    <div class="star star-2"></div>
+    <div class="star star-3"></div>
+    <div class="star star-4"></div>
+    <div class="star star-5"></div>
+
     <header>
         <div class="brand-container">
             <img src="ava.png" alt="Asta" class="pfp-png">
@@ -121,6 +143,5 @@
             <a href="info.html" class="nav-btn">info</a>
         </nav>
     </header>
-    <div style="height: 1000px;"></div>
 </body>
 </html>
