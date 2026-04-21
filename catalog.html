@@ -31,7 +31,7 @@
 
         body.fade-in { opacity: 1; }
 
-        /* --- КУРСОР ИЗ ABOUT.HTML --- */
+        /* --- КУРСОР И ПЫЛЬ (из about.html) --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -52,7 +52,6 @@
             background: var(--soft-pink) !important;
         }
 
-        /* --- ЗВЕЗДНАЯ ПЫЛЬ ИЗ ABOUT.HTML --- */
         .sparkle {
             position: fixed;
             background: var(--strong-pink);
@@ -62,27 +61,41 @@
             box-shadow: 0 0 10px var(--soft-pink);
         }
 
-        /* --- НАВИГАЦИЯ --- */
-        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; width: 100%; box-sizing: border-box; }
-        
-        .nav-btn {
-            text-decoration: none;
-            color: var(--mauve-text);
-            padding: 12px 30px;
-            border-radius: 50px;
-            border: 2px solid var(--strong-pink);
-            background: white;
-            transition: 0.3s;
-            cursor: none !important;
-            font-family: 'Comfortaa', cursive;
+        /* --- ВОЗВРАЩЕННЫЕ ПУХЛЫЕ КНОПКИ --- */
+        .nav-header { 
+            width: 100%; 
+            padding: 40px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            z-index: 100;
         }
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
+        
+        .nav-btn { 
+            text-decoration: none; 
+            color: var(--brown-outline); 
+            font-weight: 700; 
+            font-size: 0.95rem;
+            padding: 12px 28px; 
+            border: 2px solid var(--brown-outline); 
+            border-radius: 50px; 
+            background: white; 
+            box-shadow: 4px 4px 0px var(--soft-pink); 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: none !important; 
+        }
+
+        .nav-btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 7px 7px 0px var(--strong-pink);
+            background-color: white;
+        }
 
         h1 {
             font-family: 'Quicksand', sans-serif;
             font-size: 3rem;
-            color: #5D3D48;
-            margin-bottom: 50px;
+            color: var(--brown-outline);
+            margin: 10px 0 60px;
             text-align: center;
         }
 
@@ -100,13 +113,13 @@
 
         .category-card {
             text-decoration: none;
-            color: var(--mauve-text);
+            color: var(--brown-outline);
             background: white;
             border: 3px solid var(--brown-outline);
             border-radius: 25px;
             padding: 50px 25px;
             text-align: center;
-            box-shadow: 10px 10px 0px var(--soft-pink);
+            box-shadow: 12px 12px 0px var(--soft-pink);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
             display: flex;
@@ -116,14 +129,14 @@
         }
 
         .category-card:hover {
-            transform: translate(5px, 5px);
-            box-shadow: 3px 3px 0px var(--brown-outline);
+            transform: translate(6px, 6px);
+            box-shadow: 4px 4px 0px var(--brown-outline);
             background-color: var(--soft-pink);
         }
 
         .card-icon { font-size: 3.8rem; }
-        .card-title { font-family: 'Comfortaa'; font-size: 1.7rem; font-weight: 700; color: #5D3D48; }
-        .card-desc { font-family: 'Quicksand'; font-size: 1rem; line-height: 1.5; }
+        .card-title { font-family: 'Comfortaa'; font-size: 1.7rem; font-weight: 700; }
+        .card-desc { font-family: 'Quicksand'; font-size: 1rem; line-height: 1.5; opacity: 0.9; }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
@@ -137,7 +150,7 @@
 
     <div id="custom-cursor"></div>
 
-    <nav>
+    <nav class="nav-header">
         <a href="index.html" class="nav-btn">Home</a>
         <a href="about.html" class="nav-btn">About me</a>
     </nav>
@@ -165,12 +178,10 @@
     </main>
 
     <script>
-        // Анимация появления страницы
         window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
 
         const cursor = document.getElementById('custom-cursor');
         
-        // Логика движения курсора и пыли
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
@@ -178,36 +189,30 @@
             createSparkle(e.clientX, e.clientY);
         });
 
-        // Функция создания "той самой" пыли
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
-            
             const size = Math.random() * 8 + 2;
             sparkle.style.width = `${size}px`;
             sparkle.style.height = `${size}px`;
             sparkle.style.left = `${x}px`;
             sparkle.style.top = `${y}px`;
-            
             const destX = x + (Math.random() - 0.5) * 80;
             const destY = y + (Math.random() - 0.5) * 80;
-            
             sparkle.animate([
                 { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
                 { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
             ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
-            
             setTimeout(() => sparkle.remove(), 1000);
         }
 
-        // Эффект увеличения на кнопках и карточках
+        // Применяем эффект увеличения курсора ко всем активным элементам
         document.querySelectorAll('.nav-btn, .category-card, a').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // Плавный переход между страницами
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && this.href.includes('.html')) {
