@@ -14,7 +14,6 @@
             --brown-outline: #63414C;
         }
 
-        /* --- ПЛАВНОСТЬ И БАЗА --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
@@ -31,7 +30,6 @@
 
         body.fade-in { opacity: 1; }
 
-        /* --- ЕДИНЫЙ КУРСОР И ИСКРЫ (тот же код) --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -61,7 +59,6 @@
             box-shadow: 0 0 10px var(--soft-pink);
         }
 
-        /* --- ГЛАВНЫЙ ЭКРАН --- */
         .hero {
             flex: 1;
             display: flex;
@@ -70,46 +67,51 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            position: relative;
         }
 
-        /* КРУПНЫЙ ЛОГОТИП ASTAGME */
+        /* ГЛАВНЫЙ ЛОГОТИП */
         .logo-main {
-            max-width: 600px; /* Сделали реально большим! */
-            width: 80%; /* И адаптивным */
+            max-width: 650px;
+            width: 85%;
             height: auto;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             filter: drop-shadow(0 15px 25px rgba(244, 194, 215, 0.5));
             transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: none !important;
         }
 
-        .logo-main:hover {
-            transform: scale(1.05) rotate(2deg);
-            filter: drop-shadow(0 20px 40px rgba(244, 194, 215, 0.9));
+        /* УВЕЛИЧЕННАЯ АВАТАРКА */
+        .ava-container {
+            position: relative;
+            margin-bottom: 30px;
+            animation: avaFloat 5s infinite ease-in-out;
         }
 
-        /* ПАРЯЩАЯ АВАТАРКА (ava.png) */
         .ava-floating {
-            width: 80px;
-            height: 80px;
+            width: 140px; /* Было 80, теперь 140! */
+            height: 140px;
             object-fit: cover;
             border-radius: 50%;
-            border: 3px solid var(--brown-outline);
-            box-shadow: 5px 5px 0px var(--soft-pink);
-            margin-bottom: 20px;
-            animation: avaFloat 6s infinite ease-in-out;
+            border: 4px solid var(--brown-outline);
+            background: white;
+            box-shadow: 8px 8px 0px var(--soft-pink);
             cursor: none !important;
+            transition: 0.4s ease;
+        }
+
+        .ava-container:hover .ava-floating {
+            transform: scale(1.1);
+            box-shadow: 12px 12px 0px var(--strong-pink);
         }
 
         @keyframes avaFloat {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
         }
 
         h1 {
             font-family: 'Quicksand', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 50px;
@@ -117,7 +119,6 @@
             opacity: 0.8;
         }
 
-        /* --- КНОПКИ --- */
         .cta-container { display: flex; gap: 25px; }
 
         .enter-btn {
@@ -145,9 +146,8 @@
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; overflow-y: auto; }
             .enter-btn, .logo-main, .ava-floating { cursor: pointer !important; }
-            .logo-main { max-width: 350px; }
-            .ava-floating { width: 60px; height: 60px; }
-            h1 { font-size: 1rem; letter-spacing: 2px; }
+            .logo-main { max-width: 400px; }
+            .ava-floating { width: 100px; height: 100px; }
         }
     </style>
 </head>
@@ -158,7 +158,9 @@
     <main class="hero">
         <img src="font.png" alt="Astagme Logo" class="logo-main">
         
-        <img src="ava.png" alt="Astagme Avatar" class="ava-floating">
+        <div class="ava-container">
+            <img src="ava.png" alt="Astagme Avatar" class="ava-floating">
+        </div>
 
         <h1>Digital Artist & Designer</h1>
 
