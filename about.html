@@ -24,11 +24,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* Начальная прозрачность */
             opacity: 0; 
-            transition: opacity 0.6s ease-out;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        body.fade-in { opacity: 1 !important; }
+        /* Класс для плавного появления */
+        body.fade-in { 
+            opacity: 1 !important; 
+        }
 
         /* --- КУРСОР И ПЫЛЬ --- */
         #custom-cursor {
@@ -59,7 +63,7 @@
             z-index: 999999;
         }
 
-        /* --- НАВИГАЦИЯ (как на остальных страницах) --- */
+        /* --- НАВИГАЦИЯ --- */
         .nav-header { 
             width: 100%; 
             padding: 40px; 
@@ -127,7 +131,7 @@
             margin-bottom: 40px;
         }
 
-        /* --- КНОПКИ СОЦСЕТЕЙ + ОТЗЫВЫ --- */
+        /* --- КНОПКИ СОЦСЕТЕЙ --- */
         .social-links {
             display: flex;
             gap: 20px;
@@ -145,7 +149,6 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            font-size: 1.5rem;
             box-shadow: 4px 4px 0px var(--soft-pink);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
@@ -166,7 +169,7 @@
         @media (max-width: 600px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
-            .nav-btn, .social-btn { cursor: pointer !important; }
+            .nav-btn, .social-btn, .profile-pic-container { cursor: pointer !important; }
         }
     </style>
 </head>
@@ -192,9 +195,9 @@
         </p>
 
         <div class="social-links">
-            <a href="#" class="social-btn" title="Telegram">📱</a>
-            <a href="#" class="social-btn" title="Instagram">📸</a>
-            <a href="#" class="social-btn" title="Mail">✉️</a>
+            <a href="#" class="social-btn">📱</a>
+            <a href="#" class="social-btn">📸</a>
+            <a href="#" class="social-btn">✉️</a>
             
             <a href="reviews.html" class="social-btn" title="My Reviews">
                 <img src="icons/reviews.png" alt="Reviews">
@@ -203,55 +206,52 @@
     </main>
 
     <script>
+        // 1. ФУНКЦИЯ ПРОЯВЛЕНИЯ СТРАНИЦЫ
         function showPage() {
             document.body.classList.add('fade-in');
-            document.body.style.opacity = '1';
         }
 
+        // Запуск при любых сценариях
         window.addEventListener('load', showPage);
-        window.addEventListener('pageshow', (event) => { showPage(); });
+        window.addEventListener('pageshow', showPage);
+        // Запасной вариант, если события выше не сработали
+        setTimeout(showPage, 50);
 
+        // 2. КУРСОР И ПЫЛЬ
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            createSparkle(e.clientX, e.clientY);
-        });
-
-        function createSparkle(x, y) {
+            
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
             const size = Math.random() * 8 + 2;
             sparkle.style.width = size + 'px';
             sparkle.style.height = size + 'px';
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            const destX = x + (Math.random() - 0.5) * 80;
-            const destY = y + (Math.random() - 0.5) * 80;
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            
+            const destX = e.clientX + (Math.random() - 0.5) * 80;
+            const destY = e.clientY + (Math.random() - 0.5) * 80;
+            
             sparkle.animate([
                 { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+                { transform: `translate(${destX - e.clientX}px, ${destY - e.clientY}px) scale(0)`, opacity: 0 }
             ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
             setTimeout(() => sparkle.remove(), 1000);
-        }
+        });
 
-        document.querySelectorAll('a, .profile-pic-container').forEach(el => {
+        // 3. ЭФФЕКТЫ ПРИ НАВЕДЕНИИ
+        document.querySelectorAll('a, .profile-pic-container, .social-btn').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
+        // 4. ПЕРЕХОДЫ МЕЖДУ СТРАНИЦАМИ
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                if (href && href.includes('.html') && !href.startsWith('http')) {
-                    e.preventDefault();
-                    document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = href; }, 500);
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                
+                // Переходим только если это реальная ссылка на .
