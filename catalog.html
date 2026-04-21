@@ -26,15 +26,27 @@
             overflow-x: hidden;
         }
 
-        /* --- ФОН И КУРСОР (ИДЕНТИЧНО ВСЕМ СТРАНИЦАМ) --- */
-        .bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7); background-size: 500% 500%; animation: gradientMove 20s ease infinite; }
+        /* --- ФОН И КУРСОР --- */
+        .bg-gradient { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; 
+            background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7); 
+            background-size: 500% 500%; animation: gradientMove 20s ease infinite; 
+        }
         @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
         #stars-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
-        #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); }
+        
+        #custom-cursor { 
+            position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); 
+            border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); 
+            pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); 
+        }
+        
         .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 9999; }
 
         /* --- НАВИГАЦИЯ --- */
         .nav-header { width: 100%; padding: 30px; box-sizing: border-box; display: flex; justify-content: flex-start; }
+        
         .back-btn { 
             text-decoration: none; color: var(--mauve-text); font-weight: 700; 
             padding: 10px 25px; border: 2px solid var(--mauve-text); border-radius: 50px; 
@@ -44,9 +56,9 @@
         .back-btn:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--strong-pink); }
 
         /* --- ЗАГОЛОВОК --- */
-        h1 { font-family: 'Comfortaa'; font-size: 2.5rem; margin: 20px 0 50px; }
+        h1 { font-family: 'Comfortaa'; font-size: 2.5rem; margin: 20px 0 50px; text-align: center; }
 
-        /* --- СЕТКА КАТАЛОГА (КАРТОЧКИ) --- */
+        /* --- СЕТКА КАТАЛОГА --- */
         .catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -63,10 +75,10 @@
             background: white;
             border: 3px solid var(--mauve-text);
             border-radius: 25px;
-            padding: 40px 20px;
+            padding: 45px 25px;
             text-align: center;
             box-shadow: 12px 12px 0px var(--soft-pink);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
             display: flex;
             flex-direction: column;
@@ -74,28 +86,16 @@
             gap: 15px;
         }
 
+        /* Эффект нажатия при наведении */
         .category-card:hover {
-            transform: translate(5px, 5px);
-            box-shadow: 5px 5px 0px var(--mauve-text);
+            transform: translate(6px, 6px);
+            box-shadow: 4px 4px 0px var(--mauve-text);
             background-color: var(--soft-pink);
         }
 
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .card-title {
-            font-family: 'Comfortaa';
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            line-height: 1.4;
-        }
+        .card-icon { font-size: 3.5rem; margin-bottom: 10px; }
+        .card-title { font-family: 'Comfortaa'; font-size: 1.6rem; font-weight: 700; }
+        .card-desc { font-size: 0.95rem; opacity: 0.8; line-height: 1.5; }
 
         @media (max-width: 600px) {
             .catalog-grid { grid-template-columns: 1fr; }
@@ -122,12 +122,6 @@
             <p class="card-desc">Custom landing pages & creative web designs</p>
         </a>
 
-        <a href="branding.html" class="category-card">
-            <div class="card-icon">🎨</div>
-            <div class="card-title">Branding</div>
-            <p class="card-desc">Visual identity and brand books for creators</p>
-        </a>
-
         <a href="logos.html" class="category-card">
             <div class="card-icon">✨</div>
             <div class="card-title">Logos</div>
@@ -142,43 +136,50 @@
     </main>
 
     <script>
-        // --- СКРИПТ КУРСОР ---
+        // КУРСОР
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.6) createSparkle(e.clientX, e.clientY);
+            if (Math.random() > 0.6) {
+                const s = document.createElement('div');
+                s.className = 'sparkle'; document.body.appendChild(s);
+                const size = Math.random() * 8 + 2;
+                s.style.width = size + 'px'; s.style.height = size + 'px';
+                s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+                s.animate([
+                    { opacity: 1, transform: 'scale(1)' },
+                    { opacity: 0, transform: `translate(${(Math.random()-0.5)*100}px, ${(Math.random()-0.5)*100}px) scale(0)` }
+                ], 1000);
+                setTimeout(() => s.remove(), 1000);
+            }
         });
 
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            document.body.appendChild(sparkle);
-            const size = Math.random() * 8 + 2;
-            sparkle.style.width = size + 'px'; 
-            sparkle.style.height = size + 'px';
-            sparkle.style.left = x + 'px'; 
-            sparkle.style.top = y + 'px';
-            sparkle.animate([
-                { opacity: 1, transform: 'scale(1)' },
-                { opacity: 0, transform: `translate(${(Math.random()-0.5)*100}px, ${(Math.random()-0.5)*100}px) scale(0)` }
-            ], { duration: 1000 });
-            setTimeout(() => sparkle.remove(), 1000);
-        }
-
-        // --- СКРИПТ ЗВЕЗДЫ ---
+        // ЗВЕЗДЫ
         const sCanvas = document.getElementById('stars-canvas');
         const sCtx = sCanvas.getContext('2d');
         let particles = [];
         function resize() { sCanvas.width = window.innerWidth; sCanvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
-        class Particle {
-            constructor() { this.x = Math.random() * sCanvas.width; this.y = Math.random() * sCanvas.height; this.size = Math.random() * 1.5; this.opacity = Math.random(); this.speed = 0.005; }
-            update() { this.opacity += this.speed; if (this.opacity > 1 || this.opacity < 0) this.speed = -this.speed; }
-            draw() { sCtx.globalAlpha = this.opacity; sCtx.fillStyle = "white"; sCtx.beginPath(); sCtx.arc(this.x, this.y, this.size, 0, Math.PI*2); sCtx.fill(); }
+        
+        for(let i=0; i<80; i++) {
+            particles.push({
+                x: Math.random() * sCanvas.width, 
+                y: Math.random() * sCanvas.height, 
+                size: Math.random() * 1.5, 
+                opacity: Math.random(), 
+                speed: 0.005
+            });
         }
-        for(let i=0; i<80; i++) particles.push(new Particle());
-        function animate() { sCtx.clearRect(0,0,sCanvas.width, sCanvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+
+        function animate() {
+            sCtx.clearRect(0,0,sCanvas.width, sCanvas.height);
+            particles.forEach(p => {
+                p.opacity += p.speed; if (p.opacity > 1 || p.opacity < 0) p.speed = -p.speed;
+                sCtx.globalAlpha = p.opacity; sCtx.fillStyle = "white"; sCtx.beginPath(); sCtx.arc(p.x, p.y, p.size, 0, Math.PI*2); sCtx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
         animate();
     </script>
 </body>
