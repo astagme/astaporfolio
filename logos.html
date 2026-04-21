@@ -15,12 +15,12 @@
             --glow: rgba(255, 219, 234, 0.8);
         }
 
-        /* --- БАЗОВЫЕ СТИЛИ И ПЛАВНОСТЬ --- */
+        /* --- ПЛАВНОСТЬ --- */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
-            opacity: 0; /* Изначально прозрачный для анимации */
+            opacity: 0; 
             transition: opacity 0.5s ease;
             cursor: none !important;
             color: var(--mauve-text);
@@ -31,7 +31,7 @@
             opacity: 1;
         }
 
-        /* --- КАСТОМНЫЙ КУРСОР --- */
+        /* --- КУРСОР --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -124,7 +124,6 @@
             border-color: var(--strong-pink);
         }
 
-        /* Обертка для самого изображения */
         .card-image-wrapper {
             background: #FFF9FB;
             border-radius: 25px;
@@ -141,7 +140,6 @@
             max-width: 100%;
             height: auto;
             object-fit: contain;
-            /* Эффект тени для PNG букв */
             filter: drop-shadow(0 10px 15px rgba(244, 194, 215, 0.4));
             transition: 0.4s;
         }
@@ -166,7 +164,6 @@
             letter-spacing: 1px;
         }
 
-        /* --- АДАПТИВ --- */
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
@@ -203,28 +200,21 @@
                 <div class="logo-title">Project Name</div>
                 <div class="logo-category">Logo Design</div>
             </div>
-
-            <div class="logo-card">
-                <div class="card-image-wrapper">
-                    <img src="https://via.placeholder.com/400x400/FFDBEA/A67081?text=Your+Work" alt="Project">
-                </div>
-                <div class="logo-title">Project Name</div>
-                <div class="logo-category">Iconography</div>
-            </div>
         </div>
     </main>
 
     <script>
-        // 1. ЛОГИКА ПЛАВНОСТИ
-        window.addEventListener('DOMContentLoaded', () => {
+        // 1. ПЛАВНОСТЬ ПРИ ЗАГРУЗКЕ
+        window.addEventListener('load', () => {
             document.body.classList.add('fade-in');
         });
 
+        // ПЛАВНЫЙ ПЕРЕХОД ПО ССЫЛКАМ
         document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                if (link.hostname === window.location.hostname && link.href.includes('.html')) {
+            link.addEventListener('click', function(e) {
+                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
                     e.preventDefault();
-                    const target = link.href;
+                    const target = this.href;
                     document.body.style.opacity = '0';
                     setTimeout(() => {
                         window.location.href = target;
@@ -233,7 +223,7 @@
             });
         });
 
-        // 2. ЛОГИКА КУРСОРA
+        // 2. КУРСОР
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
