@@ -32,25 +32,27 @@
 
     /* --- ЕДИНЫЙ КУРСОР --- */
     #custom-cursor {
-        position: fixed;
-        width: 25px;
-        height: 25px;
-        background: white;
-        border: 2px solid var(--brown-outline);
-        border-radius: 2px 50% 50% 50%;
-        transform: translate(-50%, -50%) rotate(-45deg);
-        pointer-events: none;
-        z-index: 1000000;
-        box-shadow: 2px 2px 0px var(--soft-pink);
-        display: none;
-        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
-    }
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    background: white;
+    border: 2px solid var(--brown-outline);
+    /* Форма капельки */
+    border-radius: 2px 50% 50% 50%;
+    /* Важно: сначала центрируем по точке, потом поворачиваем */
+    transform: translate(-50%, -50%) rotate(-45deg);
+    pointer-events: none;
+    z-index: 1000000;
+    box-shadow: 2px 2px 0px var(--soft-pink);
+    display: none;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s, width 0.2s, height 0.2s;
+}
 
-    .cursor-active {
-        transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
-        background: var(--soft-pink) !important;
-    }
-
+/* Эффект увеличения при наведении */
+.cursor-active {
+    transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
+    background: var(--soft-pink) !important;
+}
     /* --- НАВИГАЦИЯ --- */
     nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
     .nav-btn {
