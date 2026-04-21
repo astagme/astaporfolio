@@ -12,15 +12,14 @@
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --brown-outline: #63414C;
-            --glow: rgba(255, 219, 234, 0.8);
         }
 
-        /* ПЛАВНОСТЬ (Добавляем этот блок) */
+        /* ПЛАВНОСТЬ */
         body {
             background-color: var(--bg-cream);
             font-family: 'Comfortaa', cursive;
             margin: 0;
-            opacity: 0; /* Изначально скрыто */
+            opacity: 0; 
             transition: opacity 0.5s ease;
             cursor: none !important;
             color: var(--mauve-text);
@@ -28,7 +27,7 @@
         }
 
         body.fade-in {
-            opacity: 1; /* Всплывает при загрузке */
+            opacity: 1;
         }
 
         /* КУРСОР */
@@ -51,7 +50,6 @@
             background: var(--soft-pink) !important;
         }
 
-        /* НАВИГАЦИЯ */
         nav {
             padding: 40px;
             display: flex;
@@ -76,7 +74,6 @@
             transform: translateY(-3px);
         }
 
-        /* СЕТКА КАТАЛОГА */
         .catalog-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -114,20 +111,11 @@
         .category-card:hover {
             transform: translate(-5px, -5px);
             box-shadow: 15px 15px 0px var(--strong-pink);
-            background: #FFF9FB;
         }
 
-        .category-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-
-        .category-card h3 {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.8rem;
-            margin: 10px 0;
-            color: #5D3D48;
-        }
+        .category-icon { font-size: 60px; margin-bottom: 20px; }
+        .category-card h3 { font-family: 'Quicksand', sans-serif; font-size: 1.8rem; margin: 10px 0; color: #5D3D48; }
+        .category-card p { margin: 0; color: var(--mauve-text); }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
@@ -143,25 +131,21 @@
     <nav>
         <a href="index.html" class="nav-btn">Home</a>
         <a href="about.html" class="nav-btn">About Me</a>
-        <a href="catalog.html" class="nav-btn">Catalog</a>
     </nav>
 
     <main class="catalog-container">
         <h1 class="catalog-title">Portfolio</h1>
-        
         <div class="catalog-grid">
             <a href="logos.html" class="category-card">
                 <div class="category-icon">🎨</div>
                 <h3>Logos</h3>
                 <p>Branding & visual identity</p>
             </a>
-
             <a href="art.html" class="category-card">
                 <div class="category-icon">✨</div>
                 <h3>Illustrations</h3>
                 <p>Digital art & character design</p>
             </a>
-
             <a href="branding.html" class="category-card">
                 <div class="category-icon">💻</div>
                 <h3>Websites</h3>
@@ -171,9 +155,36 @@
     </main>
 
     <script>
-        // ЛОГИКА ПЛАВНОСТИ
-        window.addEventListener('DOMContentLoaded', () => {
+        // Проявление при загрузке
+        window.addEventListener('load', () => {
             document.body.classList.add('fade-in');
         });
 
+        // Плавный уход при клике
         document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
+                    e.preventDefault();
+                    const target = this.href;
+                    document.body.style.opacity = '0';
+                    setTimeout(() => { window.location.href = target; }, 500);
+                }
+            });
+        });
+
+        // Курсор
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const interactables = document.querySelectorAll('.nav-btn, .category-card');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
+    </script>
+</body>
+</html>
