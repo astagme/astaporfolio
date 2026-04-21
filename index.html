@@ -11,7 +11,7 @@
             --strong-pink: #F4C2D7; 
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
-            --star-yellow: #FFD700;
+            --star-yellow: #FFD700; /* Яркий жёлтый */
             --glow: rgba(255, 219, 234, 0.8);
         }
 
@@ -22,33 +22,60 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 180vh;
+            min-height: 200vh; /* Увеличили длину для скролла */
             overflow-x: hidden;
             position: relative;
         }
 
-        /* --- АНИМАЦИЯ ЗВЕЗД --- */
+        /* --- МАГИЯ ЗВЁЗДНОГО НЕБА --- */
+        .star-field {
+            position: fixed; /* Зафиксированы на экране при скролле */
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none; /* Не мешают кликать */
+        }
+
         .star {
             position: absolute;
             background: var(--star-yellow);
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            z-index: -1;
             opacity: 0.6;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
-            50% { opacity: 0.8; transform: scale(1.2) rotate(15deg); }
+            0%, 100% { opacity: 0.2; transform: scale(0.7) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1.1) rotate(10deg); }
         }
 
-        /* Позиции для звезд (примеры) */
-        .star-1 { top: 10%; left: 5%; width: 30px; height: 30px; animation: twinkle 3s infinite; }
-        .star-2 { top: 20%; right: 10%; width: 20px; height: 20px; animation: twinkle 4s infinite 1s; }
-        .star-3 { top: 70%; left: 15%; width: 25px; height: 25px; animation: twinkle 5s infinite 0.5s; }
-        .star-4 { top: 40%; right: 5%; width: 35px; height: 35px; animation: twinkle 3.5s infinite 2s; }
-        .star-5 { top: 85%; right: 20%; width: 15px; height: 15px; animation: twinkle 6s infinite; }
+        /* --- ПОЗИЦИИ И РАЗМЕРЫ (автоматическая расстановка) --- */
+        /* Верхний левый угол */
+        .star:nth-child(1) { top: 10%; left: 5%; width: 30px; height: 30px; animation: twinkle 3s infinite; }
+        .star:nth-child(2) { top: 25%; left: 15%; width: 20px; height: 20px; animation: twinkle 4s infinite 1s; }
+        .star:nth-child(3) { top: 5%; left: 20%; width: 15px; height: 15px; animation: twinkle 5s infinite 2s; }
 
-        /* --- ОСНОВНЫЕ СТИЛИ --- */
+        /* Верхний правый угол */
+        .star:nth-child(4) { top: 15%; right: 10%; width: 35px; height: 35px; animation: twinkle 3.5s infinite; }
+        .star:nth-child(5) { top: 30%; right: 18%; width: 20px; height: 20px; animation: twinkle 4s infinite 1.5s; }
+        .star:nth-child(6) { top: 8%; right: 25%; width: 18px; height: 18px; animation: twinkle 6s infinite 3s; }
+
+        /* Центр (вокруг контента) */
+        .star:nth-child(7) { top: 45%; left: 30%; width: 25px; height: 25px; animation: twinkle 3.2s infinite; }
+        .star:nth-child(8) { top: 60%; right: 28%; width: 30px; height: 30px; animation: twinkle 5s infinite 0.5s; }
+        .star:nth-child(9) { top: 55%; left: 10%; width: 20px; height: 20px; animation: twinkle 4.5s infinite; }
+
+        /* Низ страницы */
+        .star:nth-child(10) { bottom: 10%; left: 8%; width: 35px; height: 35px; animation: twinkle 3.8s infinite; }
+        .star:nth-child(11) { bottom: 20%; right: 5%; width: 25px; height: 25px; animation: twinkle 5.5s infinite 2s; }
+        .star:nth-child(12) { bottom: 5%; right: 15%; width: 18px; height: 18px; animation: twinkle 6s infinite 4s; }
+        .star:nth-child(13) { bottom: 30%; left: 20%; width: 22px; height: 22px; animation: twinkle 4.2s infinite 1s; }
+
+        /* --- ОСНОВНЫЕ СТИЛИ (бренд и кнопки) --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
         header {
             display: flex;
             flex-direction: column;
@@ -68,11 +95,6 @@
             width: 100%;
             max-width: 1300px;
             animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
         }
 
         .pfp-png {
@@ -112,7 +134,7 @@
         .nav-btn:hover {
             background: var(--soft-pink);
             color: white;
-            transform: scale(1.05);
+            transform: translateY(-3px);
             box-shadow: 0 10px 20px var(--glow);
         }
 
@@ -120,15 +142,17 @@
             .brand-container { flex-direction: column; gap: 5px; }
             .pfp-png { width: 220px; }
             .logo-text { width: 95%; }
+            .star-field { opacity: 0.4; } /* На мобильных меньше отвлекают */
         }
     </style>
 </head>
 <body>
-    <div class="star star-1"></div>
-    <div class="star star-2"></div>
-    <div class="star star-3"></div>
-    <div class="star star-4"></div>
-    <div class="star star-5"></div>
+    <div class="star-field">
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+    </div>
 
     <header>
         <div class="brand-container">
