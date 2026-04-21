@@ -12,52 +12,167 @@
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --brown-outline: #63414C;
+            --glow: rgba(255, 219, 234, 0.8);
         }
 
-        /* ПЛАВНОСТЬ */
-        body { opacity: 0; transition: opacity 0.5s ease; background-color: var(--bg-cream); font-family: 'Comfortaa', cursive; margin: 0; cursor: none !important; color: var(--mauve-text); }
-        body.fade-in { opacity: 1; }
+        /* --- БАЗОВЫЕ СТИЛИ И ПЛАВНОСТЬ --- */
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Comfortaa', cursive;
+            margin: 0;
+            opacity: 0; /* Изначально прозрачный для анимации */
+            transition: opacity 0.5s ease;
+            cursor: none !important;
+            color: var(--mauve-text);
+            min-height: 100vh;
+        }
 
-        #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--brown-outline); border-radius: 2px 50% 50% 50%; transform: rotate(-45deg) translate(-50%, -50%); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); display: none; }
-        .cursor-active { transform: rotate(-45deg) translate(-50%, -50%) scale(1.5) !important; background: var(--soft-pink) !important; }
+        body.fade-in {
+            opacity: 1;
+        }
 
-        nav { padding: 30px; display: flex; justify-content: center; gap: 20px; }
-        .nav-btn { text-decoration: none; color: var(--mauve-text); padding: 10px 25px; border-radius: 50px; border: 2px solid var(--strong-pink); background: white; transition: 0.3s; cursor: none !important; }
-        .nav-btn:hover { background: var(--soft-pink); color: white; transform: translateY(-3px); }
+        /* --- КАСТОМНЫЙ КУРСОР --- */
+        #custom-cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%;
+            transform: rotate(-45deg) translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            display: none;
+        }
 
-        /* СЕТКА ГАЛЕРЕИ */
-        .gallery-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; text-align: center; }
-        h1 { font-family: 'Quicksand', sans-serif; font-size: 2.5rem; margin-bottom: 40px; }
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
+            width: 7px; height: 7px;
+            background: var(--soft-pink);
+            border-radius: 50%;
+            top: 5px; left: 5px;
+        }
+
+        .cursor-active {
+            transform: rotate(-45deg) translate(-50%, -50%) scale(1.5) !important;
+            background: var(--soft-pink) !important;
+        }
+
+        /* --- НАВИГАЦИЯ --- */
+        nav {
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--mauve-text);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid var(--strong-pink);
+            background: white;
+            font-weight: 500;
+            transition: 0.3s;
+            cursor: none !important;
+        }
+
+        .nav-btn:hover {
+            background: var(--soft-pink);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--glow);
+        }
+
+        /* --- ГАЛЕРЕЯ --- */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: #5D3D48;
+        }
 
         .logo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
         }
 
         .logo-card {
             background: white;
-            border-radius: 30px;
-            padding: 15px;
+            border-radius: 40px;
+            padding: 20px;
             border: 2px solid var(--soft-pink);
-            transition: 0.4s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
-            position: relative;
+            text-align: left;
+        }
+
+        .logo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--glow);
+            border-color: var(--strong-pink);
+        }
+
+        /* Обертка для самого изображения */
+        .card-image-wrapper {
+            background: #FFF9FB;
+            border-radius: 25px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 280px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
-        .logo-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px var(--soft-pink); }
-
         .logo-card img {
-            width: 100%;
-            border-radius: 20px;
-            display: block;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            /* Эффект тени для PNG букв */
+            filter: drop-shadow(0 10px 15px rgba(244, 194, 215, 0.4));
             transition: 0.4s;
         }
 
-        .logo-card:hover img { transform: scale(1.05); }
+        .logo-card:hover img {
+            transform: scale(1.08);
+        }
 
-        .logo-title { font-family: 'Quicksand', sans-serif; margin-top: 15px; font-weight: 600; font-size: 1.1rem; }
+        .logo-title {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #5D3D48;
+            margin-left: 10px;
+        }
+
+        .logo-category {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-left: 10px;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* --- АДАПТИВ --- */
+        @media (max-width: 850px) {
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .nav-btn, .logo-card { cursor: pointer !important; }
+            h1 { font-size: 2.2rem; }
+        }
     </style>
 </head>
 <body>
@@ -69,42 +184,56 @@
         <a href="catalog.html" class="nav-btn">← Back to Catalog</a>
     </nav>
 
-    <div class="gallery-container">
+    <main class="gallery-container">
         <h1>Logo Design ✨</h1>
         
         <div class="logo-grid">
             <div class="logo-card">
-                <img src="logo1.jpg" alt="Project 1">
-                <div class="logo-title">Project Name 1</div>
+                <div class="card-image-wrapper">
+                    <img src="astagme.png" alt="Astagme Logo">
+                </div>
+                <div class="logo-title">Astagme Identity</div>
+                <div class="logo-category">Personal Branding</div>
             </div>
 
             <div class="logo-card">
-                <img src="logo2.jpg" alt="Project 2">
-                <div class="logo-title">Project Name 2</div>
+                <div class="card-image-wrapper">
+                    <img src="https://via.placeholder.com/400x400/FFDBEA/A67081?text=Your+Work" alt="Project">
+                </div>
+                <div class="logo-title">Project Name</div>
+                <div class="logo-category">Logo Design</div>
             </div>
 
             <div class="logo-card">
-                <img src="logo3.jpg" alt="Project 3">
-                <div class="logo-title">Project Name 3</div>
+                <div class="card-image-wrapper">
+                    <img src="https://via.placeholder.com/400x400/FFDBEA/A67081?text=Your+Work" alt="Project">
+                </div>
+                <div class="logo-title">Project Name</div>
+                <div class="logo-category">Iconography</div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        // ПЛАВНОСТЬ
-        window.addEventListener('DOMContentLoaded', () => { document.body.classList.add('fade-in'); });
+        // 1. ЛОГИКА ПЛАВНОСТИ
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('fade-in');
+        });
+
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', (e) => {
                 if (link.hostname === window.location.hostname && link.href.includes('.html')) {
                     e.preventDefault();
                     const target = link.href;
                     document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = target; }, 500);
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 500);
                 }
             });
         });
 
-        // КУРСОР
+        // 2. ЛОГИКА КУРСОРA
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -112,8 +241,8 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        const items = document.querySelectorAll('.nav-btn, .logo-card');
-        items.forEach(el => {
+        const interactables = document.querySelectorAll('.nav-btn, .logo-card');
+        interactables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
