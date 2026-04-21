@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog | ASTAGME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #FFDBEA;
+            --strong-pink: #F4C2D7; 
+            --mauve-text: #A67081;
+            --bg-cream: #FDFBF7;
+            --brown-outline: #63414C;
+            --glow: rgba(255, 219, 234, 0.8);
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            font-family: 'Comfortaa', cursive;
+            margin: 0;
+            cursor: none !important;
+            color: var(--mauve-text);
+            min-height: 100vh;
+        }
+
+        /* --- КУРСОР --- */
+        #custom-cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 2px solid var(--brown-outline);
+            border-radius: 2px 50% 50% 50%;
+            transform: rotate(-45deg) translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1000000;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            display: none;
+        }
+
+        .cursor-active {
+            transform: rotate(-45deg) translate(-50%, -50%) scale(1.5) !important;
+            background: var(--soft-pink) !important;
+        }
+
+        /* --- НАВИГАЦИЯ --- */
+        nav {
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--mauve-text);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid var(--strong-pink);
+            background: white;
+            transition: 0.3s;
+            cursor: none !important;
+        }
+
+        .nav-btn:hover {
+            background: var(--soft-pink);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* --- СЕТКА КАТАЛОГА --- */
+        .catalog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px 80px;
+            text-align: center;
+        }
+
+        .catalog-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: #5D3D48;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        /* КАРТОЧКА КАТЕГОРИИ */
+        .category-card {
+            background: white;
+            border: 3px solid var(--brown-outline);
+            border-radius: 40px;
+            padding: 50px 30px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 10px 10px 0px var(--soft-pink);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: none !important;
+        }
+
+        .category-card:hover {
+            transform: translate(-5px, -5px);
+            box-shadow: 15px 15px 0px var(--strong-pink);
+            background: #FFF9FB;
+        }
+
+        .category-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 5px 10px var(--glow));
+        }
+
+        .category-card h3 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.8rem;
+            margin: 10px 0;
+            color: #5D3D48;
+        }
+
+        .category-card p {
+            font-size: 1rem;
+            color: var(--mauve-text);
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* АДАПТИВ */
+        @media (max-width: 850px) {
+            .catalog-title { font-size: 2.2rem; }
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .nav-btn, .category-card { cursor: pointer !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="custom-cursor"></div>
+
+    <nav>
+        <a href="index.html" class="nav-btn">Home</a>
+        <a href="about.html" class="nav-btn">About Me</a>
+        <a href="catalog.html" class="nav-btn">Catalog</a>
+    </nav>
+
+    <main class="catalog-container">
+        <h1 class="catalog-title">Portfolio</h1>
+        
+        <div class="catalog-grid">
+            
+            <a href="logos.html" class="category-card">
+                <div class="category-icon">🎨</div>
+                <h3>Logos</h3>
+                <p>Branding, visual identity and custom logo designs</p>
+            </a>
+
+            <a href="art.html" class="category-card">
+                <div class="category-icon">✨</div>
+                <h3>Illustrations</h3>
+                <p>Digital art, character design and creative drawings</p>
+            </a>
+
+            <a href="branding.html" class="category-card">
+                <div class="category-icon">💻</div>
+                <h3>Websites</h3>
+                <p>Creative coding, UI/UX and web development</p>
+            </a>
+
+        </div>
+    </main>
+
+    <script>
+        const cursor = document.getElementById('custom-cursor');
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const interactables = document.querySelectorAll('.nav-btn, .category-card');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
+    </script>
+</body>
+</html>
