@@ -24,51 +24,46 @@
             background: linear-gradient(135deg, #fdfbf7 0%, #fff5f8 100%);
         }
 
-        /* --- HEADER --- */
+        /* Анимация парения */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-20px); }
         }
 
-       <header>
-        <img src="images/font.png" alt="astagme" class="logo-text">
-        <img src="images/ava.png" alt="Asta" class="pfp-circle">
-
-        <nav>
-            <a href="#">home</a>
-            <a href="#">branding</a>
-            <a href="#">art</a>
-            <a href="#">info</a>
-        </nav>
-
-        <div class="hero-section">
-            <h1>i create brands people fall in love with</h1>
-        </div>
-    </header>
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 95vh; /* Почти на весь экран */
+            padding: 20px;
+            text-align: center;
         }
 
+        /* Огромное лого */
         .logo-text {
-            width: 85%; /* Логотип на весь экран */
-            max-width: 950px; 
+            width: 90%; 
+            max-width: 1000px; 
             height: auto;
-            filter: drop-shadow(0 10px 25px var(--glow));
+            filter: drop-shadow(0 15px 30px var(--glow));
             animation: float 6s ease-in-out infinite;
         }
 
+        /* Аватарка под лого */
         .pfp-circle {
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            border: 6px solid white;
+            border: 8px solid white;
             box-shadow: 0 10px 30px var(--glow);
             object-fit: cover;
-            margin-top: -30px; /* Эффект наслоения */
+            margin-top: -40px; /* Наплыв на логотип для стиля */
             z-index: 2;
             background-color: white;
         }
 
         nav {
-            margin-top: 50px;
+            margin-top: 40px;
             background: rgba(255, 255, 255, 0.6);
             padding: 15px 40px;
             border-radius: 50px;
@@ -94,43 +89,13 @@
             color: var(--mauve-text);
             font-weight: 300;
             font-size: 1.6rem;
-            margin-top: 50px;
+            margin-top: 40px;
             letter-spacing: 1px;
         }
 
-        /* --- GALLERY --- */
         .section-container {
-            width: 100%;
-            max-width: 1100px;
             padding: 80px 20px;
             text-align: center;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .work-card {
-            background: white;
-            border-radius: 40px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(166, 112, 129, 0.08);
-            transition: 0.4s ease;
-        }
-
-        .work-card:hover { 
-            transform: translateY(-10px); 
-            box-shadow: 0 20px 40px var(--glow); 
-        }
-
-        .card-img { 
-            height: 320px; 
-            background-size: cover; 
-            background-position: center; 
-            background-color: #fff5f8; 
         }
 
     </style>
@@ -138,9 +103,8 @@
 <body>
 
     <header>
-        <img src="images/font.png" alt="astagme" class="logo-text">
-        
-        <img src="images/ava.png" alt="Asta" class="pfp-circle">
+        <img src="font.png" alt="astagme" class="logo-text">
+        <img src="ava.png" alt="Asta" class="pfp-circle">
 
         <nav>
             <a href="#">home</a>
@@ -153,20 +117,6 @@
             <h1>i create brands people fall in love with</h1>
         </div>
     </header>
-
-    <section class="section-container">
-        <h2 style="color: var(--mauve-text); font-size: 2.2rem;">my work</h2>
-        <div class="grid-container">
-            <div class="work-card">
-                <div class="card-img" style="background-image: url('images/work1.png');"></div>
-                <div style="padding: 30px; color: var(--mauve-text);"><h3>Logos & Branding</h3></div>
-            </div>
-            <div class="work-card">
-                <div class="card-img" style="background-image: url('images/work2.png');"></div>
-                <div style="padding: 30px; color: var(--mauve-text);"><h3>Cartoony Art</h3></div>
-            </div>
-        </div>
-    </section>
 
 </body>
 </html>
