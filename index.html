@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAGME | Creative Space</title>
+    <title>ASTAGME | Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -27,177 +27,176 @@
             overflow: hidden;
         }
 
-        /* МАГИЧЕСКИЙ КУРСОР */
+        /* ВОЗВРАЩАЕМ ТОТ САМЫЙ КУРСОР */
         #custom-cursor {
             position: fixed;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             background: white;
             border: 2px solid var(--brown-outline);
-            border-radius: 50% 50% 50% 2px;
+            border-radius: 2px 50% 50% 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
             pointer-events: none;
             z-index: 10000;
-            transition: transform 0.1s;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            display: none;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* СЕТКА ИНТЕРФЕЙСА */
-        .wrapper {
+        .cursor-active {
+            transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
+            background: var(--soft-pink) !important;
+        }
+
+        /* ИСКРЫ ПРИ ДВИЖЕНИИ */
+        .sparkle {
+            position: fixed;
+            background: var(--strong-pink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 10px var(--soft-pink);
+        }
+
+        /* КОНТЕНТ */
+        .hero-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px;
-            z-index: 10;
-            width: 100%;
-            max-width: 1000px;
+            text-align: center;
+            z-index: 5;
         }
 
-        /* ЛОГОТИП С ЭФФЕКТОМ СИЯНИЯ */
-        .logo-section {
-            position: relative;
-            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-        }
-
+        /* ЛОГОТИП: ТЕПЕРЬ ДЫШИТ, А НЕ ПРЫГАЕТ */
         .logo-main {
-            max-width: 550px;
+            max-width: 600px;
             width: 90%;
             height: auto;
-            /* Анимация внутреннего свечения */
-            animation: logoGlow 4s infinite ease-in-out;
-            filter: drop-shadow(0 0 10px rgba(244, 194, 215, 0.3));
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 15px rgba(244, 194, 215, 0.3));
+            animation: logoBreathe 6s infinite ease-in-out;
+            transition: 0.8s ease;
         }
 
-        @keyframes logoGlow {
-            0%, 100% { filter: drop-shadow(0 0 15px rgba(244, 194, 215, 0.4)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 35px rgba(244, 194, 215, 0.8)); transform: scale(1.02); }
+        @keyframes logoBreathe {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.02); opacity: 1; }
         }
 
-        /* КАРТОЧКА С АВАТАРКОЙ (ПАРАЛЛАКС) */
-        .info-panel {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border: 3px solid white;
-            border-radius: 40px;
-            padding: 30px 60px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            box-shadow: 0 15px 35px rgba(244, 194, 215, 0.2);
-            /* Убираем авто-левитацию, заменяем на плавность для JS */
-            transition: transform 0.2s ease-out; 
+        .logo-main:hover {
+            transform: scale(1.05) !important;
+            filter: drop-shadow(0 15px 30px var(--soft-pink));
         }
 
-        .ava-mini {
-            width: 100px;
-            height: 100px;
+        /* БОЛЬШАЯ АВАТАРКА */
+        .ava-box {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
             border-radius: 50%;
-            border: 3px solid var(--brown-outline);
-            object-fit: cover;
+            border: 4px solid var(--brown-outline);
             background: white;
-            box-shadow: 5px 5px 0 var(--soft-pink);
+            box-shadow: 10px 10px 0 var(--soft-pink);
+            overflow: hidden;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .text-group { text-align: left; }
-
-        .role-tag {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 600;
-            opacity: 0.7;
+        .ava-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .btn-group {
+        .ava-box:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 15px 15px 0 var(--strong-pink);
+        }
+
+        /* КНОПКИ */
+        .cta-container {
             display: flex;
-            gap: 15px;
-            margin-top: 15px;
+            gap: 20px;
         }
 
-        .action-btn {
+        .main-btn {
             text-decoration: none;
             color: var(--brown-outline);
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
-            padding: 10px 25px;
-            border: 2px solid var(--brown-outline);
-            border-radius: 30px;
+            padding: 15px 40px;
+            border: 3px solid var(--brown-outline);
+            border-radius: 50px;
             background: white;
+            box-shadow: 6px 6px 0 var(--soft-pink);
             transition: 0.3s;
             cursor: none !important;
-            font-size: 0.9rem;
         }
 
-        .action-btn:hover {
-            background: var(--soft-pink);
-            transform: translateY(-3px);
-            box-shadow: 4px 4px 0 var(--strong-pink);
-        }
-
-        /* ДЕКОРАТИВНЫЕ БЛИКИ */
-        .light-orb {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--soft-pink) 0%, transparent 70%);
-            z-index: -1;
-            filter: blur(80px);
-            opacity: 0.4;
+        .main-btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 10px 10px 0 var(--strong-pink);
+            background: var(--bg-cream);
         }
 
         @media (max-width: 850px) {
-            .info-panel { flex-direction: column; padding: 30px; text-align: center; }
-            .text-group { text-align: center; }
-            #custom-cursor { display: none; }
-            body { cursor: auto; }
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .logo-main { max-width: 350px; }
+            .ava-box { width: 150px; height: 150px; }
         }
     </style>
 </head>
 <body>
 
     <div id="custom-cursor"></div>
-    <div class="light-orb" style="top: -10%; left: -10%;"></div>
-    <div class="light-orb" style="bottom: -10%; right: -10%;"></div>
 
-    <div class="wrapper">
-        <div class="logo-section" id="logoGroup">
-            <img src="font.png" alt="Astagme" class="logo-main">
+    <div class="hero-content">
+        <img src="font.png" alt="Astagme" class="logo-main">
+
+        <div class="ava-box">
+            <img src="ava.png" alt="Astagme Avatar">
         </div>
 
-        <div class="info-panel" id="parallaxCard">
-            <img src="ava.png" alt="Astagme" class="ava-mini">
-            <div class="text-group">
-                <div class="role-tag">Digital Artist & Designer</div>
-                <div class="btn-group">
-                    <a href="catalog.html" class="action-btn">Portfolio</a>
-                    <a href="about.html" class="action-btn">About Me</a>
-                </div>
-            </div>
+        <div class="cta-container">
+            <a href="catalog.html" class="main-btn">Portfolio</a>
+            <a href="about.html" class="main-btn">About Me</a>
         </div>
     </div>
 
     <script>
         const cursor = document.getElementById('custom-cursor');
-        const card = document.getElementById('parallaxCard');
-        const logo = document.getElementById('logoGroup');
 
         window.addEventListener('mousemove', (e) => {
-            // Движение курсора
+            cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-
-            // Параллакс эффект
-            const x = (window.innerWidth / 2 - e.clientX) / 25;
-            const y = (window.innerHeight / 2 - e.clientY) / 25;
-
-            card.style.transform = `translate(${-x}px, ${-y}px)`;
-            logo.style.transform = `translate(${x*0.5}px, ${y*0.5}px)`;
+            createSparkle(e.clientX, e.clientY);
         });
 
-        // Эффект на кнопках
-        document.querySelectorAll('.action-btn').forEach(btn => {
-            btn.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.5)');
-            btn.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1)');
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            document.body.appendChild(sparkle);
+            const size = Math.random() * 6 + 2;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            
+            const destX = x + (Math.random() - 0.5) * 100;
+            const destY = y + (Math.random() - 0.5) * 100;
+            
+            sparkle.animate([
+                { transform: 'scale(1)', opacity: 1 },
+                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+            ], { duration: 800, easing: 'ease-out', fill: 'forwards' });
+            
+            setTimeout(() => sparkle.remove(), 800);
+        }
+
+        document.querySelectorAll('.main-btn, .logo-main, .ava-box').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
     </script>
 </body>
