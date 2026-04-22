@@ -12,7 +12,6 @@
             --mauve-text: #A67081;
             --bg-cream: #FDFBF7;
             --brown-outline: #63414C;
-            --glass-white: rgba(255, 255, 255, 0.4);
         }
 
         body {
@@ -25,12 +24,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Плавное появление */
             opacity: 0; 
-            transition: opacity 0.8s ease-out;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        body.fade-in { opacity: 1 !important; }
+        body.visible { opacity: 1 !important; }
 
         /* --- КУРСОР --- */
         #custom-cursor {
@@ -88,100 +86,119 @@
             box-shadow: 7px 7px 0px var(--strong-pink);
         }
 
-        /* --- ГЛАВНЫЙ КОНТЕЙНЕР (ДВЕ КОЛОНКИ) --- */
-        .main-layout {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 50px;
-            max-width: 1100px;
-            width: 90%;
-            margin-top: 20px;
-            padding-bottom: 50px;
-        }
-
-        /* --- ЛЕВАЯ СТЕКЛЯННАЯ КАРТОЧКА --- */
-        .glass-card {
-            flex: 1.5;
-            background: var(--glass-white);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 40px;
-            padding: 50px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        /* --- КОНТЕЙНЕР --- */
+        .about-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
+            gap: 40px;
+            width: 90%;
+            max-width: 800px;
+            margin-top: 20px;
+            padding-bottom: 80px;
         }
 
-        .profile-pic-container {
-            width: 200px;
-            height: 200px;
-            border: 4px solid white;
-            border-radius: 50% 20% 50% 20%;
+        /* Фотография */
+        .profile-frame {
+            width: 280px;
+            height: 280px;
+            background: white;
+            border: 4px solid var(--brown-outline);
+            border-radius: 40px; /* Мягкий квадрат, чтобы сердечко не обрезалось */
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            box-shadow: 15px 15px 0px var(--soft-pink);
+            transition: all 0.4s ease;
         }
 
-        .profile-pic-container img {
+        .profile-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .profile-frame:hover {
+            transform: rotate(-3deg) scale(1.02);
+            box-shadow: 20px 20px 0px var(--strong-pink);
+        }
+
+        /* Текст */
+        .info-section {
+            text-align: center;
+            background: white;
+            border: 3px solid var(--brown-outline);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 10px 10px 0px var(--soft-pink);
         }
 
         h1 {
             font-family: 'Quicksand', sans-serif;
             font-size: 2.5rem;
             color: var(--brown-outline);
-            margin-bottom: 20px;
+            margin-top: 0;
         }
 
-        .description {
+        .bio {
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--mauve-text);
         }
 
-        /* --- ПРАВАЯ КОЛОНКА (СОЦСЕТИ) --- */
-        .side-links {
-            flex: 0.5;
+        /* --- СОЦСЕТИ --- */
+        .socials-header {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .socials-icon-main {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        h2 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.8rem;
+            color: var(--brown-outline);
+            margin: 0;
+        }
+
+        .socials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
-            position: sticky;
-            top: 50px;
+            width: 100%;
         }
 
         .social-card {
             background: white;
             border: 2px solid var(--brown-outline);
             border-radius: 20px;
-            padding: 20px;
+            padding: 15px 25px;
             text-decoration: none;
             color: var(--brown-outline);
+            font-family: 'Quicksand', sans-serif;
             font-weight: 700;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
             box-shadow: 6px 6px 0px var(--soft-pink);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
         }
 
+        .social-card .label { font-size: 0.8rem; opacity: 0.6; display: block; margin-bottom: 2px; }
+        .social-card .value { font-size: 1.05rem; }
+
         .social-card:hover {
-            transform: translateX(10px);
-            box-shadow: 2px 2px 0px var(--brown-outline);
+            transform: translateY(-5px);
             background-color: var(--soft-pink);
+            box-shadow: 10px 10px 0px var(--strong-pink);
         }
 
-        .social-icon { font-size: 1.5rem; }
-
-        @media (max-width: 900px) {
-            .main-layout { flex-direction: column; align-items: center; }
-            .side-links { flex-direction: row; flex-wrap: wrap; justify-content: center; position: static; }
+        @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
             .nav-btn, .social-card { cursor: pointer !important; }
@@ -197,45 +214,59 @@
         <a href="catalog.html" class="nav-btn">Catalog</a>
     </nav>
 
-    <div class="main-layout">
-        <main class="glass-card">
-            <div class="profile-pic-container">
-                <img src="photo.jpg" alt="Astagme">
-            </div>
+    <main class="about-container">
+        <div class="profile-frame">
+            <img src="photo.jpg" alt="Astagme">
+        </div>
 
+        <section class="info-section">
             <h1>Hi, I'm Astagme! ✨</h1>
-            
-            <p class="description">
+            <p class="bio">
                 I am a beginner graphic designer passionate about soft aesthetics and meaningful visual stories. 
                 I love creating identities that feel like a warm hug. My work focuses on simplicity, 
                 readability, and a touch of magic.
             </p>
-        </main>
+        </section>
 
-        <aside class="side-links">
-            <a href="#" class="social-card">
-                <span class="social-icon">📱</span>
-                <span>Telegram</span>
-            </a>
-            <a href="#" class="social-card">
-                <span class="social-icon">📸</span>
-                <span>Instagram</span>
-            </a>
-            <a href="#" class="social-card">
-                <span class="social-icon">✉️</span>
-                <span>E-mail</span>
-            </a>
-        </aside>
-    </div>
+        <div class="socials-header">
+            <img src="icons/socials.png" alt="Socials" class="socials-icon-main">
+            <h2>My socials</h2>
+        </div>
+
+        <div class="socials-grid">
+            <div class="social-card">
+                <div>
+                    <span class="label">Telegram</span>
+                    <span class="value">@tosdeflores</span>
+                </div>
+                <span>🕊️</span>
+            </div>
+
+            <div class="social-card">
+                <div>
+                    <span class="label">Discord</span>
+                    <span class="value">astagme</span>
+                </div>
+                <span>👾</span>
+            </div>
+
+            <div class="social-card">
+                <div>
+                    <span class="label">Email</span>
+                    <span class="value">astagme@gmail.com</span>
+                </div>
+                <span>💌</span>
+            </div>
+        </div>
+    </main>
 
     <script>
-        // Проявление страницы
-        function showPage() { document.body.classList.add('fade-in'); }
-        window.addEventListener('load', showPage);
-        window.addEventListener('pageshow', showPage);
-        setTimeout(showPage, 100);
+        // Плавное появление
+        window.addEventListener('load', () => {
+            document.body.classList.add('visible');
+        });
 
-        // Курсор
+        // Курсор и искры
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -261,20 +292,19 @@
             setTimeout(() => sparkle.remove(), 800);
         });
 
-        // Интерактив
-        document.querySelectorAll('a, .profile-pic-container').forEach(el => {
+        document.querySelectorAll('a, .profile-frame').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // Плавный уход
+        // Плавный переход
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                if (href && href !== '#' && href.includes('.html')) {
+                if (href && href.includes('.html')) {
                     e.preventDefault();
-                    document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = href; }, 500);
+                    document.body.classList.remove('visible');
+                    setTimeout(() => { window.location.href = href; }, 600);
                 }
             });
         });
