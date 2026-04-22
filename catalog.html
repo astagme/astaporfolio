@@ -26,11 +26,12 @@
             align-items: center;
             overflow-x: hidden;
             
-            /* --- ПЛАВНЫЙ ПЕРЕХОД --- */
+            /* --- НАСТРОЙКИ ПЛАВНОСТИ --- */
             opacity: 0; 
             transition: opacity 0.8s ease-in-out;
         }
 
+        /* Класс для проявления */
         body.visible { 
             opacity: 1 !important; 
         }
@@ -191,9 +192,12 @@
     </main>
 
     <script>
-        // Функция плавного появления
-        window.addEventListener('load', () => {
-            document.body.classList.add('visible');
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ ПРОЯВЛЕНИЯ
+        document.addEventListener('DOMContentLoaded', () => {
+            // Небольшая задержка, чтобы браузер успел применить стили opacity: 0
+            setTimeout(() => {
+                document.body.classList.add('visible');
+            }, 50);
         });
 
         const cursor = document.getElementById('custom-cursor');
@@ -227,14 +231,18 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // Плавный уход при переходе
+        // ПЛАВНЫЙ УХОД ПРИ ПЕРЕХОДЕ
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
+                // Проверяем, что ссылка ведет на внутреннюю страницу .html
                 if (href && href.includes('.html') && !href.startsWith('http')) {
                     e.preventDefault();
                     document.body.classList.remove('visible');
-                    setTimeout(() => { window.location.href = href; }, 600);
+                    // Ждем завершения анимации (0.6s) и переходим
+                    setTimeout(() => { 
+                        window.location.href = href; 
+                    }, 600);
                 }
             });
         });
