@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Illustrations | ASTAGME</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <title>Digital Art | ASTAGME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --soft-pink: #FFDBEA;
@@ -14,20 +14,23 @@
             --brown-outline: #63414C;
         }
 
-        /* --- БАЗА И КУРСОР --- */
         body {
             background-color: var(--bg-cream);
-            font-family: 'Comfortaa', cursive;
             margin: 0;
-            opacity: 0; 
-            transition: opacity 0.6s ease-out;
             cursor: none !important;
             color: var(--mauve-text);
+            font-family: 'Comfortaa', cursive;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0; 
+            transition: opacity 0.6s ease-out;
         }
 
-        body.fade-in { opacity: 1; }
+        body.fade-in { opacity: 1 !important; }
 
+        /* --- КУРСОР --- */
         #custom-cursor {
             position: fixed;
             width: 25px;
@@ -37,10 +40,10 @@
             border-radius: 2px 50% 50% 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
             pointer-events: none;
-            z-index: 1000000;
+            z-index: 10000;
             box-shadow: 2px 2px 0px var(--soft-pink);
             display: none;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .cursor-active {
@@ -53,105 +56,89 @@
             background: var(--strong-pink);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 999999;
-            box-shadow: 0 0 10px var(--soft-pink);
+            z-index: 9999;
         }
 
-        /* --- НАВИГАЦИЯ --- */
-        nav { padding: 40px; display: flex; justify-content: center; gap: 20px; }
-        .nav-btn {
-            text-decoration: none;
-            color: var(--mauve-text);
-            padding: 12px 30px;
-            border-radius: 50px;
-            border: 2px solid var(--strong-pink);
-            background: white;
-            transition: 0.3s;
-            cursor: none !important;
+        /* --- НАВИГАЦИЯ (ОБНОВЛЕННАЯ) --- */
+        .nav-header { 
+            width: 100%; 
+            padding: 40px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
         }
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--soft-pink); }
+        
+        .nav-btn { 
+            text-decoration: none; 
+            color: var(--brown-outline); 
+            font-weight: 700; 
+            padding: 12px 28px; 
+            border: 2px solid var(--brown-outline); 
+            border-radius: 50px; 
+            background: white; 
+            box-shadow: 4px 4px 0px var(--soft-pink); 
+            transition: all 0.3s ease;
+            cursor: none !important; 
+        }
 
-        /* --- ГАЛЕРЕЯ АРТОВ (РОВНАЯ СЕТКА) --- */
-        .art-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px 100px;
+        .nav-btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 7px 7px 0px var(--strong-pink);
+        }
+
+        /* --- КОНТЕНТ --- */
+        .header-section {
             text-align: center;
+            margin-bottom: 60px;
         }
 
-        h1 { font-family: 'Quicksand', sans-serif; font-size: 3.5rem; margin-bottom: 60px; color: #5D3D48; }
+        .category-icon {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
 
-        /* ИСПОЛЬЗУЕМ CSS GRID ДЛЯ ИДЕАЛЬНОГО ВЫРАВНИВАНИЯ */
+        h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 3rem;
+            color: var(--brown-outline);
+            margin: 0;
+        }
+
+        /* --- ГАЛЕРЕЯ --- */
         .art-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Ровно 3 колонки */
-            gap: 40px;
-            align-items: stretch; /* Все карточки одной высоты */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 90%;
+            max-width: 1100px;
+            padding-bottom: 100px;
         }
-
-        @media (max-width: 1000px) { .art-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 650px) { .art-grid { grid-template-columns: 1fr; } }
 
         .art-item {
-            display: flex;
-            flex-direction: column;
-            transition: 0.5s ease;
-            cursor: none !important;
+            background: white;
+            border: 3px solid var(--brown-outline);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0px var(--soft-pink);
+            transition: transform 0.3s ease;
         }
 
-        /* Рамка теперь имеет фиксированную пропорцию */
-        .art-wrapper {
-            background: white;
-            border: 3px solid var(--brown-outline); 
-            border-radius: 30px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: 8px 8px 0px rgba(244, 194, 215, 0.3);
-            
-            /* Делаем рамки квадратными по умолчанию для ровности */
-            aspect-ratio: 1 / 1; 
-            overflow: hidden;
-            width: 100%;
-            box-sizing: border-box;
+        .art-item:hover {
+            transform: scale(1.02);
         }
 
         .art-item img {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 18px;
-            object-fit: contain; /* Картинка масштабируется внутри рамки, не обрезаясь */
+            width: 100%;
+            height: auto;
             display: block;
-            transition: 0.5s ease;
-        }
-
-        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
-        .art-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .art-item:hover .art-wrapper {
-            border-color: var(--mauve-text);
-            box-shadow: 12px 12px 0px var(--soft-pink);
-            background: #FFF9FB;
-        }
-
-        .art-info {
-            margin-top: 15px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #5D3D48;
-            opacity: 0.8;
-            flex-grow: 1; /* Чтобы подписи не ломали сетку */
         }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
-            .art-item, .nav-btn { cursor: pointer !important; }
+            .nav-btn, .art-item { cursor: pointer !important; }
         }
     </style>
 </head>
@@ -159,78 +146,66 @@
 
     <div id="custom-cursor"></div>
 
-    <nav>
+    <nav class="nav-header">
         <a href="index.html" class="nav-btn">Home</a>
-        <a href="catalog.html" class="nav-btn">← Catalog</a>
+        <a href="catalog.html" class="nav-btn">Catalog</a>
+        <a href="about.html" class="nav-btn">About me</a>
     </nav>
 
-    <main class="art-container">
-        <h1>My Illustrations ✨</h1>
-        
-        <div class="art-grid">
-            <div class="art-item">
-                <div class="art-wrapper"><img src="illustrations/art1.jpg" alt="Art 1"></div>
-                <div class="art-info">Artwork Title 01</div>
-            </div>
-            <div class="art-item">
-                <div class="art-wrapper"><img src="illustrations/art2.jpg" alt="Art 2"></div>
-                <div class="art-info">Artwork Title 02</div>
-            </div>
-            <div class="art-item">
-                <div class="art-wrapper"><img src="illustrations/art3.jpg" alt="Art 3"></div>
-                <div class="art-info">Artwork Title 03</div>
-            </div>
-            <div class="art-item">
-                <div class="art-wrapper"><img src="illustrations/art4.jpg" alt="Art 4"></div>
-                <div class="art-info">Artwork Title 04</div>
-            </div>
-        </div>
+    <header class="header-section">
+        <img src="catalog/digital.png" alt="Digital Art Icon" class="category-icon">
+        <h1>Digital Art</h1>
+    </header>
+
+    <main class="art-grid">
+        <div class="art-item"><img src="catalog/art1.png" alt="Art 1"></div>
+        <div class="art-item"><img src="catalog/art2.png" alt="Art 2"></div>
+        <div class="art-item"><img src="catalog/art3.png" alt="Art 3"></div>
     </main>
 
     <script>
-        window.addEventListener('load', () => { document.body.classList.add('fade-in'); });
+        function showPage() { document.body.classList.add('fade-in'); }
+        window.addEventListener('load', showPage);
+        window.addEventListener('pageshow', showPage);
+        setTimeout(showPage, 100);
 
         const cursor = document.getElementById('custom-cursor');
-        
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            createSparkle(e.clientX, e.clientY);
-        });
-
-        function createSparkle(x, y) {
+            
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             document.body.appendChild(sparkle);
-            const size = Math.random() * 8 + 2;
-            sparkle.style.width = `${size}px`;
-            sparkle.style.height = `${size}px`;
-            sparkle.style.left = `${x}px`;
-            sparkle.style.top = `${y}px`;
-            const destX = x + (Math.random() - 0.5) * 80;
-            const destY = y + (Math.random() - 0.5) * 80;
+            const size = Math.random() * 6 + 2;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            
+            const destX = e.clientX + (Math.random() - 0.5) * 60;
+            const destY = e.clientY + (Math.random() - 0.5) * 60;
+            
             sparkle.animate([
                 { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
-            ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
-            setTimeout(() => sparkle.remove(), 1000);
-        }
+                { transform: `translate(${destX - e.clientX}px, ${destY - e.clientY}px) scale(0)`, opacity: 0 }
+            ], { duration: 800 });
+            setTimeout(() => sparkle.remove(), 800);
+        });
 
-        const refresh = () => {
-            document.querySelectorAll('.nav-btn, .art-item, a').forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-            });
-        };
-        refresh();
+        document.querySelectorAll('a, .art-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
+        });
 
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
-                if (this.hostname === window.location.hostname && this.href.includes('.html')) {
+                const href = this.getAttribute('href');
+                if (href && href !== '#' && href.includes('.html')) {
                     e.preventDefault();
                     document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = this.href; }, 500);
+                    setTimeout(() => { window.location.href = href; }, 500);
                 }
             });
         });
