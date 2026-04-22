@@ -91,7 +91,7 @@
             margin-bottom: 60px;
         }
 
-        /* Иконка раздела тоже без папки */
+        /* Иконка раздела в папке catalog */
         .category-icon {
             width: 100px;
             height: 100px;
@@ -106,7 +106,7 @@
             margin: 0;
         }
 
-        /* --- ЛОГОТИПЫ (БЕЗ ПАПОК) --- */
+        /* --- ЛОГОТИПЫ --- */
         .logos-container {
             display: flex;
             flex-wrap: wrap;
@@ -118,26 +118,39 @@
         }
 
         .logo-item {
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .logo-item img {
-            width: 300px; /* Немного увеличил, раз их всего два */
+            width: 300px; 
             height: auto;
             transition: all 0.4s ease;
+            margin-bottom: 20px;
         }
 
-        /* ЭФФЕКТ СВЕЧЕНИЯ */
+        .logo-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--brown-outline);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
         .logo-item:hover {
-            transform: translateY(-20px) scale(1.05);
+            transform: translateY(-20px);
         }
 
         .logo-item:hover img {
             filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 35px var(--soft-pink));
+        }
+
+        .logo-item:hover .logo-name {
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         @media (max-width: 850px) {
@@ -159,16 +172,18 @@
     </nav>
 
     <header class="header-section">
-        <img src="logos.png" alt="Logo Design Icon" class="category-icon">
+        <img src="catalog/logos.png" alt="Logo Design Icon" class="category-icon">
         <h1>Logo Design</h1>
     </header>
 
     <main class="logos-container">
         <div class="logo-item">
             <img src="font.png" alt="Font Logo">
+            <span class="logo-name">Font</span>
         </div>
         <div class="logo-item">
             <img src="metal-logo.png" alt="Metal Logo">
+            <span class="logo-name">Metal Logo</span>
         </div>
     </main>
 
