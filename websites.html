@@ -1,219 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAGME | Web Gallery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --soft-pink: #FFDBEA;
-            --strong-pink: #F4C2D7; 
-            --mauve-text: #63414C;
-            --bg-cream: #FDFBF7;
-        }
+<div class="proj-meta">
+    <h2>Personal Identity Site</h2>
+    
+    <div class="tag-container">
+        <span class="tag">Hand-drawn Assets</span>
+        <span class="tag">Custom UI/UX</span>
+        <span class="tag">Creative Coding</span>
+    </div>
 
-        /* --- ПЛАВНОЕ ПОЯВЛЕНИЕ СТРАНИЦЫ --- */
-        @keyframes pageReveal {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    <p>
+        A bespoke personal portfolio designed and developed from scratch to showcase my unique visual identity. 
+        <strong>Every element, including the custom icons and logo, was hand-drawn by me</strong> to ensure 
+        a cohesive, "angelic" aesthetic.
+    </p>
+    
+    <p class="project-details">
+        The project features smooth CSS micro-interactions, a responsive "floating" mobile mockup, 
+        and a custom-coded star cursor, demonstrating my ability to merge <strong>delicate graphic design 
+        with functional frontend development.</strong>
+    </p>
+</div>
 
-        html { scroll-behavior: smooth; }
-        
-        body {
-            background-color: var(--bg-cream);
-            margin: 0; cursor: none !important;
-            color: var(--mauve-text);
-            font-family: 'Quicksand', sans-serif;
-            overflow-x: hidden;
-            /* Применяем анимацию появления */
-            animation: pageReveal 1s ease-out;
-        }
+<style>
+    /* Professional styling for the English description */
+    .proj-meta h2 {
+        font-family: 'Comfortaa', cursive;
+        color: var(--mauve-text);
+        margin-bottom: 10px;
+    }
 
-        /* --- BACKGROUND & CURSOR --- */
-        .bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; background: linear-gradient(135deg, #fdfbf7, #ffdeeb, #fdfbf7, #e8d5ff, #fdfbf7); background-size: 500% 500%; animation: gradientMove 20s ease infinite; }
-        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        #stars-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none; }
-        #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); }
-        .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 9999; }
+    .tag-container {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
 
-        /* --- УЛУЧШЕННАЯ НАВИГАЦИЯ --- */
-        .top-nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 25px 40px; box-sizing: border-box;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; background: rgba(253, 251, 247, 0.6); backdrop-filter: blur(12px);
-            border-bottom: 1.5px solid rgba(255, 219, 234, 0.5);
-        }
+    .tag {
+        background: #fff;
+        border: 1.5px solid var(--mauve-text);
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        box-shadow: 3px 3px 0px var(--soft-pink);
+    }
 
-        /* Общий стиль для всех кнопок в меню */
-        .back-link, .jump-btn {
-            text-decoration: none; color: var(--mauve-text); font-weight: 700;
-            padding: 10px 22px; border: 2px solid var(--mauve-text); border-radius: 50px;
-            background: white; box-shadow: 3px 3px 0px var(--soft-pink);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            cursor: none !important;
-            font-size: 0.85rem;
-        }
+    .proj-meta p {
+        max-width: 600px;
+        margin: 0 auto 15px;
+        line-height: 1.7;
+        font-size: 0.95rem;
+        color: var(--mauve-text);
+    }
 
-        .back-link:hover, .jump-btn:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 6px 6px 0px var(--strong-pink);
-            background: #fffaff;
-        }
+    .proj-meta strong {
+        color: #e08dac; /* A slightly deeper pink for emphasis */
+    }
 
-        .jump-menu { display: flex; gap: 15px; }
-
-        /* --- СЕКЦИИ ПРОЕКТОВ --- */
-        .project-section {
-            padding: 160px 20px 80px;
-            display: flex; flex-direction: column; align-items: center;
-            border-bottom: 2px dashed var(--soft-pink);
-        }
-
-        .display-unit { position: relative; width: 750px; margin-bottom: 40px; }
-
-        .browser-frame {
-            width: 100%; height: 450px; background: white; border: 3px solid var(--mauve-text);
-            border-radius: 20px; box-shadow: 15px 15px 0px var(--soft-pink);
-            overflow: hidden; position: relative; z-index: 2;
-        }
-        
-        /* Улучшение четкости скриншотов */
-        .browser-content img, .screen-slide, .phone-mockup img {
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-        }
-
-        .browser-top { height: 35px; background: var(--soft-pink); border-bottom: 3px solid var(--mauve-text); display: flex; align-items: center; padding: 0 15px; gap: 8px; }
-        .b-dot { width: 10px; height: 10px; border: 2px solid var(--mauve-text); border-radius: 50%; background: white; }
-
-        .browser-content { width: 100%; height: calc(100% - 35px); position: relative; overflow: hidden; background: #eee; }
-        .screen-slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 0.8s ease-in-out; background-size: cover; background-position: top center; }
-        .screen-slide.active { opacity: 1; }
-
-        /* ТЕЛЕФОН */
-        .phone-mockup {
-            position: absolute; right: -70px; bottom: -40px;
-            width: 185px; height: 380px; background: white;
-            border: 3.5px solid var(--mauve-text); border-radius: 35px;
-            box-shadow: 10px 10px 0px var(--strong-pink);
-            z-index: 5; overflow: hidden;
-            animation: floaty 5s infinite ease-in-out;
-        }
-        @keyframes floaty { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
-        .phone-mockup img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        .proj-controls { display: flex; gap: 15px; margin-bottom: 25px; }
-        .arrow-btn {
-            width: 45px; height: 45px; border-radius: 50%; border: 2.5px solid var(--mauve-text);
-            background: white; box-shadow: 4px 4px 0px var(--soft-pink); cursor: none !important;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; transition: 0.2s;
-        }
-        .arrow-btn:hover { transform: scale(1.1); box-shadow: 6px 6px 0px var(--strong-pink); }
-
-        .proj-meta { text-align: center; }
-        .proj-meta h2 { font-family: 'Comfortaa'; font-size: 2rem; margin: 10px 0; color: var(--mauve-text); }
-        .proj-meta p { opacity: 0.8; font-size: 1rem; max-width: 550px; line-height: 1.6; }
-
-        .project-section.alt .phone-mockup { right: auto; left: -70px; box-shadow: -10px 10px 0px var(--strong-pink); }
-
-        @media (max-width: 1050px) {
-            .display-unit { width: 90%; }
-            .phone-mockup { display: none; }
-            .jump-menu { display: none; }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="custom-cursor"></div>
-    <div class="bg-gradient"></div>
-    <canvas id="stars-canvas"></canvas>
-
-    <nav class="top-nav">
-        <a href="catalog.html" class="back-link">← Back to Catalog</a>
-        
-        <div class="jump-menu">
-            <a href="#site1" class="jump-btn">Beauty</a>
-            <a href="#site2" class="jump-btn">Coffee</a>
-            <a href="#site3" class="jump-btn">Art</a>
-            <a href="#site4" class="jump-btn">Yoga</a>
-        </div>
-    </nav>
-
-    <section class="project-section" id="site1">
-        <div class="display-unit">
-            <div class="browser-frame">
-                <div class="browser-top"><div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div></div>
-                <div class="browser-content">
-                    <div class="screen-slide active" style="background-image: url('project1/desktop_1.png')"></div>
-                    <div class="screen-slide" style="background-image: url('project1/desktop_2.png')"></div>
-                </div>
-            </div>
-            <div class="phone-mockup">
-                <img src="project1/mobile_main.jpg" alt="Mobile View">
-            </div>
-        </div>
-        <div class="proj-controls">
-            <button class="arrow-btn" onclick="step(this, -1)">❮</button>
-            <button class="arrow-btn" onclick="step(this, 1)">❯</button>
-        </div>
-        <div class="proj-meta">
-            <h2>Beauty Store</h2>
-            <p>A clean and aesthetic online store for organic beauty products.</p>
-        </div>
-    </section>
-
-    <script>
-        // Плавная прокрутка для якорных ссылок (дополнительная страховка)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        function step(btn, dir) {
-            const container = btn.closest('.project-section').querySelector('.browser-content');
-            const slides = container.querySelectorAll('.screen-slide');
-            let activeIdx = Array.from(slides).findIndex(s => s.classList.contains('active'));
-            slides[activeIdx].classList.remove('active');
-            activeIdx = (activeIdx + dir + slides.length) % slides.length;
-            slides[activeIdx].classList.add('active');
-        }
-
-        const cursor = document.getElementById('custom-cursor');
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.6) {
-                const s = document.createElement('div');
-                s.className = 'sparkle'; document.body.appendChild(s);
-                const size = Math.random()*7+2;
-                s.style.width = size+'px'; s.style.height = size+'px';
-                s.style.left = e.clientX+'px'; s.style.top = e.clientY+'px';
-                s.animate([{opacity:1}, {opacity:0, transform:`translate(${(Math.random()-0.5)*60}px, ${(Math.random()-0.5)*60}px) scale(0)`}], 1000);
-                setTimeout(() => s.remove(), 1000);
-            }
-        });
-
-        const c = document.getElementById('stars-canvas');
-        const ctx = c.getContext('2d');
-        let pts = [];
-        function res() { c.width = window.innerWidth; c.height = window.innerHeight; }
-        window.addEventListener('resize', res); res();
-        for(let i=0; i<70; i++) pts.push({x:Math.random()*c.width, y:Math.random()*c.height, s:Math.random()*1.5, o:Math.random(), sp:0.005});
-        function draw() {
-            ctx.clearRect(0,0,c.width,c.height);
-            pts.forEach(p => { p.o+=p.sp; if(p.o>1||p.o<0) p.sp=-p.sp; ctx.globalAlpha=p.o; ctx.fillStyle="white"; ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2); ctx.fill(); });
-            requestAnimationFrame(draw);
-        }
-        draw();
-    </script>
-</body>
-</html>
+    .project-details {
+        font-size: 0.85rem !important;
+        opacity: 0.8;
+    }
+</style>
