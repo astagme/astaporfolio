@@ -59,7 +59,7 @@
             z-index: 9999;
         }
 
-        /* --- НАВИГАЦИЯ (ОБНОВЛЕННАЯ) --- */
+        /* --- НАВИГАЦИЯ --- */
         .nav-header { 
             width: 100%; 
             padding: 40px; 
@@ -106,39 +106,49 @@
             margin: 0;
         }
 
-        /* --- ГАЛЕРЕЯ --- */
+        /* --- ГАЛЕРЕЯ (ВОЗВРАЩАЕМ СВЕЧЕНИЕ) --- */
         .art-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 50px; /* Увеличил отступ для свечения */
             width: 90%;
             max-width: 1100px;
             padding-bottom: 100px;
         }
 
         .art-item {
-            background: white;
-            border: 3px solid var(--brown-outline);
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 8px 8px 0px var(--soft-pink);
-            transition: transform 0.3s ease;
-        }
-
-        .art-item:hover {
-            transform: scale(1.02);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .art-item img {
             width: 100%;
             height: auto;
             display: block;
+            border-radius: 20px; /* Мягкие углы для картинок */
+            /* Постоянное легкое свечение, чтобы не сливались */
+            filter: drop-shadow(0 0 10px rgba(244, 194, 215, 0.3));
+            transition: all 0.4s ease;
+        }
+
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ: Всплытие + Усиленное свечение */
+        .art-item:hover {
+            transform: translateY(-15px) scale(1.03);
+        }
+
+        .art-item:hover img {
+            /* Яркое розовое неоновое свечение */
+            filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 30px var(--soft-pink));
         }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
             .nav-btn, .art-item { cursor: pointer !important; }
+            .art-grid { gap: 30px; }
         }
     </style>
 </head>
