@@ -91,6 +91,7 @@
             margin-bottom: 60px;
         }
 
+        /* Иконка раздела тоже без папки */
         .category-icon {
             width: 100px;
             height: 100px;
@@ -105,12 +106,12 @@
             margin: 0;
         }
 
-        /* --- СЕТКА ЛОГОТИПОВ (БЕЗ КАРТОЧЕК) --- */
+        /* --- ЛОГОТИПЫ (БЕЗ ПАПОК) --- */
         .logos-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 60px;
+            gap: 80px;
             width: 90%;
             max-width: 1000px;
             padding: 40px 0;
@@ -125,27 +126,25 @@
         }
 
         .logo-item img {
-            width: 250px; /* Размер логотипов */
+            width: 300px; /* Немного увеличил, раз их всего два */
             height: auto;
-            filter: drop-shadow(0 0 0px transparent);
             transition: all 0.4s ease;
         }
 
-        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ: Всплытие + Розовое свечение */
+        /* ЭФФЕКТ СВЕЧЕНИЯ */
         .logo-item:hover {
-            transform: translateY(-15px) scale(1.05);
+            transform: translateY(-20px) scale(1.05);
         }
 
         .logo-item:hover img {
-            /* Розовое неоновое свечение вокруг логотипа */
-            filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 30px var(--soft-pink));
+            filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 35px var(--soft-pink));
         }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
             .nav-btn { cursor: pointer !important; }
-            .logo-item img { width: 180px; }
+            .logo-item img { width: 220px; }
         }
     </style>
 </head>
@@ -160,16 +159,16 @@
     </nav>
 
     <header class="header-section">
-        <img src="catalog/logos.png" alt="Logo Design Icon" class="category-icon">
+        <img src="logos.png" alt="Logo Design Icon" class="category-icon">
         <h1>Logo Design</h1>
     </header>
 
     <main class="logos-container">
         <div class="logo-item">
-            <img src="catalog/font.png" alt="Font Logo">
+            <img src="font.png" alt="Font Logo">
         </div>
         <div class="logo-item">
-            <img src="catalog/metal-logo.png" alt="Metal Logo">
+            <img src="metal-logo.png" alt="Metal Logo">
         </div>
     </main>
 
