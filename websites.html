@@ -10,10 +10,9 @@
             --soft-pink: #FFDBEA;
             --strong-pink: #F4C2D7; 
             --mauve-text: #63414C;
-            --bg-cream: #FDFBF7; /* Тот самый кремовый фон */
+            --bg-cream: #FDFBF7;
         }
 
-        /* ПЛАВНЫЙ ВХОД СТРАНИЦЫ */
         @keyframes pageReveal {
             from { opacity: 0; filter: blur(5px); }
             to { opacity: 1; filter: blur(0); }
@@ -37,16 +36,16 @@
         #custom-cursor { position: fixed; width: 25px; height: 25px; background: white; border: 2px solid var(--mauve-text); border-radius: 2px 50% 50% 50%; transform: translate(-50%, -50%) rotate(-45deg); pointer-events: none; z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink); }
         .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 9999; }
 
-        /* --- ЕДИНЫЙ СТИЛЬ КНОПОК --- */
+        /* --- ФИКСИРОВАННАЯ НАВИГАЦИЯ --- */
         .top-nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 20px 40px; box-sizing: border-box;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; background: rgba(253, 251, 247, 0.8); backdrop-filter: blur(10px);
+            z-index: 1000; background: rgba(253, 251, 247, 0.85); backdrop-filter: blur(10px);
+            border-bottom: 2px dashed var(--soft-pink);
         }
 
-        /* Кнопки как на главной */
-        .back-link, .jump-btn, .arrow-btn {
+        .back-link, .jump-btn, .arrow-btn, .tool-tag {
             text-decoration: none; 
             color: var(--mauve-text); 
             font-weight: 700;
@@ -68,14 +67,36 @@
         .back-link:hover, .jump-btn:hover, .arrow-btn:hover { 
             transform: translateY(-3px); 
             box-shadow: 6px 6px 0px var(--strong-pink);
-            background: #fffaff;
         }
 
         .jump-menu { display: flex; gap: 12px; }
 
+        /* --- ИСПОЛЬЗУЕМЫЕ ИНСТРУМЕНТЫ (СЛЕВА) --- */
+        .side-tools {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 900;
+        }
+
+        .tool-tag {
+            border-radius: 12px;
+            padding: 8px 15px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            box-shadow: 2px 2px 0px var(--soft-pink);
+            white-space: nowrap;
+        }
+        .tool-tag:hover { transform: translateX(5px); }
+        .tool-label { font-size: 0.6rem; opacity: 0.6; margin-left: 5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
         /* --- СЕКЦИИ ПРОЕКТОВ --- */
         .project-section {
-            padding: 140px 20px 80px;
+            padding: 160px 20px 80px; /* Увеличен padding сверху из-за fixed nav */
             display: flex; flex-direction: column; align-items: center;
             border-bottom: 2px dashed var(--soft-pink);
         }
@@ -95,6 +116,7 @@
         .screen-slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 0.8s ease-in-out; background-size: cover; background-position: top center; image-rendering: -webkit-optimize-contrast; }
         .screen-slide.active { opacity: 1; }
 
+        /* ТЕЛЕФОН С УЛУЧШЕННОЙ ЧЕТКОСТЬЮ */
         .phone-mockup {
             position: absolute; right: -70px; bottom: -40px;
             width: 180px; height: 360px; background: white;
@@ -102,13 +124,20 @@
             box-shadow: 8px 8px 0px var(--strong-pink);
             z-index: 5; overflow: hidden;
             animation: floaty 5s infinite ease-in-out;
+            /* Улучшение качества отрисовки */
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
         @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .phone-mockup img { width: 100%; height: 100%; object-fit: cover; image-rendering: -webkit-optimize-contrast; }
+        .phone-mockup img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            image-rendering: -webkit-optimize-contrast; 
+            image-rendering: crisp-edges;
+        }
 
         .proj-controls { display: flex; gap: 15px; margin-bottom: 30px; }
 
-        /* --- ОПИСАНИЕ НА АНГЛИЙСКОМ --- */
+        /* --- ОПИСАНИЕ --- */
         .proj-meta { text-align: center; max-width: 600px; }
         .proj-meta h2 { font-family: 'Comfortaa'; font-size: 2rem; margin-bottom: 10px; color: var(--mauve-text); }
         
@@ -118,9 +147,8 @@
         .proj-meta p { line-height: 1.6; font-size: 0.95rem; opacity: 0.9; }
         .proj-meta strong { color: #d67b9d; }
 
-        .project-section.alt .phone-mockup { right: auto; left: -70px; box-shadow: -8px 8px 0px var(--strong-pink); }
-
-        @media (max-width: 1050px) {
+        @media (max-width: 1100px) {
+            .side-tools { display: none; }
             .display-unit { width: 90%; }
             .phone-mockup { display: none; }
         }
@@ -140,6 +168,15 @@
             <a href="#site3" class="jump-btn">Coffee</a>
         </div>
     </nav>
+
+    <aside class="side-tools">
+        <div class="tool-label">Tools used:</div>
+        <div class="tool-tag">Photoshop</div>
+        <div class="tool-tag">Illustrator</div>
+        <div class="tool-tag">Figma</div>
+        <div class="tool-tag">HTML / CSS</div>
+        <div class="tool-tag">JavaScript</div>
+    </aside>
 
     <section class="project-section" id="site1">
         <div class="display-unit">
@@ -183,7 +220,6 @@
             slides[activeIdx].classList.add('active');
         }
 
-        // КУРСОР
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -199,7 +235,7 @@
             }
         });
 
-        // ЗВЕЗДЫ
+        // Звезды
         const c = document.getElementById('stars-canvas');
         const ctx = c.getContext('2d');
         let pts = [];
