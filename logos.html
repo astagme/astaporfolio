@@ -24,11 +24,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+
+            /* --- ПЛАВНЫЙ ПЕРЕХОД --- */
             opacity: 0; 
-            transition: opacity 0.6s ease-out;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        body.fade-in { opacity: 1 !important; }
+        /* Класс видимости */
+        body.visible { 
+            opacity: 1; 
+        }
 
         /* --- КУРСОР --- */
         #custom-cursor {
@@ -105,12 +110,12 @@
             margin: 0;
         }
 
-        /* --- КОНТЕЙНЕР ЛОГОТИПОВ (ВЫРАВНИВАНИЕ) --- */
+        /* --- ЛОГОТИПЫ --- */
         .logos-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-items: flex-start; /* Выравнивание по верхнему краю */
+            align-items: flex-start;
             gap: 80px;
             width: 90%;
             max-width: 1000px;
@@ -121,11 +126,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 300px; /* Фиксированная ширина для симметрии */
+            width: 300px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Обертка для самого изображения, чтобы они стояли ровно */
         .img-wrapper {
             height: 250px; 
             display: flex;
@@ -152,7 +156,7 @@
             transition: all 0.3s ease;
         }
 
-        /* ЭФФЕКТЫ */
+        /* ЭФФЕКТЫ ПРИ НАВЕДЕНИИ */
         .logo-item:hover {
             transform: translateY(-15px);
         }
@@ -208,11 +212,26 @@
     </main>
 
     <script>
-        function showPage() { document.body.classList.add('fade-in'); }
-        window.addEventListener('load', showPage);
-        window.addEventListener('pageshow', showPage);
-        setTimeout(showPage, 100);
+        // Функция плавного появления
+        window.addEventListener('load', () => {
+            document.body.classList.add('visible');
+        });
 
+        // Плавный уход при переходе по ссылке
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.includes('.html')) {
+                    e.preventDefault();
+                    document.body.classList.remove('visible');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 600);
+                }
+            });
+        });
+
+        /* --- КУРСОР И ИСКРЫ --- */
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -241,17 +260,6 @@
         document.querySelectorAll('a, .logo-item').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-        });
-
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && href !== '#' && href.includes('.html')) {
-                    e.preventDefault();
-                    document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = href; }, 500);
-                }
-            });
         });
     </script>
 </body>
