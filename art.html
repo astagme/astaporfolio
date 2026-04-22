@@ -24,11 +24,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            
+            /* --- ПЛАВНЫЙ ПЕРЕХОД --- */
             opacity: 0; 
-            transition: opacity 0.6s ease-out;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        body.fade-in { opacity: 1 !important; }
+        /* Класс, который делает страницу видимой */
+        body.visible { 
+            opacity: 1; 
+        }
 
         /* --- КУРСОР --- */
         #custom-cursor {
@@ -105,7 +110,7 @@
             margin: 0;
         }
 
-        /* --- ГАЛЕРЕЯ (РАМКИ + СВЕЧЕНИЕ + ТЕКСТ) --- */
+        /* --- ГАЛЕРЕЯ --- */
         .art-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -223,11 +228,27 @@
     </main>
 
     <script>
-        function showPage() { document.body.classList.add('fade-in'); }
-        window.addEventListener('load', showPage);
-        window.addEventListener('pageshow', showPage);
-        setTimeout(showPage, 100);
+        // Функция плавного появления
+        window.addEventListener('load', () => {
+            document.body.classList.add('visible');
+        });
 
+        // Плавный уход при переходе по ссылке
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                // Проверяем, что ссылка ведет на другую страницу .html
+                if (href && href.includes('.html')) {
+                    e.preventDefault();
+                    document.body.classList.remove('visible'); // Страница исчезает
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 600); // Ждем завершения анимации
+                }
+            });
+        });
+
+        /* --- КУРСОР И ИСКРЫ --- */
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
             cursor.style.display = 'block';
@@ -256,17 +277,6 @@
         document.querySelectorAll('a, .art-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-        });
-
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && href !== '#' && href.includes('.html')) {
-                    e.preventDefault();
-                    document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = href; }, 500);
-                }
-            });
         });
     </script>
 </body>
