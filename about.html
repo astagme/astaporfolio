@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me | ASTAGME</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --soft-pink: #FFDBEA;
@@ -98,15 +99,18 @@
             padding-bottom: 80px;
         }
 
-        /* Фотография */
+        /* --- ФОТО (ДОБАВИЛИ ПОСТОЯННОЕ СВЕЧЕНИЕ) --- */
         .profile-frame {
             width: 280px;
             height: 280px;
             background: white;
             border: 4px solid var(--brown-outline);
-            border-radius: 40px; /* Мягкий квадрат, чтобы сердечко не обрезалось */
+            border-radius: 40px;
             overflow: hidden;
             box-shadow: 15px 15px 0px var(--soft-pink);
+            
+            /* ПОСТОЯННОЕ МЯГКОЕ СВЕЧЕНИЕ */
+            filter: drop-shadow(0 0 10px rgba(244, 194, 215, 0.5));
             transition: all 0.4s ease;
         }
 
@@ -119,6 +123,8 @@
         .profile-frame:hover {
             transform: rotate(-3deg) scale(1.02);
             box-shadow: 20px 20px 0px var(--strong-pink);
+            /* УСИЛЕННОЕ СВЕЧЕНИЕ ПРИ НАВЕДЕНИИ */
+            filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 30px var(--soft-pink));
         }
 
         /* Текст */
@@ -185,6 +191,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 6px 6px 0px var(--soft-pink);
+            filter: drop-shadow(0 0 2px transparent);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: none !important;
         }
@@ -192,10 +199,26 @@
         .social-card .label { font-size: 0.8rem; opacity: 0.6; display: block; margin-bottom: 2px; }
         .social-card .value { font-size: 1.05rem; }
 
+        /* Иконки соцсетей */
+        .icon-box {
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Стиль для БЕЛОГО конверта */
+        .social-card .fa-envelope {
+            color: white;
+            filter: drop-shadow(0 0 2px var(--brown-outline)); /* Чтобы не сливался с белым фоном */
+        }
+
         .social-card:hover {
             transform: translateY(-5px);
             background-color: var(--soft-pink);
             box-shadow: 10px 10px 0px var(--strong-pink);
+            /* Свечение карточки при наведении */
+            filter: drop-shadow(0 0 10px var(--strong-pink));
         }
 
         @media (max-width: 850px) {
@@ -239,23 +262,21 @@
                     <span class="label">Telegram</span>
                     <span class="value">@tosdeflores</span>
                 </div>
-                <span>🕊️</span>
-            </div>
+                <span class="icon-box">💞</span> </div>
 
             <div class="social-card">
                 <div>
                     <span class="label">Discord</span>
                     <span class="value">astagme</span>
                 </div>
-                <span>👾</span>
-            </div>
+                <span class="icon-box">🤍</span> </div>
 
             <div class="social-card">
                 <div>
                     <span class="label">Email</span>
                     <span class="value">astagme@gmail.com</span>
                 </div>
-                <span>💌</span>
+                <span class="icon-box"><i class="fas fa-envelope"></i></span>
             </div>
         </div>
     </main>
