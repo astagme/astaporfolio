@@ -27,10 +27,11 @@
 
         body.visible { opacity: 1 !important; }
 
-        /* --- КУРСОР --- */
+        /* --- КУРСОР И ПЫЛЬ (СКОПИРОВАНО ИЗ КАТАЛОГА) --- */
         #custom-cursor {
             position: fixed;
-            width: 25px; height: 25px;
+            width: 25px;
+            height: 25px;
             background: white;
             border: 2px solid var(--brown-outline);
             border-radius: 2px 50% 50% 50%;
@@ -38,10 +39,23 @@
             pointer-events: none;
             z-index: 1000000;
             box-shadow: 2px 2px 0px var(--soft-pink);
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: none; /* Появится при движении */
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s;
         }
-        .cursor-active { transform: translate(-50%, -50%) rotate(-45deg) scale(1.6); background: var(--soft-pink) !important; }
-        .sparkle { position: fixed; background: var(--strong-pink); border-radius: 50%; pointer-events: none; z-index: 999999; }
+
+        .cursor-active {
+            transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
+            background: var(--soft-pink) !important;
+        }
+
+        .sparkle {
+            position: fixed;
+            background: var(--strong-pink);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999999;
+            box-shadow: 0 0 10px var(--soft-pink); /* Та самая тень из каталога */
+        }
 
         /* --- НАВИГАЦИЯ --- */
         .nav-header { 
@@ -70,9 +84,8 @@
         .side-tools { position: fixed; left: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 900; }
         .tool-label { font-family: 'Comfortaa'; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; opacity: 0.8; }
         .tool-tag { padding: 10px 20px; font-size: 0.75rem; border-radius: 12px; min-width: 120px; justify-content: center; }
-        .tool-tag:hover { background: var(--soft-pink); transform: translateX(5px); }
 
-        /* --- КОНТЕНТ И ПОДПИСИ (ИСПРАВЛЕНО) --- */
+        /* --- КОНТЕНТ И ПОДПИСИ --- */
         .project-section { padding: 180px 20px 100px; display: flex; flex-direction: column; align-items: center; }
         .display-unit { position: relative; width: 800px; margin-bottom: 80px; }
 
@@ -82,9 +95,8 @@
             background: var(--soft-pink); padding: 5px 12px; border-radius: 8px;
             border: 2px solid var(--brown-outline); z-index: 20;
         }
-        /* Фикс позиционирования подписей */
         .label-desktop { top: -18px; left: 20px; }
-        .label-mobile { top: -18px; right: -60px; } /* Сдвинули, чтобы не перекрывало экран */
+        .label-mobile { top: -18px; right: -60px; }
 
         .browser-frame {
             width: 100%; height: 480px; background: white;
@@ -110,7 +122,6 @@
         }
         @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        /* --- ТЕКСТ --- */
         .proj-meta { text-align: center; max-width: 650px; }
         .proj-meta h2 { font-family: 'Comfortaa'; font-size: 2.5rem; color: var(--brown-outline); margin-top: 0; }
         .tag-container { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
@@ -184,29 +195,42 @@
     </section>
 
     <script>
+        // Проявление страницы
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => { document.body.classList.add('visible'); }, 100);
+            setTimeout(() => {
+                document.body.classList.add('visible');
+            }, 50);
         });
 
         const cursor = document.getElementById('custom-cursor');
+        
+        // Логика курсора полностью из каталога
         window.addEventListener('mousemove', (e) => {
+            cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            if (Math.random() > 0.75) createSparkle(e.clientX, e.clientY);
+            createSparkle(e.clientX, e.clientY);
         });
 
         function createSparkle(x, y) {
-            const s = document.createElement('div');
-            s.className = 'sparkle';
-            document.body.appendChild(s);
-            const size = Math.random() * 6 + 2;
-            s.style.width = size + 'px'; s.style.height = size + 'px';
-            s.style.left = x + 'px'; s.style.top = y + 'px';
-            s.animate([
-                { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                { transform: `translate(${(Math.random()-0.5)*70}px, ${(Math.random()-0.5)*70}px) scale(0)`, opacity: 0 }
-            ], { duration: 800 });
-            setTimeout(() => s.remove(), 800);
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            document.body.appendChild(sparkle);
+            const size = Math.random() * 8 + 2;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            
+            const destX = x + (Math.random() - 0.5) * 80;
+            const destY = y + (Math.random() - 0.5) * 80;
+
+            sparkle.animate([
+                { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+            ], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
+
+            setTimeout(() => sparkle.remove(), 1000);
         }
 
         function step(btn, dir) {
@@ -218,17 +242,19 @@
             slides[activeIdx].classList.add('active');
         }
 
+        // Реакция на наведение (nav-btn, arrow-btn, tool-tag, tag)
         document.querySelectorAll('a, button, .tool-tag, .tag').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
+        // Плавный переход между страницами
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                if (href && href.includes('.html')) {
+                if (href && href.includes('.html') && !href.startsWith('http')) {
                     e.preventDefault();
-                    document.body.style.opacity = '0';
+                    document.body.classList.remove('visible');
                     setTimeout(() => { window.location.href = href; }, 600);
                 }
             });
