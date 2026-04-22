@@ -105,14 +105,21 @@
             margin: 0;
         }
 
-        /* --- ГАЛЕРЕЯ СО СВЕЧЕНИЕМ И РАМКАМИ --- */
+        /* --- ГАЛЕРЕЯ (РАМКИ + СВЕЧЕНИЕ + ТЕКСТ) --- */
         .art-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 60px; /* Увеличила отступ для сияния */
+            gap: 60px; 
             width: 90%;
             max-width: 1100px;
             padding-bottom: 100px;
+        }
+
+        .art-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .art-item {
@@ -121,10 +128,11 @@
             border: 3px solid var(--brown-outline);
             border-radius: 30px;
             height: 350px; 
+            width: 100%;
             overflow: hidden;
-            /* Постоянное мягкое свечение всей карточки */
             filter: drop-shadow(0 0 10px var(--soft-pink));
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
+            margin-bottom: 15px;
         }
 
         .art-item img {
@@ -135,22 +143,36 @@
             transition: all 0.4s ease;
         }
 
-        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
-        .art-item:hover {
-            transform: translateY(-15px);
-            /* Усиленное неоновое свечение */
-            filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 30px var(--soft-pink));
-            border-color: var(--brown-outline);
+        .art-name {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--brown-outline);
+            transition: all 0.3s ease;
         }
 
-        .art-item:hover img {
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
+        .art-card:hover {
+            transform: translateY(-15px);
+        }
+
+        .art-card:hover .art-item {
+            filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 30px var(--soft-pink));
+        }
+
+        .art-card:hover img {
             transform: scale(1.05); 
+        }
+
+        .art-card:hover .art-name {
+            color: var(--mauve-text);
+            text-shadow: 1px 1px 0px var(--soft-pink);
         }
 
         @media (max-width: 850px) {
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
-            .nav-btn, .art-item { cursor: pointer !important; }
+            .nav-btn { cursor: pointer !important; }
             .art-item { height: 300px; }
         }
     </style>
@@ -171,10 +193,33 @@
     </header>
 
     <main class="art-grid">
-        <div class="art-item"><img src="illustrations/art1.jpg" alt="Art 1"></div>
-        <div class="art-item"><img src="illustrations/art2.jpg" alt="Art 2"></div>
-        <div class="art-item"><img src="illustrations/art3.jpg" alt="Art 3"></div>
-        <div class="art-item"><img src="illustrations/art4.jpg" alt="Art 4"></div>
+        <div class="art-card">
+            <div class="art-item">
+                <img src="illustrations/art1.jpg" alt="Art 1">
+            </div>
+            <span class="art-name">Custom character | half</span>
+        </div>
+
+        <div class="art-card">
+            <div class="art-item">
+                <img src="illustrations/art2.jpg" alt="Art 2">
+            </div>
+            <span class="art-name">Custom character | Female head</span>
+        </div>
+
+        <div class="art-card">
+            <div class="art-item">
+                <img src="illustrations/art3.jpg" alt="Art 3">
+            </div>
+            <span class="art-name">Custom character | Male head</span>
+        </div>
+
+        <div class="art-card">
+            <div class="art-item">
+                <img src="illustrations/art4.jpg" alt="Art 4">
+            </div>
+            <span class="art-name">Custom art | Full-body</span>
+        </div>
     </main>
 
     <script>
@@ -208,7 +253,7 @@
             setTimeout(() => sparkle.remove(), 800);
         });
 
-        document.querySelectorAll('a, .art-item').forEach(el => {
+        document.querySelectorAll('a, .art-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
