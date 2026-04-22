@@ -14,6 +14,7 @@
             --brown-outline: #63414C;
         }
 
+        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
         body {
             background-color: var(--bg-cream);
             margin: 0;
@@ -22,7 +23,9 @@
             font-family: 'Comfortaa', cursive;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         body.visible { opacity: 1; }
@@ -30,16 +33,15 @@
         /* --- ФИКСИРОВАННАЯ НАВИГАЦИЯ --- */
         .nav-header { 
             width: 100%; 
-            padding: 25px 0; 
+            padding: 20px 0; 
             display: flex; 
             justify-content: center; 
             gap: 20px; 
-            position: fixed; /* Закрепляем сверху */
+            position: fixed;
             top: 0; 
-            left: 0; 
-            z-index: 1000;
-            background: rgba(253, 251, 247, 0.8); /* Полупрозрачный фон при скролле */
-            backdrop-filter: blur(10px);
+            z-index: 2000;
+            background: rgba(253, 251, 247, 0.9);
+            backdrop-filter: blur(8px);
             border-bottom: 2px dashed var(--soft-pink);
         }
 
@@ -47,49 +49,33 @@
             text-decoration: none; color: var(--brown-outline); font-weight: 700;
             padding: 10px 24px; border: 2px solid var(--brown-outline); border-radius: 50px;
             background: white; box-shadow: 4px 4px 0px var(--soft-pink); transition: 0.3s;
-            cursor: none !important;
         }
         .nav-btn:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--strong-pink); }
 
-        /* --- ВЕРТИКАЛЬНЫЙ СПИСОК ИНСТРУМЕНТОВ СЛЕВА --- */
+        /* --- БОКОВАЯ ПАНЕЛЬ ИНСТРУМЕНТОВ --- */
         .side-stack {
             position: fixed;
-            left: 40px;
+            left: 30px;
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            z-index: 100;
-        }
-
-        .stack-title {
-            font-family: 'Quicksand';
-            font-weight: 700;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            color: var(--brown-outline);
-            opacity: 0.6;
-            transform: rotate(-90deg) translateX(-40px);
-            width: 100px;
+            gap: 12px;
+            z-index: 1500;
         }
 
         .tool-item {
             background: white;
             border: 2px solid var(--brown-outline);
-            padding: 8px 15px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.75rem;
             font-weight: 700;
             box-shadow: 3px 3px 0px var(--soft-pink);
-            display: flex;
-            align-items: center;
-            gap: 8px;
             transition: 0.3s;
+            white-space: nowrap;
         }
-        .tool-item:hover { transform: translateX(10px); background: var(--soft-pink); }
+        .tool-item:hover { transform: translateX(5px); background: var(--soft-pink); }
 
         /* --- КУРСОР --- */
         #custom-cursor {
@@ -97,43 +83,83 @@
             border: 2px solid var(--brown-outline); border-radius: 2px 50% 50% 50%;
             transform: translate(-50%, -50%) rotate(-45deg); pointer-events: none;
             z-index: 10000; box-shadow: 2px 2px 0px var(--soft-pink);
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* --- КОНТЕНТ --- */
+        /* --- СЕКЦИЯ ПРОЕКТА --- */
         .project-section {
-            padding: 160px 20px 100px; /* Увеличили отступ сверху из-за фикс. меню */
-            display: flex; flex-direction: column; align-items: center;
+            padding-top: 140px; /* Чтобы не пряталось под меню */
+            padding-bottom: 100px;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .display-unit { position: relative; width: 850px; margin-bottom: 40px; }
+        .display-unit { 
+            position: relative; 
+            width: 100%;
+            margin-bottom: 60px;
+        }
 
         .browser-frame {
-            width: 100%; height: 500px; background: white; border: 3px solid var(--brown-outline);
-            border-radius: 25px; box-shadow: 15px 15px 0px var(--soft-pink);
-            overflow: hidden; position: relative; z-index: 2;
+            width: 100%;
+            height: 480px;
+            background: white;
+            border: 3px solid var(--brown-outline);
+            border-radius: 25px;
+            box-shadow: 15px 15px 0px var(--soft-pink);
+            overflow: hidden;
+            position: relative;
         }
 
-        /* ТЕЛЕФОН С УЛУЧШЕННЫМ КАЧЕСТВОМ КАРТИНКИ */
-        .phone-mockup {
-            position: absolute; right: -80px; bottom: -50px;
-            width: 200px; height: 410px; background: white;
-            border: 3.5px solid var(--brown-outline); border-radius: 40px;
-            box-shadow: 10px 10px 0px var(--strong-pink);
-            z-index: 5; overflow: hidden; animation: floaty 6s infinite ease-in-out;
+        .browser-top {
+            height: 35px;
+            background: var(--soft-pink);
+            border-bottom: 3px solid var(--brown-outline);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 8px;
         }
-        
+
+        .b-dot { width: 10px; height: 10px; border: 2px solid var(--brown-outline); border-radius: 50%; background: white; }
+
+        .browser-content { height: 100%; width: 100%; background-color: #fff; }
+        .screen-slide { 
+            width: 100%; height: 100%; 
+            background-size: cover; 
+            background-position: top center;
+        }
+
+        /* ТЕЛЕФОН (ИСПРАВЛЕННОЕ КАЧЕСТВО И СЛОЙ) */
+        .phone-mockup {
+            position: absolute;
+            right: -60px;
+            bottom: -40px;
+            width: 190px;
+            height: 390px;
+            background: white;
+            border: 3.5px solid var(--brown-outline);
+            border-radius: 38px;
+            box-shadow: 10px 10px 0px var(--strong-pink);
+            z-index: 10;
+            overflow: hidden;
+            animation: floaty 6s infinite ease-in-out;
+        }
+
+        @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
         .phone-mockup img { 
             width: 100%; height: 100%; object-fit: cover; 
-            /* КРИТИЧНО ДЛЯ КАЧЕСТВА: */
             image-rendering: -webkit-optimize-contrast; 
             image-rendering: crisp-edges;
-            display: block;
         }
 
-        .proj-meta { text-align: center; max-width: 700px; }
+        /* ОПИСАНИЕ */
+        .proj-meta { text-align: center; max-width: 650px; padding: 0 20px; }
         .proj-meta h2 { font-size: 2.2rem; margin-bottom: 15px; color: var(--brown-outline); font-family: 'Quicksand'; }
-        .proj-meta p { line-height: 1.8; color: var(--brown-outline); }
+        .proj-meta p { line-height: 1.8; color: var(--brown-outline); font-size: 1rem; }
 
         .proj-controls { display: flex; gap: 20px; margin: 30px 0; }
         .arrow-btn {
@@ -143,10 +169,10 @@
         }
         .arrow-btn:hover { transform: scale(1.1); box-shadow: 6px 6px 0px var(--strong-pink); }
 
-        @media (max-width: 1150px) {
+        /* Адаптивность для боковой панели */
+        @media (max-width: 1200px) {
             .side-stack { display: none; }
-            .display-unit { width: 90%; }
-            .phone-mockup { display: none; }
+            .phone-mockup { right: 0; bottom: -60px; }
         }
     </style>
 </head>
@@ -161,33 +187,31 @@
     </nav>
 
     <aside class="side-stack">
-        <div class="stack-title">Tech Stack</div>
         <div class="tool-item">Figma</div>
         <div class="tool-item">Photoshop</div>
         <div class="tool-item">Illustrator</div>
-        <div class="tool-item">HTML/CSS</div>
-        <div class="tool-item">JS</div>
+        <div class="tool-item">HTML / CSS</div>
+        <div class="tool-item">JavaScript</div>
     </aside>
 
-    <section class="project-section" id="site1">
+    <section class="project-section">
         <div class="display-unit">
             <div class="browser-frame">
                 <div class="browser-top">
-                    <div style="width:10px; height:10px; border:2px solid var(--brown-outline); border-radius:50%; background:white;"></div>
-                    <div style="width:10px; height:10px; border:2px solid var(--brown-outline); border-radius:50%; background:white;"></div>
+                    <div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div>
                 </div>
-                <div class="browser-content" style="height:100%; width:100%;">
-                    <div class="screen-slide active" style="background-image: url('project1/desktop_1.png'); background-size:cover; height:100%;"></div>
+                <div class="browser-content">
+                    <div class="screen-slide" style="background-image: url('project1/desktop_1.png');"></div>
                 </div>
             </div>
             <div class="phone-mockup">
-                <img src="project1/mobile_main.jpg" alt="High Quality Mobile Preview">
+                <img src="project1/mobile_main.jpg" alt="High Quality Preview">
             </div>
         </div>
 
         <div class="proj-controls">
-            <button class="arrow-btn" onclick="step(this, -1)">❮</button>
-            <button class="arrow-btn" onclick="step(this, 1)">❯</button>
+            <button class="arrow-btn">❮</button>
+            <button class="arrow-btn">❯</button>
         </div>
 
         <div class="proj-meta">
@@ -209,8 +233,14 @@
         });
 
         document.querySelectorAll('a, button, .tool-item').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.5)');
-            el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1)');
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1.5)';
+                cursor.style.backgroundColor = 'var(--soft-pink)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) rotate(-45deg) scale(1)';
+                cursor.style.backgroundColor = 'white';
+            });
         });
     </script>
 </body>
