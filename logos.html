@@ -1,531 +1,119 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Logo Design | ASTAGME</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-
     <style>
-
         :root {
-
             --soft-pink: #FFDBEA;
-
             --strong-pink: #F4C2D7; 
-
             --mauve-text: #A67081;
-
             --bg-cream: #FDFBF7;
-
             --brown-outline: #63414C;
-
         }
-
-
 
         body {
-
             background-color: var(--bg-cream);
-
             margin: 0;
-
             cursor: none !important;
-
             color: var(--mauve-text);
-
             font-family: 'Comfortaa', cursive;
-
             min-height: 100vh;
-
             display: flex;
-
             flex-direction: column;
-
             align-items: center;
-
-
 
             /* --- ПЛАВНЫЙ ПЕРЕХОД --- */
-
             opacity: 0; 
-
             transition: opacity 0.8s ease-in-out;
-
         }
-
-
 
         /* Класс видимости */
-
         body.visible { 
-
             opacity: 1; 
-
         }
-
-
 
         /* --- КУРСОР --- */
-
         #custom-cursor {
-
             position: fixed;
-
             width: 25px;
-
             height: 25px;
-
             background: white;
-
             border: 2px solid var(--brown-outline);
-
             border-radius: 2px 50% 50% 50%;
-
             transform: translate(-50%, -50%) rotate(-45deg);
-
             pointer-events: none;
-
             z-index: 10000;
-
             box-shadow: 2px 2px 0px var(--soft-pink);
-
             display: none;
-
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
         }
-
-
 
         .cursor-active {
-
             transform: translate(-50%, -50%) rotate(-45deg) scale(1.5) !important;
-
             background: var(--soft-pink) !important;
-
         }
-
-
 
         .sparkle {
-
             position: fixed;
-
             background: var(--strong-pink);
-
             border-radius: 50%;
-
             pointer-events: none;
-
             z-index: 9999;
-
         }
-
-
 
         /* --- НАВИГАЦИЯ --- */
-
         .nav-header { 
-
             width: 100%; 
-
             padding: 40px; 
-
             display: flex; 
-
             justify-content: center; 
-
             gap: 20px; 
-
         }
-
         
-
         .nav-btn { 
-
             text-decoration: none; 
-
             color: var(--brown-outline); 
-
             font-weight: 700; 
-
             padding: 12px 28px; 
-
             border: 2px solid var(--brown-outline); 
-
             border-radius: 50px; 
-
             background: white; 
-
             box-shadow: 4px 4px 0px var(--soft-pink); 
-
             transition: all 0.3s ease;
-
             cursor: none !important; 
-
         }
-
-
 
         .nav-btn:hover { 
-
             transform: translateY(-5px); 
-
             box-shadow: 7px 7px 0px var(--strong-pink);
-
         }
-
-
 
         .header-section {
-
             text-align: center;
-
             margin-bottom: 60px;
-
         }
-
-
 
         .category-icon {
-
             width: 100px;
-
             height: 100px;
-
             object-fit: contain;
-
             margin-bottom: 20px;
-
         }
-
-
 
         h1 {
-
             font-family: 'Quicksand', sans-serif;
-
             font-size: 3rem;
-
             color: var(--brown-outline);
-
             margin: 0;
-
         }
-
-
 
         /* --- ЛОГОТИПЫ --- */
-
         .logos-container {
-
             display: flex;
-
             flex-wrap: wrap;
-
             justify-content: center;
-
             align-items: flex-start;
-
             gap: 80px;
-
-            width: 90%;
-
-            max-width: 1000px;
-
-            padding: 40px 0;
-
-        }
-
-
-
-        .logo-item {
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            width: 300px;
-
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-        }
-
-
-
-        .img-wrapper {
-
-            height: 250px; 
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            margin-bottom: 25px;
-
-        }
-
-
-
-        .logo-item img {
-
-            max-width: 100%;
-
-            max-height: 100%;
-
-            object-fit: contain;
-
-            transition: all 0.4s ease;
-
-        }
-
-
-
-        .logo-name {
-
-            font-family: 'Quicksand', sans-serif;
-
-            font-weight: 700;
-
-            font-size: 1.4rem;
-
-            color: var(--brown-outline);
-
-            letter-spacing: 1px;
-
-            opacity: 0.8;
-
-            text-transform: uppercase;
-
-            transition: all 0.3s ease;
-
-        }
-
-
-
-        /* ЭФФЕКТЫ ПРИ НАВЕДЕНИИ */
-
-        .logo-item:hover {
-
-            transform: translateY(-15px);
-
-        }
-
-
-
-        .logo-item:hover img {
-
-            filter: drop-shadow(0 0 15px var(--strong-pink)) drop-shadow(0 0 35px var(--soft-pink));
-
-        }
-
-
-
-        .logo-item:hover .logo-name {
-
-            opacity: 1;
-
-            color: var(--mauve-text);
-
-            text-shadow: 2px 2px 0px var(--soft-pink);
-
-        }
-
-
-
-        @media (max-width: 850px) {
-
-            #custom-cursor { display: none !important; }
-
-            body { cursor: auto !important; }
-
-            .nav-btn { cursor: pointer !important; }
-
-            .img-wrapper { height: 180px; }
-
-            .logo-item { width: 200px; }
-
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-
-
-    <div id="custom-cursor"></div>
-
-
-
-    <nav class="nav-header">
-
-        <a href="index.html" class="nav-btn">Home</a>
-
-        <a href="catalog.html" class="nav-btn">Catalog</a>
-
-        <a href="about.html" class="nav-btn">About me</a>
-
-    </nav>
-
-
-
-    <header class="header-section">
-
-        <img src="catalog/logos.png" alt="Logo Design Icon" class="category-icon">
-
-        <h1>Logo Design</h1>
-
-    </header>
-
-
-
-    <main class="logos-container">
-
-        <div class="logo-item">
-
-            <div class="img-wrapper">
-
-                <img src="font.png" alt="Bubblegum Pink Logo">
-
-            </div>
-
-            <span class="logo-name">Bubblegum Pink</span>
-
-        </div>
-
-
-
-        <div class="logo-item">
-
-            <div class="img-wrapper">
-
-                <img src="metal-logo.png" alt="Chrome Illusion Logo">
-
-            </div>
-
-            <span class="logo-name">Chrome Illusion</span>
-
-        </div>
-
-    </main>
-
-
-
-    <script>
-
-        // Функция плавного появления
-
-        window.addEventListener('load', () => {
-
-            document.body.classList.add('visible');
-
-        });
-
-
-
-        // Плавный уход при переходе по ссылке
-
-        document.querySelectorAll('a').forEach(link => {
-
-            link.addEventListener('click', function(e) {
-
-                const href = this.getAttribute('href');
-
-                if (href && href.includes('.html')) {
-
-                    e.preventDefault();
-
-                    document.body.classList.remove('visible');
-
-                    setTimeout(() => {
-
-                        window.location.href = href;
-
-                    }, 600);
-
-                }
-
-            });
-
-        });
-
-
-
-        /* --- КУРСОР И ИСКРЫ --- */
-
-        const cursor = document.getElementById('custom-cursor');
-
-        window.addEventListener('mousemove', (e) => {
-
-            cursor.style.display = 'block';
-
-            cursor.style.left = e.clientX + 'px';
-
-            cursor.style.top = e.clientY + 'px';
-
-            
-
-            const sparkle = document.createElement('div');
-
-            sparkle.className = 'sparkle';
-
-            document.body.appendChild(sparkle);
-
-            const size = Math.random() * 6 + 2;
-
-            sparkle.style.width = size + 'px';
-
-            sparkle.style.height = size + 'px';
-
-            sparkle.style.left = e.clientX + 'px';
-
-            sparkle.style.top = e.clientY + 'px';
-
-            
-
-            const destX = e.clientX + (Math.random() - 0.5) * 60;
-
-            const destY = e.clientY + (Math.random() - 0.5) * 60;
-
-            
-
-            sparkle.animate([
-
-                { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-
-                { transform: `translate(${destX - e.clientX}px, ${destY - e.clientY}px) scale(0)`, opacity: 0 }
-
-            ], { duration: 800 });
-
-            setTimeout(() => sparkle.remove(), 800);
-
-        });
-
-
-
-        document.querySelectorAll('a, .logo-item').forEach(el => {
-
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
-
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
-
-        });
-
-    </script>
-
-</body>
-
-</html>
