@@ -107,7 +107,7 @@
             padding-bottom: 80px;
         }
 
-        /* Фото с анимацией и свечением */
+        /* Фото с анимацией парения */
         .profile-frame {
             width: 280px;
             height: 280px;
@@ -118,7 +118,7 @@
             box-shadow: 15px 15px 0px var(--soft-pink);
             filter: drop-shadow(0 0 10px rgba(244, 194, 215, 0.5));
             transition: all 0.4s ease;
-            animation: floating 4s ease-in-out infinite;
+            animation: floating 4s ease-in-out infinite; /* Фото парит */
         }
 
         .profile-frame img {
@@ -134,7 +134,7 @@
             animation-play-state: paused;
         }
 
-        /* Текстовая карточка */
+        /* Текстовая карточка (БЕЗ АНИМАЦИИ) */
         .info-section {
             text-align: center;
             background: white;
@@ -142,12 +142,11 @@
             border-radius: 30px;
             padding: 45px;
             box-shadow: 10px 10px 0px var(--soft-pink);
-            animation: floating 5s ease-in-out infinite;
-            animation-delay: 0.5s;
+            transition: transform 0.3s ease;
         }
 
         .info-section:hover {
-            animation-play-state: paused;
+            transform: scale(1.01);
         }
 
         h1 {
@@ -162,12 +161,12 @@
             font-size: 1.15rem;
             line-height: 1.8;
             color: var(--mauve-text);
-            max-width: 600px;
+            max-width: 650px;
         }
 
         .bio b {
             color: var(--brown-outline);
-            background: linear-gradient(transparent 70%, var(--soft-pink) 30%);
+            font-weight: 700;
         }
 
         /* --- СОЦСЕТИ --- */
@@ -178,10 +177,9 @@
             margin-top: 20px;
         }
 
-        /* УВЕЛИЧЕННАЯ ИКОНКА */
         .socials-icon-main {
-            width: 70px; 
-            height: 70px;
+            width: 75px; /* Увеличена */
+            height: 75px;
             object-fit: contain;
             filter: drop-shadow(2px 2px 0px var(--soft-pink));
         }
@@ -238,7 +236,8 @@
             #custom-cursor { display: none !important; }
             body { cursor: auto !important; }
             .nav-btn, .social-card { cursor: pointer !important; }
-            .socials-icon-main { width: 50px; height: 50px; }
+            .socials-icon-main { width: 55px; height: 55px; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -259,10 +258,12 @@
         <section class="info-section">
             <h1>Astagme</h1>
             <p class="bio">
-                Visual storyteller and graphic designer specializing in <b>soft aesthetics</b> and 
-                <b>dreamy digital identities</b>. I blend minimalist layouts with a touch of 
-                magic to create meaningful designs that resonate and inspire. 
-                Turning fleeting ideas into lasting visual emotions.
+                <b>Multidisciplinary designer</b> dedicated to bringing <b>your unique vision</b> to life. 
+                I specialize in full-cycle design, taking your ideas from a blank canvas to a 
+                <b>complete brand identity</b>. Whether you’re starting with a clear goal or just a feeling, 
+                I help define your unique color palette, typography, and style. 
+                From logos to full-scale websites, I transform abstract concepts into 
+                <b>stunning visual realities</b> — no matter the aesthetic.
             </p>
         </section>
 
@@ -299,7 +300,7 @@
     </main>
 
     <script>
-        // Плавное появление
+        // Проявление страницы
         window.addEventListener('load', () => {
             document.body.classList.add('visible');
         });
@@ -330,12 +331,13 @@
             setTimeout(() => sparkle.remove(), 800);
         });
 
+        // Интерактив для курсора
         document.querySelectorAll('a, .profile-frame, .social-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // Плавный переход при клике
+        // Плавный уход при переходе по ссылке
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
