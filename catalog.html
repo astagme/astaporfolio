@@ -25,11 +25,13 @@
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
+            
+            /* --- ПЛАВНЫЙ ПЕРЕХОД --- */
             opacity: 0; 
-            transition: opacity 0.6s ease-out;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        body.fade-in { 
+        body.visible { 
             opacity: 1 !important; 
         }
 
@@ -178,7 +180,7 @@
         <a href="logos.html" class="category-card">
             <img src="catalog/logos.png" alt="Logo Design" class="card-icon-img">
             <div class="card-title">Logos</div>
-            <p class="card-desc">Unique symbols that tell your brand story</p>
+            <p class="card-desc">Создаю уникальные и смелые визуальные смыслы для вашего бренда</p>
         </a>
 
         <a href="art.html" class="category-card">
@@ -189,13 +191,10 @@
     </main>
 
     <script>
-        function showPage() {
-            document.body.classList.add('fade-in');
-            document.body.style.opacity = '1';
-        }
-
-        window.addEventListener('load', showPage);
-        window.addEventListener('pageshow', (event) => { showPage(); });
+        // Функция плавного появления
+        window.addEventListener('load', () => {
+            document.body.classList.add('visible');
+        });
 
         const cursor = document.getElementById('custom-cursor');
         window.addEventListener('mousemove', (e) => {
@@ -228,13 +227,14 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
+        // Плавный уход при переходе
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 if (href && href.includes('.html') && !href.startsWith('http')) {
                     e.preventDefault();
-                    document.body.style.opacity = '0';
-                    setTimeout(() => { window.location.href = href; }, 500);
+                    document.body.classList.remove('visible');
+                    setTimeout(() => { window.location.href = href; }, 600);
                 }
             });
         });
