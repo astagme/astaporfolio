@@ -26,7 +26,7 @@
             align-items: center;
             overflow-x: hidden;
             
-            /* --- НАСТРОЙКИ ПЛАВНОСТИ --- */
+            /* --- СТРОГИЕ НАСТРОЙКИ ПЛАВНОСТИ --- */
             opacity: 0; 
             transition: opacity 0.8s ease-in-out;
         }
@@ -192,9 +192,8 @@
     </main>
 
     <script>
-        // ИСПРАВЛЕННАЯ ФУНКЦИЯ ПРОЯВЛЕНИЯ
-        document.addEventListener('DOMContentLoaded', () => {
-            // Небольшая задержка, чтобы браузер успел применить стили opacity: 0
+        // ЕДИНАЯ ЛОГИКА ПЛАВНОГО ПОЯВЛЕНИЯ
+        window.addEventListener('load', () => {
             setTimeout(() => {
                 document.body.classList.add('visible');
             }, 50);
@@ -205,7 +204,7 @@
             cursor.style.display = 'block';
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            createSparkle(e.clientX, e.clientY);
+            if (Math.random() > 0.7) createSparkle(e.clientX, e.clientY);
         });
 
         function createSparkle(x, y) {
@@ -226,20 +225,19 @@
             setTimeout(() => sparkle.remove(), 1000);
         }
 
+        // КУРСОР ДЛЯ КАРТОЧЕК И КНОПОК
         document.querySelectorAll('a, .category-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
         });
 
-        // ПЛАВНЫЙ УХОД ПРИ ПЕРЕХОДЕ
+        // ЕДИНАЯ ЛОГИКА ПЛАВНОГО УХОДА ПРИ ПЕРЕХОДЕ
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                // Проверяем, что ссылка ведет на внутреннюю страницу .html
                 if (href && href.includes('.html') && !href.startsWith('http')) {
                     e.preventDefault();
                     document.body.classList.remove('visible');
-                    // Ждем завершения анимации (0.6s) и переходим
                     setTimeout(() => { 
                         window.location.href = href; 
                     }, 600);
